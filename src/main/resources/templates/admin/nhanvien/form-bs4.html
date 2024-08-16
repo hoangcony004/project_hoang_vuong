@@ -24,6 +24,7 @@
                         <input type="text" class="form-control" id="floatingInput" placeholder="Tên đăng nhập"
                             th:field="*{TenDayDu}" />
                         <label for="floatingInput">Tên đầy đủ</label>
+                        <h5 th:text="${THONG_BAO_ADD_ER}" class="modal-title" id="exampleModalLabel">Thông Báo</h5>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -32,17 +33,15 @@
                         <label for="floatingInput">Tên đăng nhập</label>
                     </div>
 
+                    <!-- Trường mật khẩu mới -->
                     <div class="form-floating mb-3">
-                        <input type="hidden" class="form-control" id="floatingInput" placeholder="Mật khẩu"
-                            th:field="*{MatKhau}" />
-                        <!-- <label for="floatingInput">Mật khẩu</label> -->
+                        <input type="password" class="form-control" id="floatingInput" placeholder="Mật khẩu"
+                            th:field="*{matKhau}" />
+                        <label for="floatingInput">Mật khẩu</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="hidden" class="form-control" id="floatingInput" placeholder="Nhập lại mật khẩu"
-                            th:field="*{xacNhanMatKhau}" />
-                        <!-- <label for="floatingInput">Nhập lại mật khẩu</label> -->
-                    </div>
+                    <!-- Trường ẩn để lưu mật khẩu cũ -->
+                    <input type="hidden" th:field="*{xacNhanMatKhau}" />
 
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingInput" placeholder="name@gmail.com"

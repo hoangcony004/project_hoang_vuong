@@ -10,77 +10,63 @@ import org.springframework.stereotype.Service;
 @Service
 public class DvlCaiDat
 {
-    @Autowired private KdlCaiDat kdl;// kho dữ liệu;
+    @Autowired private KdlCaiDat kdl;
 
-    public List<CaiDat> dsCaiDat() // getAllCaiDat()
-    {
-  
-        // return null;
-
-        // mã bởi lập trình viên:
-        return kdl.findAll();
-    }
-
-    public List<CaiDat>  duyệtCaiDat() 
+    public List<CaiDat> dsCaiDat()
     {
         return kdl.findAll();
     }
 
-    public CaiDat  tìmCaiDatTheoId(int id)// 
+    public List<CaiDat>  duyetCaiDat() 
     {
-        // TODO Auto-generated method stub
-        // return null;
+        return kdl.findAll();
+    }
 
-        // return kdl.findById(id);
-
+    public CaiDat  timCaiDatTheoId(int id)
+    {
         CaiDat dl = null;
 
         Optional<CaiDat> optional = kdl.findById(id);
 
-        if// nếu
-        (optional.isPresent()) // tìm thấy bản ghi trong kho
+        if
+        (optional.isPresent())
         {
             dl = optional.get();
-        } else// ngược lại
+        } else
         {
-            //throw new RuntimeException("Không tìm thấy thú cưng ! Ko tim thay thu cung !");
-        }
 
+        }
         return dl;
 
     }
 
-    public CaiDat xemCaiDat(int id)// 
+    public CaiDat xemCaiDat(int id)
     {
 
         CaiDat dl = null;
 
         Optional<CaiDat> optional = kdl.findById(id);
 
-        if// nếu
-        (optional.isPresent()) // tìm thấy bản ghi trong kho
+        if
+        (optional.isPresent())
         {
             dl = optional.get();
-        } else// ngược lại
+        } else
         {
-            //throw new RuntimeException("Không tìm thấy thú cưng ! Ko tim thay thu cung !");
+           
         }
-
         return dl;
-
     }
 
     
-    public void lưuCaiDat(CaiDat dl)
+    public void luuCaiDat(CaiDat dl)
     {
-        // TODO Auto-generated method stub
         this.kdl.save(dl);
     }
 
 
-    public void xóaCaiDat(int id)
+    public void xoaCaiDat(int id)
     {
-        // TODO Auto-generated method stub
         this.kdl.deleteById(id);
     }
 

@@ -18,34 +18,36 @@
         </div>
         <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
     </div>
+    <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ER}">
+        <div th:text="${THONG_BAO_ER}">
+            Thông báo đẩy ra ở đây
+        </div>
+        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
+    </div>
 </div>
 <!-- end page title -->
 
 <!-- BS4 MODAL ADD -->
-<div class="modal" id="modalThem">
-    <div class="modal-dialog modal-xl">
+<div class="modal fade" id="modalThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
 
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div> -->
-
-            <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
+            <!-- Modal Body -->
             <div class="modal-body">
                 <i th:replace="admin/nhanvien/form-bs4.html"></i>
-
             </div>
 
-            <!-- Modal footer -->
+            <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
             </div>
 
         </div>
     </div>
 </div>
+
+
 
 <!-- BS4 MODAL Show -->
 <div class="modal" id="modalXem">
@@ -145,17 +147,17 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="text-sm-end">
-                            <!-- <button type="button" class="btn btn-success mb-2 me-1"><i
-                                    class="mdi mdi-cog-outline"></i></button>
-                            <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                            <button type="button" class="btn btn-light mb-2">Export</button> -->
+                            <form action="#" method="post">
+                                <button type="button" class="btn btn-primary mb-2 me-1">Lọc</button>
+                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                                <button type="button" class="btn btn-light mb-2">Export</button>
+                            </form>
                             <form action="/admin/nhan-vien/tim-kiem" method="GET">
                                 <select name="criteria" class="mb-2 me-1">
-                                    <option value="Id">ID</option>
                                     <option value="tenDayDu">Họ và Tên</option>
+                                    <option value="Id">ID</option>
                                     <option value="email">Email</option>
                                     <option value="dienThoai">Số điện thoại</option>
-                                    <!-- <option value="class">Lớp</option> -->
                                 </select>
                                 <input type="search" name="query" placeholder="Tìm kiếm nhân viên..."
                                     style="outline: none;">
@@ -176,18 +178,19 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th> -->
+                                <th>STT</th>
                                 <th>Ảnh Đại Diện</th>
                                 <th class="all">
-                                    <a th:href="@{/admin/nhan-vien(page=0, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}" class="text-body" style="color: black;">Tên Nhân Viên</a>
+                                    <a th:href="@{/admin/nhan-vien(page=${currentPage}, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}"
+                                        class="text-body" style="color: black;">Tên Nhân Viên</a>
                                 </th>
-                                
-                                
+
+
+
                                 <th>Tên Đăng Nhập</th>
-                                <!-- <th>Mật Khẩu</th> -->
                                 <th>Email</th>
-                                <th>SỐ Điện Thoại</th>
+                                <th>Số Điện Thoại</th>
                                 <th>Trạng Thái</th>
-                                <!-- <th>Mô Tả</th> -->
                                 <th>Ngày Tạo</th>
                                 <!-- <th>Ngày Sửa</th> -->
                                 <th>Ngày Hết Hạn</th>
@@ -203,6 +206,7 @@
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td> -->
+                                <td th:text="${dl.thuTu}">ID </td>
                                 <td>
                                     <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
                                         class="rounded me-3" height="48">
@@ -312,49 +316,67 @@
                             <!-- Trang đầu -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{'/admin/nhan-vien?page=1&pageSize=' + ${pageSize}}"
-                                   th:disabled="${currentPage == 1}">Đầu</a>
+                                    th:href="@{'/admin/nhan-vien?page=1&pageSize=' + ${pageSize}}">Đầu</a>
                             </li>
-                    
+
                             <!-- Trang trước -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{'/admin/nhan-vien?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}"
-                                   th:disabled="${currentPage == 1}">
-                                   <i class="dripicons-chevron-left"></i>
+                                    th:href="@{'/admin/nhan-vien?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
                                 </a>
                             </li>
-                    
-                            <!-- Các trang giữa -->
-                            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
-                                th:classappend="${currentPage == i} ? 'disabled' : ''">
+
+                            <!-- Trang đầu tiên -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
                                 <a class="page-link"
-                                   th:href="@{'/admin/nhan-vien?page=' + ${i} + '&pageSize=' + ${pageSize}}"
-                                   th:style="${currentPage == i} ? 'background-color: blue; color: white;' : ''"
-                                   th:classappend="${currentPage == i} ? 'active' : ''"
-                                   th:disabled="${currentPage == i}">
-                                   [[${i}]]
-                                </a>
+                                    th:href="@{'/admin/nhan-vien?page=1&pageSize=' + ${pageSize}}">1</a>
                             </li>
-                    
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Các trang giữa -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li>
+
                             <!-- Trang tiếp theo -->
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{'/admin/nhan-vien?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}"
-                                   th:disabled="${currentPage >= totalPages}">
-                                   <i class="dripicons-chevron-right"></i>
+                                    th:href="@{'/admin/nhan-vien?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
                                 </a>
                             </li>
-                    
+
                             <!-- Trang cuối -->
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{'/admin/nhan-vien?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}"
-                                   th:disabled="${currentPage >= totalPages}">Cuối</a>
+                                    th:href="@{'/admin/nhan-vien?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
                             </li>
                         </ul>
                     </nav>
-                    
+
+
+
+
 
                 </div>
             </div> <!-- end card-body-->
@@ -405,7 +427,7 @@
                 alertBox.classList.add('hide');
                 setTimeout(function () {
                     alertBox.style.display = 'none';
-                }, 500); // Đợi 0.5s (thời gian của transition) rồi mới ẩn hẳn
+                }, 500);
             });
         }
     });

@@ -10,7 +10,7 @@ public class QdlIndex
     @GetMapping({"/index", "/home"})
     public String indexAction() 
     {
-        return "Hom Page-Java Spring Boot";
+        return "Home Page-Java Spring Boot.";
     }
     
     @GetMapping("/hello")

@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CaiDat {
-  @Id // Khóa chính
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // Tăng tự động từ 1,2,3,...
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int Id;
 
   private String khoa;
@@ -21,18 +21,7 @@ public class CaiDat {
 
   public Boolean KhongHopLe() {
     var khl = false;
-
-    // if (this.Ten.length() < 2) {
-    // khl = true;
-    // System.out.print("\n Lỗi->Tên phải từ 2 kí tự trở lên: ");
-    // }
-
-    // if (this.Ten.length() > 22) {
-    // khl = true;
-    // System.out.print("\n Lỗi->Tên phải không quá 22 kí tự. ");
-    // }
-
     return khl;
   }
 
-}// end class
+}

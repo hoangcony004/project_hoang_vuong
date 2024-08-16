@@ -20,107 +20,83 @@
             <div class="row">
                 <div class="col">
                     <input disabled type="hidden" th:field="*{Id}" />
-                    <div class="form-floating mb-3">
-                        <input disabled type="text" class="form-control" id="floatingInput" placeholder="Tên đăng nhập"
-                            th:field="*{TenDayDu}" />
-                        <label for="floatingInput">Tên đầy đủ</label>
+
+                    <div class="mb-3">
+                        <h5>Tên đầy đủ:</h5>
+                        <p th:text="${dl.TenDayDu}"></p>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input disabled type="text" class="form-control" id="floatingInput" placeholder="Tên đăng nhập"
-                            th:field="*{TenDangNhap}" />
-                        <label for="floatingInput">Tên đăng nhập</label>
+                    <div class="mb-3">
+                        <h5>Tên đăng nhập:</h5>
+                        <p th:text="${dl.TenDangNhap}"></p>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input disabled type="hidden" class="form-control" id="floatingInput" placeholder="Mật khẩu"
-                            th:field="*{MatKhau}" />
-                        <!-- <label for="floatingInput">Mật khẩu</label> -->
+                    <div class="mb-3">
+                        <h5>Email:</h5>
+                        <p th:text="${dl.Email}"></p>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input disabled type="hidden" class="form-control" id="floatingInput" placeholder="Nhập lại mật khẩu"
-                            th:field="*{xacNhanMatKhau}" />
-                        <!-- <label for="floatingInput">Nhập lại mật khẩu</label> -->
+                    <div class="mb-3">
+                        <h5>Số điện thoại:</h5>
+                        <p th:text="${dl.dienThoai}"></p>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input disabled type="email" class="form-control" id="floatingInput" placeholder="name@gmail.com"
-                            th:field="*{Email}" />
-                        <label for="floatingInput">Email</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input disabled type="number" class="form-control" id="floatingInput" placeholder="Số điện thoại"
-                            th:field="*{dienThoai}" />
-                        <label for="floatingInput">Số điện thoại</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <textarea disabled class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                            style="height: 100px;" th:field="*{moTa}"></textarea>
-                        <label for="floatingTextarea">Ghi chú</label>
+                    <div class="mb-3">
+                        <h5>Ghi chú:</h5>
+                        <p th:text="${dl.moTa}"></p>
                     </div>
                 </div>
+
                 <div class="col">
-                    <div class="form-floating mb-3">
-                        <input disabled type="text" class="form-control" id="floatingInput" placeholder="Ảnh đại diện"
-                            th:field="*{AnhDaiDien}" />
-                        <label for="floatingInput">Link ảnh đại diện</label>
-                        <!-- <a href="https://postimages.org/">Cách lấy link</a> -->
+                    <div class="mb-3">
+                        <h5>Ảnh đại diện:</h5>
+                        <!-- <p th:text="${dl.AnhDaiDien}"></p> -->
+                        <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img" class="rounded me-3"
+                            height="68px">
                     </div>
 
                     <div class="row g-2">
                         <div class="col-md">
-                            <div class="form-floating  mb-3">
-                                <input disabled type="number" class="form-control" id="floatingInputGrid" placeholder="Thứ tự"
-                                    th:field="*{thuTu}" />
-                                <label for="floatingInputGrid">Thứ tự</label>
+                            <div class="mb-3">
+                                <h5>Thứ tự:</h5>
+                                <p th:text="${dl.thuTu}"></p>
                             </div>
                         </div>
                         <div class="col-md">
-                            <div class="form-floating  mb-3">
-                                <select disabled class="form-select" th:field="*{TrangThai}" id="floatingSelectGrid"
-                                    aria-label="Floating label select example">
-                                    <!--  -->
-                                    <!-- <option selected>Lựa chọn trạng thái</option> -->
-                                    <option value="1">Cho phép</option>
-                                    <option value="0">Không cho phép</option>
-                                </select>
-                                <label for="floatingSelectGrid">Trạng thái</label>
+                            <div class="mb-3">
+                                <h5>Trạng thái:</h5>
+                                <!-- <p th:text="${dl.TrangThai == 1 ? 'Cho phép' : 'Không cho phép'}"></p> -->
+                                <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
+                                <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
                             </div>
                         </div>
-                        <!-- <div class="col-md">
-                        <div class="form-floating  mb-3">
-                            <select class="form-select" id="floatingSelectGrid"
-                                aria-label="Floating label select example">
-                               
-                                <option selected>Lựa chọn trạng thái</option>
-                                <option value="1">Admin0</option>
-                                <option value="2">Admin1</option>
-                                <option value="3">Admin2</option>
-                                <option value="4">Admin3</option>
-                                <option value="5">User</option>
-                            </select>
-                            <label for="floatingSelectGrid">Phân quyền</label>
+
+
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày tạo:</h5>
+                                <p th:text="${dl.ngayTao}"></p>
+                            </div>
                         </div>
-                    </div> -->
-                        <div class="form-floating mb-3">
-                            <input disabled type="date" class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
-                                th:field="*{ngayHetHan}" />
-                            <label for="floatingInput">Ngày hết hạn</label>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày sửa</h5>
+                                <p th:text="${dl.ngaySua}"></p>
+                            </div>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input disabled type="hidden" class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
-                                th:field="*{NgayTao}" />
-                        </div>
-                        <div class="form-floating mb-3">
-                            <!-- <input disabled type="hidden" class="form-control" id="floatingInput" placeholder="Ngày hết hạn" th:field="*{NgaySua}" /> -->
-
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày hết hạn:</h5>
+                                <p th:text="${dl.ngayHetHan}"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div></form>
+            </div>
+        </form>
     </div>
 </div>

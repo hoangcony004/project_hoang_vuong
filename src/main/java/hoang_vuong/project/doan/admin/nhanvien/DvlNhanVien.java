@@ -10,20 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
-
 @Service
 public class DvlNhanVien 
 {
-    @Autowired private KdlNhanVien kdl;// kho dữ liệu;
+    @Autowired private KdlNhanVien kdl;
 
     @Autowired
     private KdlNhanVien nhanVienRepository;
 
-    public Page<NhanVien> duyệtNhanVien(Pageable pageable) {
+    public Page<NhanVien> duyetNhanVien(Pageable pageable) {
         return nhanVienRepository.findAll(pageable);
     }
-
 
     public List<NhanVien> timKiemTheoTen(String ten) {
         return kdl.findByTenDayDuContainingIgnoreCase(ten);
@@ -37,110 +34,75 @@ public class DvlNhanVien
         return kdl.findByDienThoaiContainingIgnoreCase(dienThoai);
     }
 
-    public List<NhanVien> dsNhanVien() // getAllThucThe()
-    {
-  
-        // return null;
-
-        // mã bởi lập trình viên:
-        return kdl.findAll();
-    }
-
-    public List<NhanVien>  duyệtNhanVien() 
+    public List<NhanVien> dsNhanVien()
     {
         return kdl.findAll();
     }
 
-    public NhanVien  tìmNhanVienTheoId(int id)// 
+    public List<NhanVien>  duyetNhanVien() 
     {
-        // TODO Auto-generated method stub
-        // return null;
+        return kdl.findAll();
+    }
 
-        // return kdl.findById(id);
-
+    public NhanVien  timNhanVienTheoId(int id)// 
+    {
         NhanVien dl = null;
 
         Optional<NhanVien> optional = kdl.findById(id);
 
-        if// nếu
-        (optional.isPresent()) // tìm thấy bản ghi trong kho
+        if
+        (optional.isPresent())
         {
             dl = optional.get();
-        } else// ngược lại
+        } else
         {
-            //throw new RuntimeException("Không tìm thấy thú cưng ! Ko tim thay thu cung !");
+        
         }
 
         return dl;
 
     }
 
-    public NhanVien xemNhanVien(int id)// 
+    public NhanVien xemNhanVien(int id)
     {
 
         NhanVien dl = null;
 
         Optional<NhanVien> optional = kdl.findById(id);
 
-        if// nếu
-        (optional.isPresent()) // tìm thấy bản ghi trong kho
+        if
+        (optional.isPresent())
         {
             dl = optional.get();
-        } else// ngược lại
+        } else
         {
-            //throw new RuntimeException("Không tìm thấy thú cưng ! Ko tim thay thu cung !");
+            
         }
 
         return dl;
 
     }
 
-        public void lưuNhanVien(NhanVien dl)
+        public void luuNhanVien(NhanVien dl)
     {
-        // TODO Auto-generated method stub
         this.kdl.save(dl);
     }
 
-        public void xóaNhanVien(int id)
+        public void xoaNhanVien(int id)
     {
-        // TODO Auto-generated method stub
         this.kdl.deleteById(id);
     }
 
-        public NhanVien tìmNhanVienTheoTenDangNhap(String tdn)
+        public NhanVien timNhanVienTheoTenDangNhap(String tdn)
     {
- // TODO Auto-generated method stub
-        // return null;
-
-        // return kdl.findById(id);
-
         NhanVien dl = null;
 
-        // List<NhanVien> list = kdl.findByTenDangNhap(tdn);
-        // if(list!=null && list.size()>0)
-        //     dl = list.get(0);
-
-        // if(kdl.existsByTenDangNhap(tdn))
-        // {
-        //     dl = kdl.findByTenDangNhap(tdn).get(0);
-        // }
-
-        dl = kdl.findOneByTenDangNhap(tdn);// OK
-
-        // if// nếu
-        // (dl==null) // tìm thấy bản ghi trong kho
-        // {
-            
-        // } else// ngược lại
-        // {
-        //     //throw new RuntimeException("Không tìm thấy thú cưng ! Ko tim thay thu cung !");
-        // }
+        dl = kdl.findOneByTenDangNhap(tdn);
 
         return dl;
     }
 
-    
-        public Boolean tồnTạiTênĐăngNhập(String tdn)
+        public Boolean DaCoTenDangNhap(String tdn)
     {
         return kdl.existsByTenDangNhap(tdn);
     }
