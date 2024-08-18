@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- <div th:replace="fragments/head :: head"></div> -->
-<div th:insert="~{fragments/head :: head}"></div>
+<!-- <div th:replace="admin/fragments/head :: head"></div> -->
+<div th:insert="~{admin/fragments/head :: head}"></div>
 
 <body class="loading"
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
-        <!-- <div th:replace="fragments/navbar :: navbar"></div> -->
-        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <!-- <div th:replace="admin/fragments/navbar :: navbar"></div> -->
+        <div th:insert="~{admin/fragments/navbar :: navbar}"></div>
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->
@@ -19,9 +19,9 @@
         <div class="content-page">
             <div class="content">
                 <!-- Topbar Start -->
-                <!-- Include fragment từ fragments/header.html -->
-                <!-- <div th:replace="fragments/header :: header"></div> -->
-                <div th:insert="~{fragments/header :: header}"></div>
+                <!-- Include fragment từ admin/fragments/header.html -->
+                <!-- <div th:replace="admin/fragments/header :: header"></div> -->
+                <div th:insert="~{admin/fragments/header :: header}"></div>
                 <!-- end Topbar -->
 
                 <!-- Start Content-->
@@ -35,8 +35,8 @@
 
             <!-- Footer Start -->
             <footer class="footer">
-                <!-- <div th:replace="fragments/footer :: footer"></div> -->
-                <div th:insert="~{fragments/footer :: footer}"></div>
+                <!-- <div th:replace="admin/fragments/footer :: footer"></div> -->
+                <div th:insert="~{admin/fragments/footer :: footer}"></div>
             </footer>
             <!-- end Footer -->
 
@@ -52,8 +52,8 @@
 
 
     <!-- Right Sidebar -->
-    <!-- <div th:replace="fragments/rightbar :: rightbar"></div> -->
-    <div th:insert="~{fragments/rightbar :: rightbar}"></div>
+    <!-- <div th:replace="admin/fragments/rightbar :: rightbar"></div> -->
+    <div th:insert="~{admin/fragments/rightbar :: rightbar}"></div>
 
 
 
@@ -61,8 +61,8 @@
     <!-- /End-bar -->
 
 
-    <!-- <div th:replace="fragments/script :: script"></div> -->
-    <div th:insert="~{fragments/script :: script}"></div>
+    <!-- <div th:replace="admin/fragments/script :: script"></div> -->
+    <div th:insert="~{admin/fragments/script :: script}"></div>
 
 
 </body>

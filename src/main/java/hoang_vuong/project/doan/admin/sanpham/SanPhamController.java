@@ -1,15 +1,24 @@
 package hoang_vuong.project.doan.admin.sanpham;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
+import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
+import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,16 +30,22 @@ public class SanPhamController {
     @Autowired
     private SanPhamService dvl;
 
-    @Autowired
-    private SanPhamService dvlSanPhamService;
+    // @Autowired
+    // private SanPhamService dvlSanPhamService;
 
-    @GetMapping("/san-pham") 
+    @Autowired
+    private NhaSanXuatService nhaSanXuatService;
+
+    @GetMapping("/san-pham")
     public String getDuyet(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
         List<SanPham> list = dvl.duyet();
 
+        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+
+        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
         model.addAttribute("ds", list);
         model.addAttribute("dl", new SanPham());
         model.addAttribute("title", "Quản Lý Sản Phẩm");
@@ -42,6 +57,88 @@ public class SanPhamController {
 
         return "layouts/layout-admin.html";
 
+    }
+
+    @PostMapping("/san-pham/them")
+    public String postAddSanPham(@ModelAttribute("SanPham") SanPham dl,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        dl.setNgayTao(LocalDate.now());
+
+        dvl.them(dl);
+
+        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+
+        return "redirect:/admin/san-pham";
+
+    }
+
+    @GetMapping("/san-pham/xem")
+    public String getShowSP(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xem(id);
+
+        model.addAttribute("title_body", "Xem Sản Phẩm");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/san-pham/xem");
+
+        return "admin/sanpham/form-xem-sp-bs4.html";
+
+    }
+
+    @GetMapping("/san-pham/sua")
+    public String getEditSP(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+        var dl = dvl.xem(id);
+
+        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+        model.addAttribute("title_body", "Sửa Sản Phẩm");
+        model.addAttribute("title_sm", "Cập nhật");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/san-pham/sua");
+
+        return "admin/sanpham/form-bs4-sp.html";
+
+    }
+
+    @PostMapping("/san-pham/sua")
+    public String postEditSP(@ModelAttribute("SanPham") SanPham dl,
+            RedirectAttributes redirectAttributes) {
+
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        dl.setNgaySua(LocalDate.now());
+        dvl.sua(dl);
+
+        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã sửa thành công !");
+
+        return "redirect:/admin/san-pham";
+
+    }
+
+    @PostMapping("/san-pham/xoa")
+    public String postDelete(@RequestParam("id") int id,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            this.dvl.xoa(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa. Lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/san-pham";
     }
 
 }

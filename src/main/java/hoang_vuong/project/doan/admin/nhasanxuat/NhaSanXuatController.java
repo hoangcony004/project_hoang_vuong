@@ -3,6 +3,8 @@ package hoang_vuong.project.doan.admin.nhasanxuat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,24 +34,37 @@ public class NhaSanXuatController {
     private NhaSanXuatService dvlNhaSanXuatService;
 
     @GetMapping("/nha-san-xuat")
-    public String getDuyet(Model model) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
+public String getDuyet(Model model,
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "5") int pageSize,
+        HttpServletRequest request) {
 
-        List<NhaSanXuat> list = dvl.duyet();
+    // Kiểm tra xem nhân viên đã đăng nhập chưa
+    if (Qdl.NhanVienChuaDangNhap(request))
+        return "redirect:/admin/dang-nhap";
 
-        model.addAttribute("ds", list);
-        model.addAttribute("dl", new NhaSanXuat());
-        model.addAttribute("title", "Quản Lý Nhà Sản Xuất");
-        model.addAttribute("title_duyet", "Nhà Sản Xuất");
+    // Tính toán chỉ số trang (pageIndex)
+    int pageIndex = page - 1;
 
-        model.addAttribute("title_btn_add", "Thêm Nhà Sản Xuất");
-        model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("action", "/admin/nha-san-xuat/them");
-        model.addAttribute("content", "admin/nhasanxuat/duyet.html");
+    // Lấy dữ liệu phân trang từ dịch vụ
+    Page<NhaSanXuat> nhaSanXuatPage = dvlNhaSanXuatService.duyetNhaSanXuat(PageRequest.of(pageIndex, pageSize));
 
-        return "layouts/layout-admin.html";
-    }
+    // Cập nhật mô hình với dữ liệu phân trang
+    model.addAttribute("currentPage", page);
+    model.addAttribute("totalPages", nhaSanXuatPage.getTotalPages());
+    model.addAttribute("pageSize", pageSize);
+    model.addAttribute("ds", nhaSanXuatPage.getContent()); // Danh sách nhà sản xuất
+    model.addAttribute("dl", new NhaSanXuat()); // Đối tượng mới để thêm
+    model.addAttribute("title", "Quản Lý Nhà Sản Xuất");
+    model.addAttribute("title_duyet", "Nhà Sản Xuất");
+    model.addAttribute("title_btn_add", "Thêm Nhà Sản Xuất");
+    model.addAttribute("title_sm", "Thêm mới");
+    model.addAttribute("action", "/admin/nha-san-xuat/them");
+    model.addAttribute("content", "admin/nhasanxuat/duyet.html");
+
+    return "layouts/layout-admin.html";
+}
+
 
     @PostMapping("/nha-san-xuat/them")
     public String postThemNSX(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,

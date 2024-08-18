@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,8 @@ public class NhanVien
     private String    anhDaiDien; 
     private Boolean   trangThai;
     private String    dienThoai;
+    
+    @Column(columnDefinition="LONGTEXT")
     private String    moTa;
     private int       thuTu; 
 

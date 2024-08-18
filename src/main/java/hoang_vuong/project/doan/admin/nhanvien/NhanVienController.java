@@ -2,16 +2,13 @@ package hoang_vuong.project.doan.admin.nhanvien;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-// Thư viện web: Java Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-// import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +22,6 @@ import org.springframework.data.domain.Sort;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-// Thue viện Session
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import hoang_vuong.project.doan.qdl.Qdl;
@@ -107,24 +103,6 @@ public class NhanVienController {
     public String postThem(@ModelAttribute("NhanVien") NhanVien dl,
             RedirectAttributes redirectAttributes) {
 
-        // Kiểm tra các trường bắt buộc
-        // if (dl.getTenDayDu() == null || dl.getTenDayDu().trim().isEmpty()) {
-        // redirectAttributes.addFlashAttribute("THONG_BAO_ADD_ER", "Chưa nhập tên nhân
-        // viên.");
-        // return "redirect:/admin/nhan-vien"; // Quay lại trang thêm
-        // }
-
-        // if (dl.getEmail() == null || dl.getEmail().trim().isEmpty()) {
-        // redirectAttributes.addFlashAttribute("THONG_BAO_ADD_ER", "Chưa nhập email.");
-        // return "redirect:/admin/nhan-vien"; // Quay lại trang thêm
-        // }
-
-        // if (dl.getMatKhau() == null || dl.getMatKhau().trim().isEmpty()) {
-        // redirectAttributes.addFlashAttribute("THONG_BAO_ADD_ER", "Chưa nhập mật
-        // khẩu.");
-        // return "redirect:/admin/nhan-vien"; // Quay lại trang thêm
-        // }
-
         // Mã hóa mật khẩu
         var inputPassword = dl.getMatKhau();
         var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
@@ -141,29 +119,13 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/sua")
-    public String getSua(Model model, @RequestParam("id") int id) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
-
-        NhanVien dl = dvl.xemNhanVien(id);
-
-        // Gửi đối tượng dữ liệu sang bên view
-        model.addAttribute("dl", dl);
-        model.addAttribute("content", "admin/nhanvien/sua.html");
-
-        return "layouts/layout-admin.html";
-    }
-
-    @GetMapping("/nhan-vien/sua-ajax")
     public String getSuaAjax(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        // NhanVien dl = dvl.xemNhanVien(id);
         var dl = dvl.xemNhanVien(id);
         model.addAttribute("title_body", "Sửa Nhân Viên");
         model.addAttribute("title_sm", "Cập nhật");
-        // Gửi đối tượng dữ liệu sang bên view
         model.addAttribute("dl", dl);
         model.addAttribute("action", "/admin/nhan-vien/sua");
 
@@ -197,23 +159,9 @@ public class NhanVienController {
         dl.setNgaySua(LocalDate.now());
         dvl.luuNhanVien(dl);
 
-        // Gửi thông báo thành công từ view Add/Edit sang view List
         redirectAttributes.addFlashAttribute("THONG_BAO", "Đã sửa thành công !");
 
         return "redirect:/admin/nhan-vien";
-    }
-
-    @GetMapping("/nhan-vien/xoa")
-    public String getXoa(Model model, @RequestParam(value = "id") int id) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
-
-        NhanVien dl = dvl.timNhanVienTheoId(id);
-
-        model.addAttribute("dl", dl);
-        model.addAttribute("content", "admin/nhanvien/xoa.html");
-
-        return "layouts/layout-admin.html";
     }
 
     @PostMapping("/nhan-vien/xoa")
@@ -235,19 +183,6 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/xem")
-    public String getXem(Model model, @RequestParam(value = "id") int id) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
-
-        NhanVien dl = dvl.xemNhanVien(id);
-
-        model.addAttribute("dl", dl);
-        model.addAttribute("content", "admin/nhanvien/xem.html");
-
-        return "layouts/layout-admin.html";
-    }
-
-    @GetMapping("/nhan-vien/xem-ajax")
     public String getXemAjax(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";

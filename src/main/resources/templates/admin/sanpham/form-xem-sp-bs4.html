@@ -1,0 +1,123 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_body}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_body}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <form th:action="${action}" th:object="${dl}" method="post">
+
+            <div class="row">
+                <div class="col">
+                    <input disabled type="hidden" th:field="*{Id}" />
+
+                    <div class="mb-3">
+                        <h5>Model: </h5>
+                        <p th:text="${dl.model}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tên sản phẩm:</h5>
+                        <p th:text="${dl.tenSP}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Đơn giá:</h5>
+                        <p th:text="${dl.getFomatGiaBan}"></p>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <h5>Trạng thái:</h5>
+                            <span th:if="${dl.trangThai} == true" class="badge bg-success">Cho phép</span>
+                            <span th:if="${dl.trangThai} == false" class="badge bg-danger">Không cho phép</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Nhà sản xuất:</h5>
+                        <p th:text="${dl.NhaSanXuat.ten}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Ghi chú:</h5>
+                        <p th:text="${dl.moTa}"></p>
+                    </div>
+                </div>
+                <div class="col">
+
+                    <div class="mb-3">
+                        <h5>Ảnh đại diện:</h5>
+                        <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img" class="rounded me-3"
+                            height="68px">
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Thứ tự:</h5>
+                                <p th:text="${dl.thuTu}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Bán chạy:</h5>
+                                <span th:if="${dl.banChay} == true" class="badge bg-success">Có bán chạy</span>
+                                <span th:if="${dl.banChay} == false" class="badge bg-danger">Không bán chạy</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Nổi bật:</h5>
+                                <span th:if="${dl.noiBat} == true" class="badge bg-success">Có nổi bật</span>
+                                <span th:if="${dl.noiBat} == false" class="badge bg-danger">Không nổi bật</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Tag:</h5>
+                                <p th:text="${dl.tag}"></p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày tạo:</h5>
+                                <p th:text="${dl.ngayTao}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày sửa</h5>
+                                <p th:text="${dl.ngaySua}"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày hết hạn:</h5>
+                                <p th:text="${dl.ngayHetHan}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

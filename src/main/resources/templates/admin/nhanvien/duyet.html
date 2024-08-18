@@ -53,20 +53,10 @@
 <div class="modal" id="modalXem">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div> -->
-
-            <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
             <div class="modal-body">
                 <i th:replace="admin/nhanvien/form-xem-bs4.html"></i>
 
             </div>
-
-            <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
@@ -79,18 +69,9 @@
 <div class="modal" id="modalSua">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div> -->
-
-            <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
             <div class="modal-body">
                 Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
@@ -136,10 +117,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="row mb-2">
-                    <!-- <div class="col-sm-4">
-                        <a href="#" th:href="@{/admin/nhan-vien/them}" class="btn btn-success mb-2"><i
-                                class="mdi mdi-plus-circle me-2"></i> Thêm Nhân Viên</a>
-                    </div> -->
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalThem">
                             <i class="bi-plus-circle"></i> Thêm Nhân Viên
@@ -147,21 +124,25 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="text-sm-end">
-                            <form action="#" method="post">
-                                <button type="button" class="btn btn-primary mb-2 me-1">Lọc</button>
-                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                <button type="button" class="btn btn-light mb-2">Export</button>
+                            <!-- Các nút chức năng -->
+                            <form action="#" method="post" class="mb-3">
+                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-light btn-sm me-2">Import</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button>
                             </form>
-                            <form action="/admin/nhan-vien/tim-kiem" method="GET">
-                                <select name="criteria" class="mb-2 me-1">
+
+                            <!-- Form tìm kiếm -->
+                            <form action="/admin/nhan-vien/tim-kiem" method="GET" class="d-flex justify-content-end">
+                                <select name="criteria" class="form-select form-select-sm me-2"
+                                    style="max-width: 150px;">
                                     <option value="tenDayDu">Họ và Tên</option>
                                     <option value="Id">ID</option>
                                     <option value="email">Email</option>
                                     <option value="dienThoai">Số điện thoại</option>
                                 </select>
-                                <input type="search" name="query" placeholder="Tìm kiếm nhân viên..."
-                                    style="outline: none;">
-                                <button class="btn-primary" type="submit">Tìm kiếm</button>
+                                <input type="search" name="query" class="form-control form-control-sm me-2"
+                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>
@@ -169,7 +150,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
                                 <!-- <th class="all" style="width: 20px;">
@@ -239,29 +220,16 @@
                                 <td th:text="${dl.getNgayHetHanText}"></td>
 
                                 <td class="table-action">
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/xem(id=${dl.Id})}" class="action-icon"> <i
-                                            class="mdi mdi-eye"></i></a> -->
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/sua(id=${dl.Id})} " class="action-icon"> <i
-                                            class="mdi mdi-square-edit-outline"></i></a> -->
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/xoa(id=${dl.Id})} " class="action-icon"> <i
-                                            class="mdi mdi-delete"></i></a> -->
 
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
                                         th:data-id="${dl.id}">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        // triggered when modal is about to be shown
                                         $('#modalXem').on('show.bs.modal', function (e) {
-
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalXem .modal-body').load("/admin/nhan-vien/xem-ajax?id=" + id);
-
-                                            //populate the textbox
-                                            // $(e.currentTarget).find('input[name="id"]').val(id);
+                                            $('#modalXem .modal-body').load("/admin/nhan-vien/xem?id=" + id);
                                         });
                                     </script>
 
@@ -270,17 +238,11 @@
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </a>
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        // triggered when modal is about to be shown
                                         $('#modalSua').on('show.bs.modal', function (e) {
 
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalSua .modal-body').load("/admin/nhan-vien/sua-ajax?id=" + id);
-
-                                            //populate the textbox
-                                            // $(e.currentTarget).find('input[name="id"]').val(id);
+                                            $('#modalSua .modal-body').load("/admin/nhan-vien/sua?id=" + id);
                                         });
                                     </script>
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
@@ -289,14 +251,10 @@
                                     </a>
 
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        //triggered when modal is about to be shown
                                         $('#modalXoa').on('show.bs.modal', function (e) {
 
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
                                             console.log("ID nhận được: ", id);
-                                            //populate the textbox
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>

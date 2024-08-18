@@ -136,10 +136,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="row mb-2">
-                    <!-- <div class="col-sm-4">
-                        <a href="#" th:href="@{/admin/nhan-vien/them}" class="btn btn-success mb-2"><i
-                                class="mdi mdi-plus-circle me-2"></i> Thêm Nhân Viên</a>
-                    </div> -->
                     <div class="col-sm-4">
                         <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
                             data-target="#modalThem">
@@ -148,21 +144,25 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="text-sm-end">
-                            <form action="#" method="post">
-                                <button type="button" class="btn btn-primary mb-2 me-1">Lọc</button>
-                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                <button type="button" class="btn btn-light mb-2">Export</button>
+                            <!-- Các nút chức năng -->
+                            <form action="#" method="post" class="mb-3">
+                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-light btn-sm me-2">Import</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button>
                             </form>
-                            <form action="/admin/nhan-vien/tim-kiem" method="GET">
-                                <select name="criteria" class="mb-2 me-1">
+
+                            <!-- Form tìm kiếm -->
+                            <form action="/admin/nhan-vien/tim-kiem" method="GET" class="d-flex justify-content-end">
+                                <select name="criteria" class="form-select form-select-sm me-2"
+                                    style="max-width: 150px;">
                                     <option value="tenDayDu">Họ và Tên</option>
                                     <option value="Id">ID</option>
                                     <option value="email">Email</option>
                                     <option value="dienThoai">Số điện thoại</option>
                                 </select>
-                                <input type="search" name="query" placeholder="Tìm kiếm nhân viên..."
-                                    style="outline: none;">
-                                <button class="btn-primary" type="submit">Tìm kiếm</button>
+                                <input type="search" name="query" class="form-control form-control-sm me-2"
+                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>
