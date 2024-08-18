@@ -44,7 +44,7 @@
                     <!-- <input type="hidden" th:field="*{xacNhanMatKhau}" /> -->
 
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@gmail.com"
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Email"
                             th:field="*{Email}" />
                         <label for="floatingInput">Email</label>
                     </div>
@@ -56,9 +56,11 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                            style="height: 100px;" th:field="*{moTa}"></textarea>
-                        <label for="floatingTextarea">Ghi chú</label>
+                        <!-- <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                            style="height: 100px;" th:field="*{moTa}"></textarea> -->
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Địa chỉ"
+                            th:field="*{diaChi}" />
+                        <label for="floatingTextarea">Địa chỉ</label>
                     </div>
                 </div>
                 <div class="col">

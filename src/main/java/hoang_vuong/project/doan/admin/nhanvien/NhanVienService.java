@@ -11,12 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @Service
-public class DvlNhanVien 
+public class NhanVienService 
 {
-    @Autowired private KdlNhanVien kdl;
+    @Autowired private NhanVienRepository kdl;
 
     @Autowired
-    private KdlNhanVien nhanVienRepository;
+    private NhanVienRepository nhanVienRepository;
 
     public Page<NhanVien> duyetNhanVien(Pageable pageable) {
         return nhanVienRepository.findAll(pageable);
