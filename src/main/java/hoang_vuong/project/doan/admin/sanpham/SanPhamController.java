@@ -24,7 +24,7 @@ public class SanPhamController {
     @Autowired
     private SanPhamService dvlSanPhamService;
 
-    @GetMapping("/san-pham")
+    @GetMapping("/san-pham") 
     public String getDuyet(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
