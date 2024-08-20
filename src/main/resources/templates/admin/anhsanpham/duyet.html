@@ -5,10 +5,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                    <li class="breadcrumb-item active" th:text="${title_duyet}">Khách Hàng</li>
+                    <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
                 </ol>
             </div>
-            <h4 class="page-title" th:text="${title_duyet}">Khách Hàng</h4>
+            <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
         </div>
     </div>
     <!-- Thông báo lỗi -->
@@ -27,36 +27,19 @@
 </div>
 <!-- end page title -->
 
-<!-- BS4 MODAL ADD -->
 <div class="modal fade" id="modalThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
+
             <!-- Modal Body -->
             <div class="modal-body">
-                <div th:insert="admin/khachhang/form-bs4-kh.html"></div>
+                <i th:replace="admin/anhsanpham/form-bs4-asp.html"></i>
             </div>
 
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- BS4 MODAL Show -->
-<div class="modal" id="modalXem">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <div th:insert="admin/khachhang/form-xem-bs4.html"></div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
 
         </div>
@@ -67,15 +50,13 @@
 <div class="modal" id="modalSua">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <!-- Modal Body -->
             <div class="modal-body">
                 Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
             </div>
-
-            <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -86,13 +67,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa Khách Hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Nhân Viên</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formXoa" action="/admin/khach-hang/xoa" method="post">
+                <form id="formXoa" action="/admin/anh-san-pham/xoa" method="post">
                     <input type="hidden" name="id" id="idInput" value="" />
                     <p>
                         Bạn có chắc muốn xóa?
@@ -104,6 +85,7 @@
                         <i class="bi-trash"></i> Xóa
                     </button>
                 </form>
+
             </div>
         </div>
     </div>
@@ -115,10 +97,12 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-sm-4">
-                        <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
-                            data-target="#modalThem">
-                            <i class="bi-plus-circle"></i> Thêm Nhân Viên
-                        </button>
+                        <div class="col-sm-4">
+                            <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
+                                data-target="#modalThem">
+                                <i class="bi-plus-circle"></i> Thêm Nhân Viên
+                            </button>
+                        </div>
                     </div>
                     <div class="col-sm-8">
                         <div class="text-sm-end">
@@ -130,7 +114,7 @@
                             </form>
 
                             <!-- Form tìm kiếm -->
-                            <form action="/admin/khach-hang/tim-kiem" method="GET" class="d-flex justify-content-end">
+                            <form action="" method="GET" class="d-flex justify-content-end">
                                 <select name="criteria" class="form-select form-select-sm me-2"
                                     style="max-width: 150px;">
                                     <option value="tenDayDu">Họ và Tên</option>
@@ -151,79 +135,52 @@
                     <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
-                                <th>STT</th>
-                                <th>Ảnh Đại Diện</th>
-                                <th class="all">
-                                    <a th:href="@{/admin/khach-hang(page=${currentPage}, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}"
-                                        class="text-body" style="color: black;">Tên Khách Hàng</a>
+                                <th class="all" style="width: 20px;">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="customCheck1">
+                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                    </div>
                                 </th>
-                                <th>Tên Đăng Nhập</th>
-                                <th>Email</th>
-                                <th>Số Điện Thoại</th>
-                                <th>Trạng Thái</th>
-                                <th>Ngày Tạo</th>
-                                <th>Ngày Hết Hạn</th>
+                                <th class="all">Tên Sản Phẩm</th>
+                                <th>Hình Ảnh</th>
+                                <th>Ngày Thêm</th>
+                                <th>Ngày Sửa</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr th:each="dl : ${ds}">
-                                <td th:text="${dl.thuTu}">ID </td>
                                 <td>
-                                    <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="customCheck2">
+                                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                    </div>
+                                </td>
+
+                                <td th:text="${dl.SanPham.tenSP}">
+                                    <a th:href="#"></a>
+                                </td>
+
+                                <td>
+                                    <img th:src="${dl.hinhAnh}" alt="Chưa có ảnh" title="contact-img"
                                         class="rounded me-3" height="48">
-                                </td>
-
-                                <td th:text="${dl.TenDayDu}">
-                                    <p class="m-0 d-inline-block align-middle font-16">
-                                        Họ Và Tên
-                                    </p>
-                                </td>
-
-                                <td th:text="${dl.TenDangNhap}">
-                                    Tên Đăng Nhập
-                                </td>
-
-                                <td th:text="${dl.email}">
-                                    Email
-                                </td>
-
-                                <td th:text="${dl.dienThoai}">
-                                    254
-                                </td>
-
-                                <td>
-                                    <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
-                                    <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
                                 </td>
 
                                 <td th:text="${dl.getNgayTaoText}"></td>
 
-                                <td th:text="${dl.getNgayHetHanText}"></td>
+                                <td th:text="${dl.getNgaySuaText}"></td>
 
                                 <td class="table-action">
-                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
-                                        th:data-id="${dl.id}">
-                                        <i class="mdi mdi-eye"></i>
-                                    </a>
-                                    <script>
-                                        $('#modalXem').on('show.bs.modal', function (e) {
-                                            var id = $(e.relatedTarget).data('id');
-
-                                            $('#modalXem .modal-body').load("/admin/khach-hang/xem-ajax?id=" + id);
-                                        });
-                                    </script>
-
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalSua"
                                         th:data-id="${dl.id}">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </a>
                                     <script>
                                         $('#modalSua').on('show.bs.modal', function (e) {
+
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalSua .modal-body').load("/admin/khach-hang/sua?id=" + id);
+                                            $('#modalSua .modal-body').load("/admin/anh-san-pham/sua?id=" + id);
                                         });
                                     </script>
 
@@ -231,11 +188,10 @@
                                         href="#modalXoa" th:data-id="${dl.id}">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
-
                                     <script>
                                         $('#modalXoa').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
-                                            // console.log("ID nhận được: ", id);
+                                            console.log("ID nhận được: ", id);
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>
@@ -250,25 +206,24 @@
                             <!-- Trang đầu -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                                    th:href="@{'/admin/anh-san-pham?page=1&pageSize=' + ${pageSize}}">Đầu</a>
                             </li>
 
                             <!-- Trang trước -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    th:href="@{'/admin/anh-san-pham?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
                                     <i class="dripicons-chevron-left"></i>
                                 </a>
                             </li>
 
                             <!-- Trang đầu tiên -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=1&pageSize=' + ${pageSize}}">1</a>
+                                <a class="page-link" th:href="@{'/admin/anh-san-pham?page=1&pageSize=' + ${pageSize}}">1</a>
                             </li>
 
                             <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+                            <li class="page-item" th:if="${totalPages > 2 and currentPage > 4}">
                                 <span class="page-link">...</span>
                             </li>
 
@@ -277,11 +232,11 @@
                                 th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
                                 th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                                    th:href="@{'/admin/anh-san-pham?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
                             </li>
 
                             <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+                            <li class="page-item" th:if="${totalPages > 2 and currentPage < totalPages - 3}">
                                 <span class="page-link">...</span>
                             </li>
 
@@ -289,13 +244,13 @@
                             <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
                                 th:if="${totalPages > 1}">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                                    th:href="@{'/admin/anh-san-pham?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
                             </li>
 
                             <!-- Trang tiếp theo -->
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    th:href="@{'/admin/anh-san-pham?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
                                     <i class="dripicons-chevron-right"></i>
                                 </a>
                             </li>
@@ -303,7 +258,7 @@
                             <!-- Trang cuối -->
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/khach-hang?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                                    th:href="@{'/admin/anh-san-pham?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
                             </li>
                         </ul>
                     </nav>
@@ -331,15 +286,12 @@
 
     #alert-box {
         transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
     }
 
     #alert-box.hide {
         opacity: 0;
         transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
     }
-
 
     .close:hover {
         opacity: 1;

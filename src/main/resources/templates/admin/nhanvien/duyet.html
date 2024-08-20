@@ -32,7 +32,6 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-
             <!-- Modal Body -->
             <div class="modal-body">
                 <i th:replace="admin/nhanvien/form-bs4.html"></i>
@@ -47,20 +46,20 @@
     </div>
 </div>
 
-
-
 <!-- BS4 MODAL Show -->
 <div class="modal" id="modalXem">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
+            <!-- Modal Body -->
             <div class="modal-body">
                 <i th:replace="admin/nhanvien/form-xem-bs4.html"></i>
 
             </div>
+
+            <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -69,6 +68,7 @@
 <div class="modal" id="modalSua">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
+            <!-- Modal Body -->
             <div class="modal-body">
                 Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
             </div>
@@ -111,7 +111,6 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -153,27 +152,17 @@
                     <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
-                                <!-- <th class="all" style="width: 20px;">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck1">
-                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                    </div>
-                                </th> -->
                                 <th>STT</th>
                                 <th>Ảnh Đại Diện</th>
                                 <th class="all">
                                     <a th:href="@{/admin/nhan-vien(page=${currentPage}, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}"
                                         class="text-body" style="color: black;">Tên Nhân Viên</a>
                                 </th>
-
-
-
                                 <th>Tên Đăng Nhập</th>
                                 <th>Email</th>
                                 <th>Số Điện Thoại</th>
                                 <th>Trạng Thái</th>
                                 <th>Ngày Tạo</th>
-                                <!-- <th>Ngày Sửa</th> -->
                                 <th>Ngày Hết Hạn</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
@@ -181,28 +170,23 @@
 
                         <tbody>
                             <tr th:each="dl : ${ds}">
-                                <!-- <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck2">
-                                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                    </div>
-                                </td> -->
                                 <td th:text="${dl.thuTu}">ID </td>
+
                                 <td>
                                     <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
                                         class="rounded me-3" height="48">
                                 </td>
+
                                 <td th:text="${dl.TenDayDu}">
                                     <p class="m-0 d-inline-block align-middle font-16">
                                         Họ Và Tên
                                     </p>
                                 </td>
+
                                 <td th:text="${dl.TenDangNhap}">
                                     Tên Đăng Nhập
                                 </td>
-                                <!-- <td th:text="${dl.MatKhau}">
-                                    Mật Khẩu
-                                </td> -->
+
                                 <td th:text="${dl.email}">
                                     Email
                                 </td>
@@ -210,17 +194,17 @@
                                 <td th:text="${dl.dienThoai}">
                                     254
                                 </td>
+
                                 <td>
                                     <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
                                     <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
                                 </td>
-                                <!-- <td th:text="${dl.moTa}"></td> -->
+
                                 <td th:text="${dl.getNgayTaoText}"></td>
-                                <!-- <td th:text="${dl.ngaySua}"></td> -->
+
                                 <td th:text="${dl.getNgayHetHanText}"></td>
 
                                 <td class="table-action">
-
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
                                         th:data-id="${dl.id}">
                                         <i class="mdi mdi-eye"></i>
@@ -245,11 +229,11 @@
                                             $('#modalSua .modal-body').load("/admin/nhan-vien/sua?id=" + id);
                                         });
                                     </script>
+
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
                                         href="#modalXoa" th:data-id="${dl.id}">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
-
                                     <script>
                                         $('#modalXoa').on('show.bs.modal', function (e) {
 
@@ -258,15 +242,10 @@
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>
-
-
                                 </td>
                             </tr>
 
                         </tbody>
-                        <tfoot>
-
-                        </tfoot>
                     </table>
                     <!-- Hiển thị phân trang -->
                     <nav class="pagination-container">
@@ -331,11 +310,6 @@
                             </li>
                         </ul>
                     </nav>
-
-
-
-
-
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

@@ -29,6 +29,8 @@ import hoang_vuong.project.doan.qdl.Qdl;
 @Controller
 @RequestMapping("/admin")
 public class NhanVienController {
+
+
     @Autowired
     private HttpServletRequest request;
 

@@ -9,7 +9,7 @@
 </div>
 <form th:action="@{/admin/dang-nhap}" th:object="${dl}" method="post">
     <div class="field">
-        <input type="text" th:field="*{TenDangNhap}" required>
+        <input type="text" th:field="*{TenDangNhap}" required autofocus>
         <label>Tên đăng nhập</label>
     </div>
     <div class="field">

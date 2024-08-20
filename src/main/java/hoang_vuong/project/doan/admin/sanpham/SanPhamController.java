@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +20,6 @@ import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,23 +31,33 @@ public class SanPhamController {
     @Autowired
     private SanPhamService dvl;
 
-    // @Autowired
-    // private SanPhamService dvlSanPhamService;
+    @Autowired
+    private SanPhamService dvlSanPhamService;
 
     @Autowired
     private NhaSanXuatService nhaSanXuatService;
 
     @GetMapping("/san-pham")
-    public String getDuyet(Model model) {
+    public String getDuyet(Model model,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int pageSize,
+            HttpServletRequest request) {
+
+        // Kiểm tra xem nhân viên đã đăng nhập chưa
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        List<SanPham> list = dvl.duyet();
+        // Tính toán chỉ số trang (pageIndex)
+        int pageIndex = page - 1;
 
-        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+        // Lấy dữ liệu phân trang từ dịch vụ
+        Page<SanPham> sanPhamPage = dvlSanPhamService.duyetSanPham(PageRequest.of(pageIndex, pageSize));
 
-        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
-        model.addAttribute("ds", list);
+        // Cập nhật mô hình với dữ liệu phân trang
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sanPhamPage.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("ds", sanPhamPage.getContent());
         model.addAttribute("dl", new SanPham());
         model.addAttribute("title", "Quản Lý Sản Phẩm");
         model.addAttribute("title_duyet", "Sản Phẩm");
@@ -56,7 +67,22 @@ public class SanPhamController {
         model.addAttribute("content", "admin/sanpham/duyet.html");
 
         return "layouts/layout-admin.html";
+    }
 
+    @GetMapping("/san-pham/them")
+    public String getThem(Model model) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = new NhanVien();
+
+        model.addAttribute("dl", dl);
+        model.addAttribute("title_body", "Thêm Sản Phẩm");
+        model.addAttribute("title_sm", "Thêm mới");
+        model.addAttribute("action", "/admin/san-pham/them");
+        model.addAttribute("content", "admin/sanpham/them.html");
+
+        return "layouts/layout-admin.html";
     }
 
     @PostMapping("/san-pham/them")

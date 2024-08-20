@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- <div th:replace="admin/fragments/head :: head"></div> -->
+<!-- gọi head vào đây -->
 <div th:insert="~{admin/fragments/head :: head}"></div>
 
-<body class="loading"
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+<body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
+     "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false,
+     "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
-        <!-- <div th:replace="admin/fragments/navbar :: navbar"></div> -->
         <div th:insert="~{admin/fragments/navbar :: navbar}"></div>
         <!-- Left Sidebar End -->
 
@@ -19,23 +18,20 @@
         <div class="content-page">
             <div class="content">
                 <!-- Topbar Start -->
-                <!-- Include fragment từ admin/fragments/header.html -->
-                <!-- <div th:replace="admin/fragments/header :: header"></div> -->
                 <div th:insert="~{admin/fragments/header :: header}"></div>
                 <!-- end Topbar -->
 
                 <!-- Start Content-->
                 <div class="container-fluid">
                     <!--nội dung riêng-->
-                    <i th:replace="${content}"></i>
+                    <div th:insert="${content}"></div>
 
                 </div> <!-- container -->
-
+                
             </div> <!-- content -->
 
             <!-- Footer Start -->
             <footer class="footer">
-                <!-- <div th:replace="admin/fragments/footer :: footer"></div> -->
                 <div th:insert="~{admin/fragments/footer :: footer}"></div>
             </footer>
             <!-- end Footer -->
@@ -45,26 +41,15 @@
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->
-
-
     </div>
     <!-- END wrapper -->
 
-
     <!-- Right Sidebar -->
-    <!-- <div th:replace="admin/fragments/rightbar :: rightbar"></div> -->
     <div th:insert="~{admin/fragments/rightbar :: rightbar}"></div>
-
-
-
     <div class="rightbar-overlay"></div>
     <!-- /End-bar -->
 
-
-    <!-- <div th:replace="admin/fragments/script :: script"></div> -->
     <div th:insert="~{admin/fragments/script :: script}"></div>
-
-
 </body>
 
 </html>
