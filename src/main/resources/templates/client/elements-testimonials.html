@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- molla/elements-testimonials.html  22 Nov 2019 10:05:18 GMT -->
+<head th:replace="client/fragments/head :: head"></head>
+
+<body>
+    <div class="page-wrapper">
+        <header th:replace="client/fragments/header :: header"></header>
+
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">Testimonials<span>Elements</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="elements-list.html">Elements</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Testimonials</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                	<h2 class="title text-center mb-3">Quote Sign <span class="title-separator">/</span> Centered Align</h2><!-- End .title text-center -->
+
+                	<div class="owl-carousel owl-theme owl-testimonials" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": true,
+                            "responsive": {
+                                "1200": {
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                		<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
+
+	                		<cite>
+	                			Jenson Gregory
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus qui ut ipsum.Velit quos ipsa exercitationem, vel unde obcaecati impedit eveniet non. ”</p>
+
+	                		<cite>
+	                			Damon Stone
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicabo a, modi voluptatibus. Perferendis perspiciatis, voluptate, distinctio earum veritatis animi tempora eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
+
+	                		<cite>
+	                			John Smith
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+                	</div><!-- End .testimonials-slider owl-carousel -->
+
+                	<hr class="mt-5 mb-5">
+                	<h2 class="title text-center mb-3">Quote Sign <span class="title-separator">/</span> Centered Align <span class="title-separator">/</span> 2 Columns</h2><!-- End .title text-center -->
+
+                    <div class="owl-carousel owl-theme owl-testimonials" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": true,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "768": {
+                                    "items":2
+                                },
+                                "1200": {
+                                    "items":2,
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                		<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.  ”</p>
+	                		<cite>
+	                			Jenson Gregory
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus. ”</p>
+
+	                		<cite>
+	                			Victoria Ventura
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicabo a, modi voluptatibus. Perferendis, voluptate, distinctio earum veritatis animi. ”</p>
+
+	                		<cite>
+	                			John Smith
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+                	</div><!-- End .testimonials-slider owl-carousel -->
+
+                	<hr class="mt-5 mb-5">
+                	<h2 class="title text-center mb-3">Quote Sign <span class="title-separator">/</span> Centered Align <span class="title-separator">/</span> 3 Columns</h2><!-- End .title text-center -->
+					
+                    <div class="owl-carousel owl-theme owl-testimonials" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": true,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "768": {
+                                    "items":2
+                                },
+                                "992": {
+                                    "items":3
+                                },
+                                "1200": {
+                                    "items":3,
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                		<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus quet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis. ”</p>
+	                		<cite>
+	                			Jenson Gregory
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusand. ”</p>
+
+	                		<cite>
+	                			Victoria Ventura
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicab, modi animi. ”</p>
+
+	                		<cite>
+	                			Angelica Lynch
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial testimonial-icon text-center">
+	                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicab. ”</p>
+
+	                		<cite>
+	                			John Smith
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+                	</div><!-- End .testimonials-slider owl-carousel -->
+                </div><!-- End .container -->
+
+                <div class="mb-5"></div><!-- End .mb-5 -->
+
+            	<div class="bg-image bg-overlay pt-5 pb-4" style="background-image: url(assets/images/backgrounds/bg-1.jpg)">
+            		<div class="container">
+            			<h2 class="title text-center text-white mb-3">Quote Sign <span class="title-separator">/</span> Centered Align <span class="title-separator">/</span> Dark Background</h2><!-- End .title text-center -->
+
+	                	<div class="owl-carousel owl-theme owl-testimonials owl-light" data-toggle="owl" 
+                            data-owl-options='{
+                                "nav": false, 
+                                "dots": true,
+                                "margin": 20,
+                                "loop": true,
+                                "responsive": {
+                                    "1200": {
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+	                		<blockquote class="testimonial testimonial-icon text-center text-white">
+		                		<p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
+
+		                		<cite>
+		                			Jenson Gregory
+		                			<span>Customer</span>
+		                		</cite>
+		                	</blockquote><!-- End .testimonial -->
+
+		                	<blockquote class="testimonial testimonial-icon text-center text-white">
+		                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus qui ut ipsum.Velit quos ipsa exercitationem, vel unde obcaecati impedit eveniet non. ”</p>
+
+		                		<cite>
+		                			Damon Stone
+		                			<span>Customer</span>
+		                		</cite>
+		                	</blockquote><!-- End .testimonial -->
+
+		                	<blockquote class="testimonial testimonial-icon text-center text-white">
+		                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicabo a, modi voluptatibus. Perferendis perspiciatis, voluptate, distinctio earum veritatis animi tempora eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
+
+		                		<cite>
+		                			John Smith
+		                			<span>Customer</span>
+		                		</cite>
+		                	</blockquote><!-- End .testimonial -->
+	                	</div><!-- End .testimonials-slider owl-carousel -->
+            		</div><!-- End .container -->
+            	</div><!-- End .bg-image pt-6 pb-6 -->
+
+            	<div class="mb-5"></div><!-- End .mb-5 -->
+
+                <div class="container">
+                	<h2 class="title text-center mb-3">Customer Photo <span class="title-separator">/</span> Centered Align</h2><!-- End .title text-center -->
+
+                    <div class="owl-carousel owl-theme owl-testimonials-photo" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "1200": {
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                		<blockquote class="testimonial text-center">
+                			<img src="assets/images/testimonials/user-1.jpg" alt="user">
+	                		<p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
+
+	                		<cite>
+	                			Jenson Gregory
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial text-center">
+                			<img src="assets/images/testimonials/user-2.jpg" alt="user">
+	                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus qui ut ipsum.Velit quos ipsa exercitationem, vel unde obcaecati impedit eveniet non. ”</p>
+
+	                		<cite>
+	                			Victoria Ventura
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+                	</div><!-- End .testimonials-slider owl-carousel -->
+
+                	<hr class="mt-5 mb-5">
+                	<h2 class="title text-center mb-3">Customer Photo <span class="title-separator">/</span> Centered Align <span class="title-separator">/</span> 2 Columns</h2><!-- End .title text-center -->
+
+                    <div class="owl-carousel owl-theme owl-testimonials-photo" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": true,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "768": {
+                                    "items":2
+                                },
+                                "1200": {
+                                    "items":2,
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                		<blockquote class="testimonial text-center">
+                			<img src="assets/images/testimonials/user-1.jpg" alt="user">
+	                		<p>“  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.  ”</p>
+	                		<cite>
+	                			Jenson Gregory
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial text-center">
+                			<img src="assets/images/testimonials/user-2.jpg" alt="user">
+	                		<p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus. ”</p>
+
+	                		<cite>
+	                			Victoria Ventura
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+
+	                	<blockquote class="testimonial text-center">
+                			<img src="assets/images/testimonials/user-1.jpg" alt="user">
+	                		<p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicabo a, modi voluptatibus. Perferendis, voluptate, distinctio earum veritatis animi. ”</p>
+
+	                		<cite>
+	                			John Smith
+	                			<span>Customer</span>
+	                		</cite>
+	                	</blockquote><!-- End .testimonial -->
+                	</div><!-- End .testimonials-slider owl-carousel -->
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+
+            <!-- Elements list -->
+            <div class="container mb-5">
+                <div class="row elements">
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-accordions.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>accordions</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-banners.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>banners</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-blog-posts.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>blog posts</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-buttons.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>buttons</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-cta.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>call to action</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-icon-boxes.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>icon boxes</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-portfolio.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>portfolio</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-product-category.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>product catigories</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-products.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>products</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-tabs.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>tabs</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-testimonials.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>testimonials</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-titles.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>titles</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-typography.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>typography</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-video-banners.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>video</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div><!-- End Elements list -->
+        </main><!-- End .main -->
+
+        <footer  th:replace="client/fragments/footer :: footer" ></footer>
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
+
+    <!-- Sign in / Register Modal -->
+    <div th:replace="client/fragments/register_modal :: register_modal"></div>
+    <div th:replace="client/fragments/script :: script"></div>
+</body>
+
+
+<!-- molla/elements-testimonials.html  22 Nov 2019 10:05:18 GMT -->
+</html>

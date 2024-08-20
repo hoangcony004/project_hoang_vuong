@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- molla/404.html  22 Nov 2019 10:04:04 GMT -->
+<head th:replace="client/fragments/head :: head"></head>
+
+<body>
+    <div class="page-wrapper">
+        <header th:replace="client/fragments/header :: header"></header>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">404</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+        	<div class="error-content text-center" style="background-image: url(assets/images/backgrounds/error-bg.jpg)">
+            	<div class="container">
+            		<h1 class="error-title">Error 404</h1><!-- End .error-title -->
+            		<p>We are sorry, the page you've requested is not available.</p>
+            		<a href="index.html" class="btn btn-outline-primary-2 btn-minwidth-lg">
+            			<span>BACK TO HOMEPAGE</span>
+            			<i class="icon-long-arrow-right"></i>
+            		</a>
+            	</div><!-- End .container -->
+        	</div><!-- End .error-content text-center -->
+        </main><!-- End .main -->
+
+        <footer  th:replace="client/fragments/footer :: footer" ></footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
+    <!-- Sign in / Register Modal -->
+    <div th:replace="client/fragments/register_modal :: register_modal"></div><!-- End .modal -->
+
+    <!-- Plugins JS File -->
+    <div th:replace="client/fragments/script :: script"></div>
+</body>
+
+
+<!-- molla/404.html  22 Nov 2019 10:04:04 GMT -->
+</html>

@@ -45,6 +45,11 @@ public class KhachHangService
     {
         return kdl.findAll();
     }
+    public KhachHang timEmmail(String tdn){
+        KhachHang dl = null;
+        dl = kdl.findOneByEmail(tdn);
+        return dl;
+    }
 
     public KhachHang  timKhachHangTheoId(int id)// 
     {
@@ -107,6 +112,9 @@ public class KhachHangService
         public Boolean DaCoTenDangNhap(String tdn)
     {
         return kdl.existsByTenDangNhap(tdn);
+    }
+    public boolean dacoemail(String email){
+        return kdl.existsByEmail(email);
     }
 
 

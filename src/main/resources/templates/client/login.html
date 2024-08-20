@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+<head th:replace="client/fragments/head :: head"></head>
+
+<body>
+    <div class="page-wrapper">
+        <header th:replace="client/fragments/header :: header"></header>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Login</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+            	<div class="container">
+            		<div class="form-box">
+            			<div class="form-tab">
+	            			<ul class="nav nav-pills nav-fill" role="tablist">
+							    <li class="nav-item">
+							        <a class="nav-link active" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
+							    </li>
+							    <li class="nav-item">
+							        <a class="nav-link " id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+							    </li>
+							</ul>
+							<div class="tab-content">
+								
+								<div class="alert alert-success" th:if="${THONG_BAO}"
+								style="color: rgb(242, 242, 242); font-size: 14px; margin-top: 10px; text-align: center;">
+								<span th:text="${THONG_BAO}"></span>
+								</div> 
+							    <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+							    	<form th:action="@{/apps/dang-nhap}" th:object="${dl}" method="post">
+							    		<div class="form-group">
+							    			<label for="singin-email-2">Email *</label>
+							    			<input type="text" th:field="*{email}" class="form-control" id="singin-email-2" name="singin-email" required>
+							    		</div><!-- End .form-group -->
+
+							    		<div class="form-group">
+							    			<label for="singin-password-2">Password *</label>
+							    			<input type="password" th:field="*{matKhau}" class="form-control" id="singin-password-2" name="singin-password" required>
+							    		</div><!-- End .form-group -->
+
+							    		<div class="form-footer">
+							    			<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>LOG IN</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+
+			                				<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input" id="signin-remember-2">
+												<label class="custom-control-label" for="signin-remember-2">Remember Me</label>
+											</div><!-- End .custom-checkbox -->
+
+											<a href="#" class="forgot-link">Forgot Your Password?</a>
+							    		</div><!-- End .form-footer -->
+							    	</form>
+							    	<div class="form-choice">
+								    	<p class="text-center">or sign in with</p>
+								    	<div class="row">
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login btn-g">
+								    				<i class="icon-google"></i>
+								    				Login With Google
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login btn-f">
+								    				<i class="icon-facebook-f"></i>
+								    				Login With Facebook
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    	</div><!-- End .row -->
+							    	</div><!-- End .form-choice -->
+							    </div><!-- .End .tab-pane -->
+							    <div class="tab-pane fade  " id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+							    	<form th:action="#{action}" th:object="${dl}" method="post">
+							    		<div class="form-group">
+							    			<label for="register-email-2">Email *</label>
+							    			<input type="email" th:field="*{email}" placeholder="Nhập Email" class="form-control" id="register-email-2" name="register-email" required>
+							    		</div><!-- End .form-group -->
+										<div class="form-group">
+							    			<label >Số điện thoại *</label>
+							    			<input type="tel" pattern="[0-9]{10}" placeholder="Nhập số điện thoại" th:field="*{dienThoai}" class="form-control" required>
+							    		</div><!-- End .form-group -->
+										<div class="form-group">
+							    			<label >Địa chỉ*</label>
+							    			<input type="text"  placeholder="Nhập địa chỉ" th:field="*{diaChi}" class="form-control" required>
+							    		</div>
+							    		<div class="form-group">
+							    			<label for="register-password-2">Mật khẩu *</label>
+							    			<input type="password" th:field="*{matKhau}" placeholder="Nhập mật khẩu" class="form-control" id="register-password-2" name="register-password" required>
+							    		</div><!-- End .form-group -->
+
+										<input type="hidden" th:field="*{NgayTao}" />
+							    		<div class="form-footer">
+							    			<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>SIGN UP</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+
+							    		</div><!-- End .form-footer -->
+							    	</form>
+							    	<div class="form-choice">
+								    	<p class="text-center">or sign in with</p>
+								    	<div class="row">
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login btn-g">
+								    				<i class="icon-google"></i>
+								    				Login With Google
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login  btn-f">
+								    				<i class="icon-facebook-f"></i>
+								    				Login With Facebook
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    	</div><!-- End .row -->
+							    	</div><!-- End .form-choice -->
+							    </div><!-- .End .tab-pane -->
+							</div><!-- End .tab-content -->
+						</div><!-- End .form-tab -->
+            		</div><!-- End .form-box -->
+            	</div><!-- End .container -->
+            </div><!-- End .login-page section-bg -->
+        </main><!-- End .main -->
+
+        <footer  th:replace="client/fragments/footer :: footer" ></footer>
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
+    <!-- Sign in / Register Modal -->
+    <div th:replace="client/fragments/register_modal :: register_modal"></div>
+
+    <!-- Plugins JS File -->
+    <div th:replace="client/fragments/script :: script">
+</body>
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+</html>

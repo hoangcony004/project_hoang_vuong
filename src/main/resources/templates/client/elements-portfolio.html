@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- molla/elements-portfolio.html  22 Nov 2019 10:05:20 GMT -->
+<head th:replace="client/fragments/head :: head"></head>
+
+<body>
+    <div class="page-wrapper">
+        <header th:replace="client/fragments/header :: header"></header>
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">Portfolio<span>Elements</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="elements-list.html">Elements</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Portfolio</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                	<h2 class="title text-center mb-2">Grid 3 Columns</h2><!-- End .title text-center mb-2 -->
+                    <nav class="portfolio-nav">
+                    	<ul class="nav-filter portfolio-filter justify-content-center">
+                            <li class="active"><a href="#" data-filter="*">All</a></li>
+                            <li><a href="#" data-filter=".women">Women</a></li>
+                            <li><a href="#" data-filter=".men">Men</a></li>
+                            <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                        </ul>
+                    </nav><!-- End .portfolio-nav -->
+
+                    <div class="portfolio-container" data-layout="fitRows">
+                    	<div class="portfolio-item accessories women col-sm-6 col-lg-4">
+                    		<div class="portfolio portfolio-overlay">
+                                <figure class="portfolio-media">
+                                    <a href="#">
+                                        <img src="assets/images/portfolio/item-1.jpg" alt="item">
+                                    </a>
+                                </figure>
+                                <div class="portfolio-content">
+                                    <h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                                    <div class="portfolio-tags">
+                                        <a href="#">Accessories</a>
+                                    </div><!-- End .portfolio-tags -->
+                                </div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-lg-4">
+                    		<div class="portfolio portfolio-overlay">
+                                <figure class="portfolio-media">
+                                    <a href="#">
+                                        <img src="assets/images/portfolio/item-2.jpg" alt="item">
+                                    </a>
+                                </figure>
+                                <div class="portfolio-content">
+                                    <h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                                    <div class="portfolio-tags">
+                                        <a href="#">Men</a>
+                                    </div><!-- End .portfolio-tags -->
+                                </div><!-- End .portfolio-content -->      
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-lg-4">
+                    		<div class="portfolio portfolio-overlay">
+                                <figure class="portfolio-media">
+                                    <a href="#">
+                                        <img src="assets/images/portfolio/item-3.jpg" alt="item">
+                                    </a>
+                                </figure>
+                                <div class="portfolio-content">
+                                    <h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                                    <div class="portfolio-tags">
+                                        <a href="#">Women</a>
+                                    </div><!-- End .portfolio-tags -->
+                                </div><!-- End .portfolio-content -->      
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/item-4.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men women col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/item-5.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-lg-4">
+                    		<div class="portfolio portfolio-overlay">
+                                <figure class="portfolio-media">
+                                    <a href="#">
+                                        <img src="assets/images/portfolio/item-6.jpg" alt="item">
+                                    </a>
+                                </figure>
+                                <div class="portfolio-content">
+                                    <h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                                    <div class="portfolio-tags">
+                                        <a href="#">Men</a>
+                                    </div><!-- End .portfolio-tags -->
+                                </div><!-- End .portfolio-content -->      
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+                    </div><!-- End .portfolio-container -->
+
+                    <hr class="mb-4">
+
+                    <h2 class="title text-center mb-2">Grid 4 Columns</h2><!-- End .title text-center mb-2 -->
+                	<nav class="portfolio-nav">
+                        <ul class="nav-filter portfolio-filter justify-content-center">
+                            <li class="active"><a href="#" data-filter="*">All</a></li>
+                            <li><a href="#" data-filter=".women">Women</a></li>
+                            <li><a href="#" data-filter=".men">Men</a></li>
+                            <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                        </ul>
+                    </nav><!-- End .portfolio-nav -->
+
+                    <div class="portfolio-container" data-layout="fitRows" id="portfolio-2">
+                    	<div class="portfolio-item accessories women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-1.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-2.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-3.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-4.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-5.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-6.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-7.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/4cols/item-8.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+                    </div><!-- End .portfolio-container -->
+
+                    <hr class="mb-4">
+
+                    <h2 class="title text-center mb-2">Masonry 3 Columns</h2><!-- End .title text-center mb-2 -->
+                	<nav class="portfolio-nav">
+                        <ul class="nav-filter portfolio-filter justify-content-center">
+                            <li class="active"><a href="#" data-filter="*">All</a></li>
+                            <li><a href="#" data-filter=".women">Women</a></li>
+                            <li><a href="#" data-filter=".men">Men</a></li>
+                            <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                        </ul>
+                    </nav><!-- End .portfolio-nav -->
+
+                    <div class="portfolio-container">
+                    	<div class="portfolio-item accessories women col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-1.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-2.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-3.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                        </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-4.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men women col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-5.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-lg-4">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-3cols/item-6.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+                    </div><!-- End .portfolio-container -->
+
+                    <hr class="mb-4">
+
+                    <h2 class="title text-center mb-2">Masonry 4 Columns</h2><!-- End .title text-center mb-2 -->
+                	<nav class="portfolio-nav">
+                        <ul class="nav-filter portfolio-filter justify-content-center">
+                            <li class="active"><a href="#" data-filter="*">All</a></li>
+                            <li><a href="#" data-filter=".women">Women</a></li>
+                            <li><a href="#" data-filter=".men">Men</a></li>
+                            <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                        </ul>
+                    </nav><!-- End .portfolio-nav -->
+
+                    <div class="portfolio-container">
+                    	<div class="portfolio-item accessories women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-1.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-2.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-3.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-4.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-5.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-6.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-7.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio portfolio-overlay">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/masonry-4cols/item-8.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content portfolio-content-center">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio portfolio-overlay -->
+                    	</div><!-- End .portfolio-item -->
+                    </div><!-- End .portfolio-container -->
+
+                    <hr class="mb-4">
+                </div><!-- End .container -->
+
+                <div class="container-fluid">
+                	<h2 class="title text-center mb-2">Fullwidth with Text <span class="title-separator">(No space)</span></h2><!-- End .title text-center mb-2 -->
+                	<nav class="portfolio-nav">
+                        <ul class="nav-filter portfolio-filter justify-content-center">
+                            <li class="active"><a href="#" data-filter="*">All</a></li>
+                            <li><a href="#" data-filter=".women">Women</a></li>
+                            <li><a href="#" data-filter=".men">Men</a></li>
+                            <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                        </ul>
+                    </nav><!-- End .portfolio-nav -->
+
+                    <div class="portfolio-container portfolio-nogap" data-layout="fitRows">
+                    	<div class="portfolio-item accessories women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-1.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-2.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Nunc dignissim risus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-3.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Cras ornare tristique</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-4.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vivamus vestibulum ntulla</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Men</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men women col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-5.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vestibulum auctor dapibus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-6.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Nunc dignissim risus</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item women accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-7.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Cras ornare tristique</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Women</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+
+                    	<div class="portfolio-item men accessories col-sm-6 col-md-4 col-lg-3">
+                            <div class="portfolio">
+                        		<figure class="portfolio-media">
+                        			<a href="#">
+                        				<img src="assets/images/portfolio/fullwidth/item-8.jpg" alt="item">
+                        			</a>
+                        		</figure>
+                        		<div class="portfolio-content">
+                        			<h3 class="portfolio-title"><a href="#">Vivamus vestibulum ntulla</a></h3><!-- End .portfolio-title -->
+                        			<div class="portfolio-tags">
+                        				<a href="#">Accessories</a>
+                        			</div><!-- End .portfolio-tags -->
+                        		</div><!-- End .portfolio-content -->
+                            </div><!-- End .portfolio -->
+                    	</div><!-- End .portfolio-item -->
+                    </div><!-- End .portfolio-container -->
+                </div><!-- End .container-fluid -->
+            </div><!-- End .page-content -->
+
+            <!-- Elements list -->
+            <div class="container mb-5">
+                <div class="row elements">
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-accordions.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>accordions</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-banners.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>banners</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-blog-posts.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>blog posts</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-buttons.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>buttons</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-cta.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>call to action</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-icon-boxes.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>icon boxes</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-portfolio.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>portfolio</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-product-category.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>product catigories</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-products.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>products</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-tabs.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>tabs</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-testimonials.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>testimonials</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-titles.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>titles</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-typography.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>typography</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-5col col-lg-4 col-md-3 col-6">
+                        <a href="elements-video-banners.html" class="element-type">
+                            <div class="element">
+                                <i class="element-img"></i>
+                                <i class="element-hover-img"></i>
+                                <p>video</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div><!-- End Elements list -->
+        </main><!-- End .main -->
+        <footer  th:replace="client/fragments/footer :: footer" ></footer>
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
+
+    <!-- Sign in / Register Modal -->
+    <div th:replace="client/fragments/register_modal :: register_modal"></div><!-- End .modal -->
+
+    <!-- Plugins JS File -->
+    <div th:replace="client/fragments/script :: script"></div>
+</body>
+
+
+<!-- molla/elements-portfolio.html  22 Nov 2019 10:05:32 GMT -->
+</html>
