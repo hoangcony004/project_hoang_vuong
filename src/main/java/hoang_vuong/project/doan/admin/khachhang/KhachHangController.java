@@ -136,6 +136,39 @@ public class KhachHangController {
 
         return "redirect:/admin/khach-hang";
     }
+
+    @GetMapping("/khach-hang/xem")
+    public String getXem(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xemKhachHang(id);
+
+        model.addAttribute("title_body", "Xem Khách Hàng");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/khach-hang/xem");
+
+        return "admin/khachhang/form-xem-kh-bs4.html";
+
+    }
+
+    @PostMapping("/khach-hang/xoa")
+    public String postXoa(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        System.out.println("ID nhận được trong controller là: " + id);
+
+        try {
+            this.dvl.xoaKhachHang(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa nhân viên. Lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/khach-hang";
+    }
 }
 
-// }
+

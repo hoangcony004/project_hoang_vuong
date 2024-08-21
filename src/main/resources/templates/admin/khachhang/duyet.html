@@ -51,7 +51,7 @@
         <div class="modal-content">
             <!-- Modal Body -->
             <div class="modal-body">
-                <div th:insert="admin/khachhang/form-xem-bs4.html"></div>
+                <div th:insert="admin/khachhang/form-xem-kh-bs4.html"></div>
             </div>
 
             <!-- Modal footer -->
@@ -211,7 +211,7 @@
                                         $('#modalXem').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalXem .modal-body').load("/admin/khach-hang/xem-ajax?id=" + id);
+                                            $('#modalXem .modal-body').load("/admin/khach-hang/xem?id=" + id);
                                         });
                                     </script>
 

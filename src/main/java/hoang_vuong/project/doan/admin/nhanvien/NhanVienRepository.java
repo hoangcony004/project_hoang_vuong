@@ -9,6 +9,7 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Integer>
     List<NhanVien> findByTenDangNhap(String tenDangNhap);
     Boolean existsByTenDangNhap(String tenDangNhap);
     NhanVien findOneByTenDangNhap(String tenDangNhap);
+    NhanVien findOneByEmail(String email);
     Boolean existsByTenDayDu(String tdd);
 
     List<NhanVien> findByTenDayDuContainingIgnoreCase(String tenDayDu);

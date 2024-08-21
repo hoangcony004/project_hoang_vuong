@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +24,17 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import hoang_vuong.project.doan.qdl.Qdl;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
 public class NhanVienController {
-
 
     @Autowired
     private HttpServletRequest request;
@@ -39,6 +44,9 @@ public class NhanVienController {
 
     @Autowired
     private NhanVienService dvlNhanVien;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping("/nhan-vien")
     public String getDuyet(Model model,
@@ -349,6 +357,68 @@ public class NhanVienController {
         redirectAttributes.addFlashAttribute("THONG_BAO", "Đăng xuất thành công.");
         request.getSession().invalidate();
         return "redirect:/admin/dang-nhap";
+    }
+
+    @GetMapping("/quen-mat-khau")
+    public String getQuenMatKhau(Model model) {
+        var dl = new NhanVien();
+
+        model.addAttribute("dl", dl);
+        model.addAttribute("content", "admin/nhanvien/quenmatkhau.html");
+
+        return "layouts/layout-admin-login.html";
+    }
+
+    @PostMapping("/quen-mat-khau")
+    public String postQuenMatKhau(@RequestParam("email") String email, Model model) {
+        // Tạo mật khẩu mới
+        String newPassword = generateRandomPassword();
+        // Cập nhật mật khẩu mới trong cơ sở dữ liệu
+        updatePassword(email, newPassword);
+        
+        // Gửi mật khẩu mới qua email
+        try {
+            String subject = "Mật khẩu mới của bạn";
+            String body = "Mật khẩu mới của bạn là: " + newPassword;
+            sendEmail(email, subject, body);
+            model.addAttribute("THONG_BAO_SS", "Mật khẩu mới đã được gửi đến email của bạn.");
+        } catch (MessagingException e) {
+            model.addAttribute("THONG_BAO", "Có lỗi xảy ra khi gửi email. Vui lòng thử lại.");
+        }
+
+        model.addAttribute("dl", new NhanVien());
+        model.addAttribute("content", "admin/nhanvien/dangnhap.html");
+
+        return "layouts/layout-admin-login.html";
+    }
+
+    // Phương thức tạo mật khẩu ngẫu nhiên
+    private String generateRandomPassword() {
+        return RandomStringUtils.randomAlphanumeric(8); // Tạo mật khẩu 8 ký tự ngẫu nhiên
+    }
+
+    // Phương thức cập nhật mật khẩu trong cơ sở dữ liệu
+    private void updatePassword(String email, String newPassword) {
+        NhanVien nhanVien = dvl.timNhanVienTheoEmail(email);
+
+        var hash = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+
+        if (nhanVien != null) {
+            nhanVien.setMatKhau(hash); // Nên mã hóa mật khẩu trước khi lưu
+            dvl.luuNhanVien(nhanVien);
+        }
+    }
+
+    // Phương thức gửi email
+    private void sendEmail(String to, String subject, String body) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(body, true);
+
+        mailSender.send(message);
     }
 
 }

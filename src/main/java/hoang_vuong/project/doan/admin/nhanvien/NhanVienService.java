@@ -102,6 +102,15 @@ public class NhanVienService
         return dl;
     }
 
+    public NhanVien timNhanVienTheoEmail(String email)
+    {
+        NhanVien dl = null;
+
+        dl = kdl.findOneByEmail(email);
+
+        return dl;
+    }
+
         public Boolean DaCoTenDangNhap(String tdn)
     {
         return kdl.existsByTenDangNhap(tdn);
