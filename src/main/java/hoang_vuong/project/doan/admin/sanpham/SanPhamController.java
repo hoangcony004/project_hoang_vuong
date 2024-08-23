@@ -63,6 +63,7 @@ public class SanPhamController {
         model.addAttribute("title_duyet", "Sản Phẩm");
         model.addAttribute("title_btn_add", "Thêm Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");
+        model.addAttribute("phan_trang", "san-pham");
         model.addAttribute("action", "/admin/san-pham/them");
         model.addAttribute("content", "admin/sanpham/duyet.html");
 
@@ -75,7 +76,9 @@ public class SanPhamController {
             return "redirect:/admin/dang-nhap";
 
         var dl = new NhanVien();
+        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
 
+        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
         model.addAttribute("dl", dl);
         model.addAttribute("title_body", "Thêm Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");

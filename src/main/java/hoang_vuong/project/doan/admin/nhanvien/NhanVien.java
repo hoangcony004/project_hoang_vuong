@@ -17,29 +17,31 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class NhanVien
-{
+public class NhanVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    private String    tenDangNhap;
-    private String    email;
-    private String    tenDayDu;
-    private String    matKhau;
-    private String    xacNhanMatKhau;
-    private String    anhDaiDien; 
-    private Boolean   trangThai;
-    private String    dienThoai;
-    
-    @Column(columnDefinition="LONGTEXT")
-    private String    moTa;
-    private int       thuTu; 
+    private String tenDangNhap;
+    private String email;
+    private String tenDayDu;
+    private String matKhau;
+    private String xacNhanMatKhau;
+    private String anhDaiDien;
+    private Boolean trangThai;
+    private String dienThoai;
 
-    private LocalDate ngayTao; 
-    private LocalDate ngaySua; 
+    private String matKhauMoi;
+    private String nhapLaiMatKhauMoi;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String moTa;
+    private int thuTu;
+
+    private LocalDate ngayTao;
+    private LocalDate ngaySua;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayHetHan; 
+    private LocalDate ngayHetHan;
 
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
@@ -54,6 +56,5 @@ public class NhanVien
 
         return khl;
     }
-
 
 }

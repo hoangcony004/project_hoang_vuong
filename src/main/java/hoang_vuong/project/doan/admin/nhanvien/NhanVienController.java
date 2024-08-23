@@ -85,6 +85,9 @@ public class NhanVienController {
         model.addAttribute("sortDirection", direction.equals("asc") ? "asc" : "desc");
 
         model.addAttribute("action", "/admin/nhan-vien/them");
+
+        model.addAttribute("phan_trang", "nhan-vien");
+
         model.addAttribute("title_body", "Thêm Nhân Viên");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("title", "Quản Lý Nhân Viên");
@@ -129,7 +132,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/sua")
-    public String getSuaAjax(Model model, @RequestParam("id") int id) {
+    public String getSua(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -158,7 +161,7 @@ public class NhanVienController {
             dl.setMatKhau(hash);
             dl.setXacNhanMatKhau(inputXNMK);
         } else {
-            ;
+
             var inputPassword = dl.getMatKhau();
             var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
 
@@ -193,7 +196,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/xem")
-    public String getXemAjax(Model model, @RequestParam("id") int id) {
+    public String getXem(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -306,6 +309,8 @@ public class NhanVienController {
     public String getDangNhap(Model model, HttpSession session) {
 
         System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
+
+        model.addAttribute("title", "Đăng Nhập");
         model.addAttribute("dl", new NhanVien());
         model.addAttribute("content", "admin/nhanvien/dangnhap.html");
 
@@ -350,7 +355,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/dang-xuat")
-    public String getDangThoat(Model model,
+    public String getDangXuat(Model model,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
 
@@ -364,48 +369,66 @@ public class NhanVienController {
         var dl = new NhanVien();
 
         model.addAttribute("dl", dl);
+        model.addAttribute("title", "Quên Mật Khẩu");
         model.addAttribute("content", "admin/nhanvien/quenmatkhau.html");
 
         return "layouts/layout-admin-login.html";
     }
 
     @PostMapping("/quen-mat-khau")
-    public String postQuenMatKhau(@RequestParam("email") String email, Model model) {
+    public String postQuenMatKhau(@RequestParam("email") String email,
+            RedirectAttributes redirectAttributes) {
         // Tạo mật khẩu mới
         String newPassword = generateRandomPassword();
-        // Cập nhật mật khẩu mới trong cơ sở dữ liệu
-        updatePassword(email, newPassword);
-        
-        // Gửi mật khẩu mới qua email
-        try {
-            String subject = "Mật khẩu mới của bạn";
-            String body = "Mật khẩu mới của bạn là: " + newPassword;
-            sendEmail(email, subject, body);
-            model.addAttribute("THONG_BAO_SS", "Mật khẩu mới đã được gửi đến email của bạn.");
-        } catch (MessagingException e) {
-            model.addAttribute("THONG_BAO", "Có lỗi xảy ra khi gửi email. Vui lòng thử lại.");
+        // Cập nhật mật khẩu mới trong cơ sở dữ liệu và lấy trạng thái
+        int status = updatePassword(email, newPassword);
+
+        // Kiểm tra trạng thái và thực hiện hành động tương ứng
+        if (status == 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Không tìm thấy nhân viên với email: " + email);
+            return "redirect:/admin/quen-mat-khau";
+        } else if (status == 2) {
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Có nhiều hơn một nhân viên với email: " + email);
+            return "redirect:/admin/quen-mat-khau";
+        } else {
+            // Gửi mật khẩu mới qua email
+            try {
+                String subject = "Cấp Mật khẩu Mới";
+                String body = "Mật khẩu mới của bạn là: " + newPassword;
+                sendEmail(email, subject, body);
+                redirectAttributes.addFlashAttribute("THONG_BAO_SS", "Mật khẩu mới đã được gửi đến email của bạn.");
+            } catch (MessagingException e) {
+                redirectAttributes.addFlashAttribute("THONG_BAO", "Có lỗi xảy ra khi gửi email. Vui lòng thử lại.");
+                return "redirect:/admin/quen-mat-khau";
+            }
         }
 
-        model.addAttribute("dl", new NhanVien());
-        model.addAttribute("content", "admin/nhanvien/dangnhap.html");
-
-        return "layouts/layout-admin-login.html";
+        return "redirect:/admin/dang-nhap";
     }
 
-    // Phương thức tạo mật khẩu ngẫu nhiên
+    // // Phương thức tạo mật khẩu ngẫu nhiên
     private String generateRandomPassword() {
-        return RandomStringUtils.randomAlphanumeric(8); // Tạo mật khẩu 8 ký tự ngẫu nhiên
+        return RandomStringUtils.randomAlphanumeric(8);
+
     }
 
-    // Phương thức cập nhật mật khẩu trong cơ sở dữ liệu
-    private void updatePassword(String email, String newPassword) {
-        NhanVien nhanVien = dvl.timNhanVienTheoEmail(email);
+    private int updatePassword(String email, String newPassword) {
+        List<NhanVien> danhSachNhanVien = dvl.timDanhSachNhanVienTheoEmail(email);
 
-        var hash = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
-
-        if (nhanVien != null) {
-            nhanVien.setMatKhau(hash); // Nên mã hóa mật khẩu trước khi lưu
+        if (danhSachNhanVien.isEmpty()) {
+            // Không tìm thấy nhân viên nào với email này
+            return 0;
+        } else if (danhSachNhanVien.size() > 1) {
+            // Tìm thấy nhiều hơn một nhân viên với email này
+            return 2;
+        } else {
+            // Chỉ có một nhân viên với email này
+            NhanVien nhanVien = danhSachNhanVien.get(0);
+            var hash = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+            nhanVien.setMatKhau(hash);
+            nhanVien.setXacNhanMatKhau(newPassword);
             dvl.luuNhanVien(nhanVien);
+            return 1;
         }
     }
 
@@ -419,6 +442,75 @@ public class NhanVienController {
         helper.setText(body, true);
 
         mailSender.send(message);
+    }
+
+    @GetMapping("/doi-mat-khau")
+    public String getDoiMatKhau(@ModelAttribute("dl") NhanVien dl, Model model, HttpServletRequest request) {
+        if (Qdl.NhanVienChuaDangNhap(request)) {
+            return "redirect:/admin/dang-nhap";
+        }
+
+        model.addAttribute("title", "Đổi Mật Khẩu");
+        model.addAttribute("content", "admin/nhanvien/doimatkhau.html");
+
+        return "layouts/layout-admin-login.html";
+    }
+
+    @PostMapping("/doi-mat-khau")
+    public String doiMatKhau(
+            @RequestParam("matKhau") String matKhau,
+            @RequestParam("matKhauMoi") String matKhauMoi,
+            @RequestParam("nhapLaiMatKhauMoi") String nhapLaiMatKhauMoi,
+            @ModelAttribute("dl") NhanVien dl,
+            HttpServletRequest request,
+            HttpSession session,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+
+        // Kiểm tra xem người dùng có đăng nhập không
+        if (Qdl.NhanVienChuaDangNhap(request)) {
+            return "redirect:/admin/dang-nhap";
+        }
+
+        Integer nhanVienId = (Integer) session.getAttribute("NhanVien_Id");
+
+        if (nhanVienId == null) {
+
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Không tìm thấy thông tin nhân viên.");
+            return "redirect:/admin/doi-mat-khau";
+        }
+
+        // Lấy nhân viên từ cơ sở dữ liệu bằng ID
+        NhanVien nhanVien = dvl.timNhanVienTheoId(nhanVienId);
+
+        // Kiểm tra mật khẩu cũ
+        String old_password = nhanVien.getMatKhau();
+        boolean dung_mat_khau = BCrypt.checkpw(matKhau, old_password);
+        if (dung_mat_khau) {
+            System.out.println("Mật khẩu cũ đúng");
+        } else {
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Mật khẩu cũ không đúng.");
+            return "redirect:/admin/doi-mat-khau";
+        }
+
+        // Kiểm tra mật khẩu mới và mật khẩu nhập lại
+        if (!matKhauMoi.equals(nhapLaiMatKhauMoi)) {
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Mật khẩu mới và mật khẩu nhập lại không khớp.");
+            return "redirect:/admin/doi-mat-khau";
+        } else {
+            var inputPassword = dl.getMatKhauMoi();
+            var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
+            nhanVien.setMatKhau(hash);
+
+            nhanVien.setXacNhanMatKhau(matKhauMoi);
+            dvl.luuNhanVien(nhanVien);
+
+            // session.setAttribute("nhanVien", nhanVien);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SS", "Đổi mật khẩu thành công.");
+            request.getSession().invalidate();
+            return "redirect:/admin/dang-nhap";
+        }
+
     }
 
 }

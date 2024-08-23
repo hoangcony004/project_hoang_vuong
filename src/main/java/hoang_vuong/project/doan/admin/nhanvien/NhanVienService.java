@@ -111,6 +111,11 @@ public class NhanVienService
         return dl;
     }
 
+    public List<NhanVien> timDanhSachNhanVienTheoEmail(String email) {
+        return kdl.findByEmail(email); // Giả sử bạn có một phương thức trong repository để tìm danh sách theo email
+    }
+    
+
         public Boolean DaCoTenDangNhap(String tdn)
     {
         return kdl.existsByTenDangNhap(tdn);

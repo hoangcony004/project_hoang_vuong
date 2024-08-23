@@ -58,6 +58,7 @@ public class NhaSanXuatController {
         model.addAttribute("title", "Quản Lý Nhà Sản Xuất");
         model.addAttribute("title_duyet", "Nhà Sản Xuất");
         model.addAttribute("title_btn_add", "Thêm Nhà Sản Xuất");
+        model.addAttribute("phan_trang", "nha-san-xuat");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("action", "/admin/nha-san-xuat/them");
         model.addAttribute("content", "admin/nhasanxuat/duyet.html");

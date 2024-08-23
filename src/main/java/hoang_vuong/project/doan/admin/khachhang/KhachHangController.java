@@ -72,6 +72,7 @@ public class KhachHangController {
 
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
+        model.addAttribute("phan_trang", "khach-hang");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("title", "Quản Lý Khách Hàng");
         model.addAttribute("title_duyet", "Khách Hàng");

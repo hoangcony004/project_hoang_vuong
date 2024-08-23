@@ -63,6 +63,7 @@ public class AnhSanPhamController {
         model.addAttribute("ds", anhSanPhamPage.getContent());
         model.addAttribute("dl", new AnhSanPham());
         model.addAttribute("title", "Quản Lý Ảnh Sản Phẩm");
+        model.addAttribute("phan_trang", "anh-san-pham");
         model.addAttribute("title_duyet", "Ảnh Sản Phẩm");
         model.addAttribute("title_btn_add", "Thêm Ảnh Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");
