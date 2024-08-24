@@ -1,0 +1,41 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_btn_add}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_btn_add}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <form th:action="${action}" th:object="${dl}" method="post">
+
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" th:field="*{Id}" />
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" required id="floatingInput" placeholder="Tên đăng nhập"
+                            th:field="*{khoa}" />
+                        <label for="floatingInput">Khóa</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" required id="floatingInput" placeholder="Tên đăng nhập"
+                            th:field="*{giaTri}" />
+                        <label for="floatingInput">Giá Trị</label>
+                    </div>
+                </div>
+
+            </div>
+            <button th:text="${title_sm}" type="submit" class="btn btn-outline-success">Cập Nhật</button>
+        </form>
+    </div>
+</div>
+

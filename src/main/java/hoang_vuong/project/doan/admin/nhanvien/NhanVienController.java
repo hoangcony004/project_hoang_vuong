@@ -317,6 +317,45 @@ public class NhanVienController {
         return "layouts/layout-admin-login.html";
     }
 
+    // @PostMapping("/dang-nhap")
+    // public String postDangNhap(Model model,
+    // RedirectAttributes redirectAttributes,
+    // @RequestParam("TenDangNhap") String TenDangNhap,
+    // @RequestParam("MatKhau") String MatKhau,
+    // HttpServletRequest request,
+    // HttpSession session) {
+
+    // String old_password = null;
+
+    // if (dvl.DaCoTenDangNhap(TenDangNhap)) {
+    // var old_dl = dvl.timNhanVienTheoTenDangNhap(TenDangNhap);
+    // old_password = old_dl.getMatKhau();
+    // boolean dung_mat_khau = BCrypt.checkpw(MatKhau, old_password);
+
+    // if (dung_mat_khau) {
+    // request.getSession().setAttribute("NhanVien_Id", old_dl.getId());
+    // request.getSession().setAttribute("NhanVien_TenDayDu", old_dl.getTenDayDu());
+
+    // var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN");
+    // if (uriBeforeLogin == null)
+    // uriBeforeLogin = "/admin/dashboard";
+    // return "redirect:" + uriBeforeLogin;
+    // } else {
+    // // Sai mật khẩu, giữ lại tên đăng nhập
+    // // session.setAttribute("TenDangNhap", TenDangNhap);
+    // redirectAttributes.addFlashAttribute("THONG_BAO", "Sai tên đăng nhập hoặc mật
+    // khẩu!");
+    // return "redirect:/admin/dang-nhap";
+    // }
+
+    // } else {
+    // // Không tồn tại tên đăng nhập
+    // redirectAttributes.addFlashAttribute("THONG_BAO", "Sai tên đăng nhập hoặc mật
+    // khẩu!");
+    // return "redirect:/admin/dang-nhap";
+    // }
+    // }
+
     @PostMapping("/dang-nhap")
     public String postDangNhap(Model model,
             RedirectAttributes redirectAttributes,
@@ -325,11 +364,22 @@ public class NhanVienController {
             HttpServletRequest request,
             HttpSession session) {
 
-        String old_password = null;
+        // Tìm nhân viên theo tên đăng nhập, email hoặc số điện thoại
+        NhanVien old_dl = null;
+        if (TenDangNhap.contains("@")) {
+            // Kiểm tra email
+            old_dl = dvl.timNhanVienTheoEmail(TenDangNhap);
+        } else if (TenDangNhap.matches("\\d+")) {
+            // Kiểm tra số điện thoại
+            old_dl = dvl.timNhanVienTheoDienThoai(TenDangNhap);
+        } else {
+            // Kiểm tra tên đăng nhập
+            old_dl = dvl.timNhanVienTheoTenDangNhap(TenDangNhap);
+        }
 
-        if (dvl.DaCoTenDangNhap(TenDangNhap)) {
-            var old_dl = dvl.timNhanVienTheoTenDangNhap(TenDangNhap);
-            old_password = old_dl.getMatKhau();
+        if (old_dl != null) {
+            // Kiểm tra mật khẩu
+            String old_password = old_dl.getMatKhau();
             boolean dung_mat_khau = BCrypt.checkpw(MatKhau, old_password);
 
             if (dung_mat_khau) {
@@ -341,14 +391,12 @@ public class NhanVienController {
                     uriBeforeLogin = "/admin/dashboard";
                 return "redirect:" + uriBeforeLogin;
             } else {
-                // Sai mật khẩu, giữ lại tên đăng nhập
-                // session.setAttribute("TenDangNhap", TenDangNhap);
+                // Sai mật khẩu, giữ lại thông tin đăng nhập
                 redirectAttributes.addFlashAttribute("THONG_BAO", "Sai tên đăng nhập hoặc mật khẩu!");
                 return "redirect:/admin/dang-nhap";
             }
-
         } else {
-            // Không tồn tại tên đăng nhập
+            // Không tìm thấy thông tin đăng nhập
             redirectAttributes.addFlashAttribute("THONG_BAO", "Sai tên đăng nhập hoặc mật khẩu!");
             return "redirect:/admin/dang-nhap";
         }

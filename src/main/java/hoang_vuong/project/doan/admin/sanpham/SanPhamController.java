@@ -54,6 +54,9 @@ public class SanPhamController {
         Page<SanPham> sanPhamPage = dvlSanPhamService.duyetSanPham(PageRequest.of(pageIndex, pageSize));
 
         // Cập nhật mô hình với dữ liệu phân trang
+        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+
+        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", sanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
@@ -76,9 +79,8 @@ public class SanPhamController {
             return "redirect:/admin/dang-nhap";
 
         var dl = new NhanVien();
-        List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
-
-        model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+        // List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+        // model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
         model.addAttribute("dl", dl);
         model.addAttribute("title_body", "Thêm Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");

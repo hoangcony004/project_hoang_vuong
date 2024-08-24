@@ -247,7 +247,69 @@
 
                         </tbody>
                     </table>
-                    <div th:insert="/admin/pages/pageable.html"></div>
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <!-- Trang đầu -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                            </li>
+
+                            <!-- Trang trước -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang đầu tiên -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=1&pageSize=' + ${pageSize}}">1</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Các trang giữa -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li>
+
+                            <!-- Trang tiếp theo -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nhan-vien?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
@@ -255,50 +317,4 @@
 </div>
 <!-- end row -->
 
-<style>
-    .close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        line-height: 1;
-        color: #000;
-        opacity: 0.5;
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        margin-top: 4px;
-    }
-
-    #alert-box {
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-    #alert-box.hide {
-        opacity: 0;
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-
-    .close:hover {
-        opacity: 1;
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var closeButton = document.getElementById('close-button');
-        var alertBox = document.getElementById('alert-box');
-
-        if (closeButton && alertBox) {
-            closeButton.addEventListener('click', function () {
-                alertBox.classList.add('hide');
-                setTimeout(function () {
-                    alertBox.style.display = 'none';
-                }, 500);
-            });
-        }
-    });
-</script>
+<div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>

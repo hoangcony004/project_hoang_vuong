@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import hoang_vuong.project.doan.admin.caidat.DvlCaiDat;
+import hoang_vuong.project.doan.admin.caidat.CaiDatService;
 
 @ControllerAdvice
 public class QdlLayout
 {
     @Autowired
-    DvlCaiDat dvlCaiDat;
+    CaiDatService dvlCaiDat;
 
     @ModelAttribute("testGlobalText")
     public String getTest(){

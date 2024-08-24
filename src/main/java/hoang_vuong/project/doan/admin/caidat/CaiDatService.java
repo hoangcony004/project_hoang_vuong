@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DvlCaiDat
+public class CaiDatService
 {
-    @Autowired private KdlCaiDat kdl;
+    @Autowired private CaiDatRepository kdl;
 
     public List<CaiDat> dsCaiDat()
     {

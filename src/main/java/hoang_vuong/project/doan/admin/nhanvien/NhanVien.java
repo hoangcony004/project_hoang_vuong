@@ -23,13 +23,17 @@ public class NhanVien {
     private int Id;
 
     private String tenDangNhap;
+
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String dienThoai;
+    
     private String tenDayDu;
     private String matKhau;
     private String xacNhanMatKhau;
     private String anhDaiDien;
     private Boolean trangThai;
-    private String dienThoai;
 
     private String matKhauMoi;
     private String nhapLaiMatKhauMoi;

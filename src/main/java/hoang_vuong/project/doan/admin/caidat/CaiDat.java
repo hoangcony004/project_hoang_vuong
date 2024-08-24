@@ -19,9 +19,4 @@ public class CaiDat {
   private String khoa;
   private String giaTri;
 
-  public Boolean KhongHopLe() {
-    var khl = false;
-    return khl;
-  }
-
 }
