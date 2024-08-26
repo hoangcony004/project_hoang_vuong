@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 
 <!-- molla/index-3.html  22 Nov 2019 09:55:42 GMT -->
-<head th:replace="/client/fragments/head :: head"></head>
-
+<head th:replace="client/fragments/head :: head"></head>
 <body>
     <div class="page-wrapper">
-        <header th:replace="/client/fragments/header :: header"></header>
+        <header th:replace="client/fragments/header :: header"></header>
         <main class="main">
             <div class="intro-section pt-3 pb-3 mb-2">
                 <div class="container">
@@ -164,179 +163,61 @@
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
+                            <div th:each="dl : ${ds}" class="product product-2">
+
                                 <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                
+                                  <a th:href="@{/apps/product(id=${dl.id})}">
+                
+                                    <img th:src="${dl.anhDaiDien}" style="min-height:250px" alt="Product image"
+                
+                                      class="product-image"> </a>
+                
+                                  <div class="product-action-vertical">
+                
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                
+                                      <span>add to wishlist</span>
+                
                                     </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
+                
+                                  </div><!-- End .product-action -->
+                
+                                  <div class="product-action product-action-dark">
+                
+                                    <a href="#" class="btn-product btn-cart" title="Add to cart">
+                
+                                      <span>add to cart</span></a> <a href="popup/quickView.html"
+                
+                                      class="btn-product btn-quickview" title="Quick view"><span>quick
+                
+                                        view</span></a>
+                
+                                  </div><!-- End .product-action -->
+                
                                 </figure><!-- End .product-media -->
-
+                
                                 <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Cameras & Camcorders</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $349.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
+                
+                                  <div class="product-cat"> <!-- <a href="#">Cameras & Camcorders</a> -->
+                
+                                    <p th:text="${dl.nhaSanXuat.ten}"></p>
+                
+                                  </div><!-- End .product-cat -->
+                
+                                  <h3 class="product-title"><a th:href="@{/apps/product(id=${dl.id})}"
+                
+                                      th:text="${dl.tenSP}"></a></h3><!-- End .product-title -->
+                
+                                  <div class="product-price" th:text="${dl.donGia}"> </div><!-- End .product-price -->
+                
+                                  <!-- <div class="ratings-container"> <div class="ratings"> <div class="ratings-val" style="width: 60%;"></div> </div> <span class="ratings-text">( 2 Reviews )</span> </div> -->
+                
+                                  <!-- End .rating-container -->
+                
                                 </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Smartwatches</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Apple - Apple Watch Series 3 with White Sport Band</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $214.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #e2e2e2;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #f2bc9e;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Laptops</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Lenovo - 330-15IKBR 15.6"</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="out-price">$339.99</span>
-                                        <span class="out-text">Out of Stock</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 3 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Digital Cameras</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Sony - Alpha a5100 Mirrorless Camera</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $499.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 11 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Cameras & Camcorders</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $349.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                
+             </div>
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
@@ -361,146 +242,61 @@
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
+                            <div th:each="dl : ${ds}" class="product product-2">
+
                                 <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
+                
+                                  <a th:href="@{/apps/product(id=${dl.id})}">
+                
+                                    <img th:src="${dl.anhDaiDien}" style="min-height:250px" alt="Product image"
+                
+                                      class="product-image"> </a>
+                
+                                  <div class="product-action-vertical">
+                
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                
+                                      <span>add to wishlist</span>
+                
                                     </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
+                
+                                  </div><!-- End .product-action -->
+                
+                                  <div class="product-action product-action-dark">
+                
+                                    <a href="#" class="btn-product btn-cart" title="Add to cart">
+                
+                                      <span>add to cart</span></a> <a href="popup/quickView.html"
+                
+                                      class="btn-product btn-quickview" title="Quick view"><span>quick
+                
+                                        view</span></a>
+                
+                                  </div><!-- End .product-action -->
+                
                                 </figure><!-- End .product-media -->
-
+                
                                 <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Digital Cameras</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Sony - Alpha a5100 Mirrorless Camera</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $499.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 11 Reviews )</span>
-                                    </div><!-- End .rating-container -->
+                
+                                  <div class="product-cat"> <!-- <a href="#">Cameras & Camcorders</a> -->
+                
+                                    <p th:text="${dl.nhaSanXuat.ten}"></p>
+                
+                                  </div><!-- End .product-cat -->
+                
+                                  <h3 class="product-title"><a th:href="@{/apps/product(id=${dl.id})}"
+                
+                                      th:text="${dl.tenSP}"></a></h3><!-- End .product-title -->
+                
+                                  <div class="product-price" th:text="${dl.donGia}"> </div><!-- End .product-price -->
+                
+                                  <!-- <div class="ratings-container"> <div class="ratings"> <div class="ratings-val" style="width: 60%;"></div> </div> <span class="ratings-text">( 2 Reviews )</span> </div> -->
+                
+                                  <!-- End .rating-container -->
+                
                                 </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Cameras & Camcorders</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $349.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Laptops</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Lenovo - 330-15IKBR 15.6"</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="out-price">$339.99</span>
-                                        <span class="out-text">Out of Stock</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 3 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Smartwatches</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Apple - Apple Watch Series 3 with White Sport Band</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $214.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #e2e2e2;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #f2bc9e;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                
+             </div>
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane p-0 fade" id="products-top-tab" role="tabpanel" aria-labelledby="products-top-link">
@@ -525,179 +321,62 @@
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
+                            <div th:each="dl : ${ds}" class="product product-2">
+
                                 <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
+                
+                                  <a th:href="@{/apps/product(id=${dl.id})}">
+                
+                                    <img th:src="${dl.anhDaiDien}" style="min-height:250px" alt="Product image"
+                
+                                      class="product-image"> </a>
+                
+                                  <div class="product-action-vertical">
+                
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                
+                                      <span>add to wishlist</span>
+                
                                     </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
+                
+                                  </div><!-- End .product-action -->
+                
+                                  <div class="product-action product-action-dark">
+                
+                                    <a href="#" class="btn-product btn-cart" title="Add to cart">
+                
+                                      <span>add to cart</span></a> <a href="popup/quickView.html"
+                
+                                      class="btn-product btn-quickview" title="Quick view"><span>quick
+                
+                                        view</span></a>
+                
+                                  </div><!-- End .product-action -->
+                
                                 </figure><!-- End .product-media -->
-
+                
                                 <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Laptops</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Lenovo - 330-15IKBR 15.6"</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="out-price">$339.99</span>
-                                        <span class="out-text">Out of Stock</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 3 Reviews )</span>
-                                    </div><!-- End .rating-container -->
+                
+                                  <div class="product-cat"> <!-- <a href="#">Cameras & Camcorders</a> -->
+                
+                                    <p th:text="${dl.nhaSanXuat.ten}"></p>
+                
+                                  </div><!-- End .product-cat -->
+                
+                                  <h3 class="product-title"><a th:href="@{/apps/product(id=${dl.id})}"
+                
+                                      th:text="${dl.tenSP}"></a></h3><!-- End .product-title -->
+                
+                                  <div class="product-price" th:text="${dl.donGia}"> </div><!-- End .product-price -->
+                
+                                  <!-- <div class="ratings-container"> <div class="ratings"> <div class="ratings-val" style="width: 60%;"></div> </div> <span class="ratings-text">( 2 Reviews )</span> </div> -->
+                
+                                  <!-- End .rating-container -->
+                
                                 </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Cameras & Camcorders</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $349.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Digital Cameras</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Sony - Alpha a5100 Mirrorless Camera</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $499.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 11 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Smartwatches</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Apple - Apple Watch Series 3 with White Sport Band</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $214.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #e2e2e2;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #f2bc9e;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="/client/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Cameras & Camcorders</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $349.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                
+             </div>
+                           
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                 </div><!-- End .tab-content -->
@@ -3627,49 +3306,19 @@
             </div><!-- End .container -->
         </main><!-- End .main -->
 
-        <footer  th:replace="/client/fragments/footer :: footer" ></footer>
+        <footer  th:replace="client/fragments/footer :: footer" ></footer>
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
 
-
-    <div th:replace="/client/fragments/menu_mobile :: menu_mobile"></div>
+    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
     <!-- Sign in / Register Modal -->
-    <div th:replace="/client/fragments/register_modal :: register_modal"></div>
+   <div th:replace="client/fragments/register_modal :: register_modal"></div>
 
-    <!-- <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <div class="row no-gutters bg-white newsletter-popup-content">
-                    <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
-                        <div class="banner-content text-center">
-                            <img src="/client/assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60" height="15">
-                            <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
-                            <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite products.</p>
-                            <form action="#">
-                                <div class="input-group input-group-round">
-                                    <input type="email" class="form-control form-control-white" placeholder="Your Email Address" aria-label="Email Adress" required>
-                                    <div class="input-group-append">
-                                        <button class="btn" type="submit"><span>go</span></button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
-                                <label class="custom-control-label" for="register-policy-2">Do not show this popup again</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2-5col col-lg-5 ">
-                        <img src="/client/assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div th:replace="/client/fragments/script :: script">
+    <!-- Plugins JS File -->
+    <div th:replace="client/fragments/script :: script"></div>
 </body>
 
 

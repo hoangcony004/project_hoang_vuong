@@ -38,9 +38,9 @@
 								<span th:text="${THONG_BAO}"></span>
 								</div> 
 							    <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
-							    	<form th:action="@{/apps/dang-nhap}" th:object="${dl}" method="post">
+							    	<form th:action="@{/apps/dang-nhap}"  th:object="${dl}" method="post">
 							    		<div class="form-group">
-							    			<label for="singin-email-2">Email *</label>
+							    			<label for="singin-email-2" >Email hoặc số điện thoại*</label>
 							    			<input type="text" th:field="*{email}" class="form-control" id="singin-email-2" name="singin-email" required>
 							    		</div><!-- End .form-group -->
 

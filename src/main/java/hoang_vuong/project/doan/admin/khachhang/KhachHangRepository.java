@@ -12,8 +12,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Integer>
     Boolean existsByEmail(String email);
     KhachHang findOneByTenDangNhap(String tenDangNhap);
     KhachHang findOneByEmail(String email);
+   KhachHang findOneByDienThoai(String dienThoai);
     Boolean existsByTenDayDu(String tdd);
-
+    Boolean existsByDienThoai(String dienThoai);
     List<KhachHang> findByTenDayDuContainingIgnoreCase(String tenDayDu);
 
     List<KhachHang> findByEmailContainingIgnoreCase(String email);

@@ -3,14 +3,19 @@ package hoang_vuong.project.doan.admin.sanpham;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SanPhamService 
 {
     @Autowired private SanPhamRepository kdl;
-
+    public Page<SanPham> duyetSanPham(Pageable pageable) {
+        return kdl.findAll(pageable);
+    }
     public List<SanPham> dsSanPham() 
     {
         return kdl.findAll();
@@ -79,6 +84,7 @@ public class SanPhamService
     {
         this.kdl.deleteById(id);
     }
+
 
 }
 

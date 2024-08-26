@@ -50,6 +50,11 @@ public class KhachHangService
         dl = kdl.findOneByEmail(tdn);
         return dl;
     }
+    public KhachHang timSodienthoai(String tdn){
+        KhachHang dl = null;
+        dl = kdl.findOneByDienThoai(tdn);
+        return dl;
+    }
 
     public KhachHang  timKhachHangTheoId(int id)// 
     {
@@ -115,6 +120,9 @@ public class KhachHangService
     }
     public boolean dacoemail(String email){
         return kdl.existsByEmail(email);
+    }
+    public boolean dacosdt(String email){
+        return kdl.existsByDienThoai(email);
     }
 
 

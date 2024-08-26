@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!-- cũng ok, có màu chọn giống checkbox -->
 
 <!-- molla/product-extended.html  22 Nov 2019 10:03:20 GMT -->
 <head th:replace="client/fragments/head :: head"></head>
@@ -38,7 +38,7 @@
                             <div class="col-md-6">
                                 <div class="product-gallery">
                                     <figure class="product-main-image">
-                                        <img id="product-zoom" src="assets/images/products/single/extended/3.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg" alt="product image">
+                                        <img id="product-zoom" src="/client/assets/images/products/single/extended/3.jpg" data-zoom-image="/client/assets/images/products/single/extended/3-big.jpg" alt="product image">
 
                                         <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                             <i class="icon-arrows"></i>
@@ -46,20 +46,20 @@
                                     </figure><!-- End .product-main-image -->
 
                                     <div id="product-zoom-gallery" class="product-image-gallery">
-                                        <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/1.jpg" data-zoom-image="assets/images/products/single/extended/1-big.jpg">
-                                            <img src="assets/images/products/single/extended/1-small.jpg" alt="product side">
+                                        <a class="product-gallery-item" href="#" data-image="/client/assets/images/products/single/extended/1.jpg" data-zoom-image="/client/assets/images/products/single/extended/1-big.jpg">
+                                            <img src="/client/assets/images/products/single/extended/1-small.jpg" alt="product side">
                                         </a>
 
-                                        <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/2.jpg" data-zoom-image="assets/images/products/single/extended/2-big.jpg">
-                                            <img src="assets/images/products/single/extended/2-small.jpg" alt="product cross">
+                                        <a class="product-gallery-item" href="#" data-image="/client/assets/images/products/single/extended/2.jpg" data-zoom-image="/client/assets/images/products/single/extended/2-big.jpg">
+                                            <img src="/client/assets/images/products/single/extended/2-small.jpg" alt="product cross">
                                         </a>
 
-                                        <a class="product-gallery-item active" href="#" data-image="assets/images/products/single/extended/3.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg">
-                                            <img src="assets/images/products/single/extended/3-small.jpg" alt="product with model">
+                                        <a class="product-gallery-item active" href="#" data-image="/client/assets/images/products/single/extended/3.jpg" data-zoom-image="/client/assets/images/products/single/extended/3-big.jpg">
+                                            <img src="/client/assets/images/products/single/extended/3-small.jpg" alt="product with model">
                                         </a>
 
-                                        <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/4.jpg" data-zoom-image="assets/images/products/single/extended/4-big.jpg">
-                                            <img src="assets/images/products/single/extended/4-small.jpg" alt="product back">
+                                        <a class="product-gallery-item" href="#" data-image="/client/assets/images/products/single/extended/4.jpg" data-zoom-image="/client/assets/images/products/single/extended/4-big.jpg">
+                                            <img src="/client/assets/images/products/single/extended/4-small.jpg" alt="product back">
                                         </a>
 
                                     </div><!-- End .product-image-gallery -->
@@ -171,7 +171,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                             <div class="product-desc-content">
-                                <div class="product-desc-row bg-image"  style="background-image: url('assets/images/products/single/extended/bg-1.jpg')">
+                                <div class="product-desc-row bg-image"  style="background-image: url('/client/assets/images/products/single/extended/bg-1.jpg')">
                                     <div class="container">
                                         <div class="row justify-content-end">
                                             <div class="col-sm-6 col-lg-4">
@@ -188,7 +188,7 @@
                                     </div><!-- End .container -->
                                 </div><!-- End .product-desc-row -->
 
-                                <div class="product-desc-row bg-image text-white"  style="background-image: url('assets/images/products/single/extended/bg-2.jpg')">
+                                <div class="product-desc-row bg-image text-white"  style="background-image: url('/client/assets/images/products/single/extended/bg-2.jpg')">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -204,11 +204,11 @@
 
                                         <div class="mb-5"></div><!-- End .mb-3 -->
 
-                                        <img src="assets/images/products/single/extended/sign.png" alt="" class="ml-auto mr-auto">
+                                        <img src="/client/assets/images/products/single/extended/sign.png" alt="" class="ml-auto mr-auto">
                                     </div><!-- End .container -->
                                 </div><!-- End .product-desc-row -->
 
-                                <div class="product-desc-row bg-image"  style="background-image: url('assets/images/products/single/extended/bg-3.jpg')">
+                                <div class="product-desc-row bg-image"  style="background-image: url('/client/assets/images/products/single/extended/bg-3.jpg')">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-lg-5">
@@ -347,7 +347,7 @@
                             <figure class="product-media">
                                 <span class="product-label label-new">New</span>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-4.jpg" alt="Product image" class="product-image">
+                                    <img src="/client/assets/images/products/product-4.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -388,7 +388,7 @@
                             <figure class="product-media">
                                 <span class="product-label label-out">Out of Stock</span>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-6.jpg" alt="Product image" class="product-image">
+                                    <img src="/client/assets/images/products/product-6.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -423,7 +423,7 @@
                             <figure class="product-media">
                                 <span class="product-label label-top">Top</span>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-11.jpg" alt="Product image" class="product-image">
+                                    <img src="/client/assets/images/products/product-11.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -463,7 +463,7 @@
                         <div class="product product-7">
                             <figure class="product-media">
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-10.jpg" alt="Product image" class="product-image">
+                                    <img src="/client/assets/images/products/product-10.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -497,7 +497,7 @@
                         <div class="product product-7">
                             <figure class="product-media">
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-7.jpg" alt="Product image" class="product-image">
+                                    <img src="/client/assets/images/products/product-7.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
