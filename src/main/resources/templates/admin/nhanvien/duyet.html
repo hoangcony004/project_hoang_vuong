@@ -32,10 +32,9 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-
             <!-- Modal Body -->
             <div class="modal-body">
-                <i th:replace="admin/nhanvien/form-bs4.html"></i>
+                <div th:replace="admin/nhanvien/form-bs4.html"></div>
             </div>
 
             <!-- Modal Footer -->
@@ -47,30 +46,20 @@
     </div>
 </div>
 
-
-
 <!-- BS4 MODAL Show -->
 <div class="modal" id="modalXem">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div> -->
-
-            <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
+            <!-- Modal Body -->
             <div class="modal-body">
                 <i th:replace="admin/nhanvien/form-xem-bs4.html"></i>
 
             </div>
 
-            <!-- Modal footer -->
+            <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -79,18 +68,10 @@
 <div class="modal" id="modalSua">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div> -->
-
-            <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
+            <!-- Modal Body -->
             <div class="modal-body">
                 Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
@@ -130,16 +111,11 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="row mb-2">
-                    <!-- <div class="col-sm-4">
-                        <a href="#" th:href="@{/admin/nhan-vien/them}" class="btn btn-success mb-2"><i
-                                class="mdi mdi-plus-circle me-2"></i> Thêm Nhân Viên</a>
-                    </div> -->
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalThem">
                             <i class="bi-plus-circle"></i> Thêm Nhân Viên
@@ -147,21 +123,25 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="text-sm-end">
-                            <form action="#" method="post">
-                                <button type="button" class="btn btn-primary mb-2 me-1">Lọc</button>
-                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                <button type="button" class="btn btn-light mb-2">Export</button>
+                            <!-- Các nút chức năng -->
+                            <form action="#" method="post" class="mb-3">
+                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-light btn-sm me-2">Import</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button>
                             </form>
-                            <form action="/admin/nhan-vien/tim-kiem" method="GET">
-                                <select name="criteria" class="mb-2 me-1">
+
+                            <!-- Form tìm kiếm -->
+                            <form action="/admin/nhan-vien/tim-kiem" method="GET" class="d-flex justify-content-end">
+                                <select name="criteria" class="form-select form-select-sm me-2"
+                                    style="max-width: 150px;">
                                     <option value="tenDayDu">Họ và Tên</option>
                                     <option value="Id">ID</option>
                                     <option value="email">Email</option>
                                     <option value="dienThoai">Số điện thoại</option>
                                 </select>
-                                <input type="search" name="query" placeholder="Tìm kiếm nhân viên..."
-                                    style="outline: none;">
-                                <button class="btn-primary" type="submit">Tìm kiếm</button>
+                                <input type="search" name="query" class="form-control form-control-sm me-2"
+                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>
@@ -169,30 +149,20 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
-                                <!-- <th class="all" style="width: 20px;">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck1">
-                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                    </div>
-                                </th> -->
                                 <th>STT</th>
                                 <th>Ảnh Đại Diện</th>
                                 <th class="all">
                                     <a th:href="@{/admin/nhan-vien(page=${currentPage}, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}"
                                         class="text-body" style="color: black;">Tên Nhân Viên</a>
                                 </th>
-
-
-
                                 <th>Tên Đăng Nhập</th>
                                 <th>Email</th>
                                 <th>Số Điện Thoại</th>
                                 <th>Trạng Thái</th>
                                 <th>Ngày Tạo</th>
-                                <!-- <th>Ngày Sửa</th> -->
                                 <th>Ngày Hết Hạn</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
@@ -200,28 +170,23 @@
 
                         <tbody>
                             <tr th:each="dl : ${ds}">
-                                <!-- <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck2">
-                                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                    </div>
-                                </td> -->
                                 <td th:text="${dl.thuTu}">ID </td>
+
                                 <td>
                                     <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
                                         class="rounded me-3" height="48">
                                 </td>
+
                                 <td th:text="${dl.TenDayDu}">
                                     <p class="m-0 d-inline-block align-middle font-16">
                                         Họ Và Tên
                                     </p>
                                 </td>
+
                                 <td th:text="${dl.TenDangNhap}">
                                     Tên Đăng Nhập
                                 </td>
-                                <!-- <td th:text="${dl.MatKhau}">
-                                    Mật Khẩu
-                                </td> -->
+
                                 <td th:text="${dl.email}">
                                     Email
                                 </td>
@@ -229,39 +194,26 @@
                                 <td th:text="${dl.dienThoai}">
                                     254
                                 </td>
+
                                 <td>
                                     <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
                                     <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
                                 </td>
-                                <!-- <td th:text="${dl.moTa}"></td> -->
+
                                 <td th:text="${dl.getNgayTaoText}"></td>
-                                <!-- <td th:text="${dl.ngaySua}"></td> -->
+
                                 <td th:text="${dl.getNgayHetHanText}"></td>
 
                                 <td class="table-action">
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/xem(id=${dl.Id})}" class="action-icon"> <i
-                                            class="mdi mdi-eye"></i></a> -->
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/sua(id=${dl.Id})} " class="action-icon"> <i
-                                            class="mdi mdi-square-edit-outline"></i></a> -->
-                                    <!-- <a href="#" th:href="@{/admin/nhan-vien/xoa(id=${dl.Id})} " class="action-icon"> <i
-                                            class="mdi mdi-delete"></i></a> -->
-
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
                                         th:data-id="${dl.id}">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        // triggered when modal is about to be shown
                                         $('#modalXem').on('show.bs.modal', function (e) {
-
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalXem .modal-body').load("/admin/nhan-vien/xem-ajax?id=" + id);
-
-                                            //populate the textbox
-                                            // $(e.currentTarget).find('input[name="id"]').val(id);
+                                            $('#modalXem .modal-body').load("/admin/nhan-vien/xem?id=" + id);
                                         });
                                     </script>
 
@@ -270,47 +222,32 @@
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </a>
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        // triggered when modal is about to be shown
                                         $('#modalSua').on('show.bs.modal', function (e) {
 
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalSua .modal-body').load("/admin/nhan-vien/sua-ajax?id=" + id);
-
-                                            //populate the textbox
-                                            // $(e.currentTarget).find('input[name="id"]').val(id);
+                                            $('#modalSua .modal-body').load("/admin/nhan-vien/sua?id=" + id);
                                         });
                                     </script>
+
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
                                         href="#modalXoa" th:data-id="${dl.id}">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
-
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        //triggered when modal is about to be shown
                                         $('#modalXoa').on('show.bs.modal', function (e) {
 
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
-                                            console.log("ID nhận được: ", id);
-                                            //populate the textbox
+                                            // console.log("ID nhận được: ", id);
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>
-
-
                                 </td>
                             </tr>
 
                         </tbody>
-                        <tfoot>
-
-                        </tfoot>
                     </table>
-                    <!-- Hiển thị phân trang -->
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
                     <nav class="pagination-container">
                         <ul class="pagination justify-content-center">
                             <!-- Trang đầu -->
@@ -373,11 +310,6 @@
                             </li>
                         </ul>
                     </nav>
-
-
-
-
-
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
@@ -385,50 +317,4 @@
 </div>
 <!-- end row -->
 
-<style>
-    .close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        line-height: 1;
-        color: #000;
-        opacity: 0.5;
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        margin-top: 4px;
-    }
-
-    #alert-box {
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-    #alert-box.hide {
-        opacity: 0;
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-
-    .close:hover {
-        opacity: 1;
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var closeButton = document.getElementById('close-button');
-        var alertBox = document.getElementById('alert-box');
-
-        if (closeButton && alertBox) {
-            closeButton.addEventListener('click', function () {
-                alertBox.classList.add('hide');
-                setTimeout(function () {
-                    alertBox.style.display = 'none';
-                }, 500);
-            });
-        }
-    });
-</script>
+<div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>

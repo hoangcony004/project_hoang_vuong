@@ -1,4 +1,4 @@
-package hoang_vuong.project.doan.admin.nhasanxuat;
+package hoang_vuong.project.doan.admin.anhsanpham;
 
 import java.util.List;
 
@@ -6,34 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.ui.Model;
 
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
-// import ch.qos.logback.core.model.Model;
+import hoang_vuong.project.doan.admin.sanpham.SanPham;
+import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin")
-public class NhaSanXuatController {
+public class AnhSanPhamController {
 
     @Autowired
     private HttpServletRequest request;
 
     @Autowired
-    private NhaSanXuatService dvl;
+    private AnhSanPhamService dvl;
 
     @Autowired
-    private NhaSanXuatService dvlNhaSanXuatService;
+    private AnhSanPhamService anhSanPhamService;
 
-    @GetMapping("/nha-san-xuat")
+    @Autowired
+    private SanPhamService sanPhamService;
+
+    @GetMapping("/anh-san-pham")
     public String getDuyet(Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int pageSize,
@@ -47,41 +51,44 @@ public class NhaSanXuatController {
         int pageIndex = page - 1;
 
         // Lấy dữ liệu phân trang từ dịch vụ
-        Page<NhaSanXuat> nhaSanXuatPage = dvlNhaSanXuatService.duyetNhaSanXuat(PageRequest.of(pageIndex, pageSize));
+        Page<AnhSanPham> anhSanPhamPage = anhSanPhamService.duyetAnhSanPham(PageRequest.of(pageIndex, pageSize));
 
+        List<SanPham> dsSanPham = sanPhamService.dsSanPham();
+
+        model.addAttribute("dsSanPham", dsSanPham);
         // Cập nhật mô hình với dữ liệu phân trang
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", nhaSanXuatPage.getTotalPages());
+        model.addAttribute("totalPages", anhSanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
-        model.addAttribute("ds", nhaSanXuatPage.getContent()); // Danh sách nhà sản xuất
-        model.addAttribute("dl", new NhaSanXuat()); // Đối tượng mới để thêm
-        model.addAttribute("title", "Quản Lý Nhà Sản Xuất");
-        model.addAttribute("title_duyet", "Nhà Sản Xuất");
-        model.addAttribute("title_btn_add", "Thêm Nhà Sản Xuất");
-        model.addAttribute("phan_trang", "nha-san-xuat");
+        model.addAttribute("ds", anhSanPhamPage.getContent());
+        model.addAttribute("dl", new AnhSanPham());
+        model.addAttribute("title", "Quản Lý Ảnh Sản Phẩm");
+        model.addAttribute("phan_trang", "anh-san-pham");
+        model.addAttribute("title_duyet", "Ảnh Sản Phẩm");
+        model.addAttribute("title_btn_add", "Thêm Ảnh Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("action", "/admin/nha-san-xuat/them");
-        model.addAttribute("content", "admin/nhasanxuat/duyet.html");
+        model.addAttribute("action", "/admin/anh-san-pham/them");
+        model.addAttribute("content", "admin/anhsanpham/duyet.html");
 
         return "layouts/layout-admin.html";
     }
 
-    @PostMapping("/nha-san-xuat/them")
-    public String postThemNSX(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
+    @PostMapping("/anh-san-pham/them")
+    public String postAddAnhSanPham(@ModelAttribute("AnhSanPham") AnhSanPham dl,
             RedirectAttributes redirectAttributes) {
-
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+        dl.setNgayTao(LocalDate.now());
         dvl.them(dl);
 
         redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
 
-        return "redirect:/admin/nha-san-xuat";
+        return "redirect:/admin/anh-san-pham";
     }
 
-    @PostMapping("/nha-san-xuat/xoa")
-    public String postXoa(@RequestParam("id") int id,
+    @PostMapping("/anh-san-pham/xoa")
+    public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
@@ -94,7 +101,7 @@ public class NhaSanXuatController {
                     "Không thể xóa. Lỗi: " + e.getMessage());
         }
 
-        return "redirect:/admin/nha-san-xuat";
+        return "redirect:/admin/anh-san-pham";
     }
 
 }

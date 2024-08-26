@@ -20,35 +20,32 @@
             <div class="row">
                 <div class="col">
                     <input type="hidden" th:field="*{Id}" />
+
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" required id="floatingInput" placeholder="Tên đăng nhập"
-                            th:field="*{ten}" />
-                        <label for="floatingInput">Tên nhà sản xuất</label>
+                            th:field="*{hinhAnh}" />
+                        <label for="floatingInput">Đường dẫn ảnh</label>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" required th:field="*{maSP}" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option value="" disabled selected>Chọn sản phẩm</option>
+                                <option th:each="sp : ${dsSanPham}" th:value="${sp.id}" th:text="${sp.tenSP}">
+                                </option>
+                            </select>
+                            <label for="floatingSelectGrid">Sản Phẩm</label>
+                        </div>
                     </div>
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" required id="floatingInput" placeholder="Tên đăng nhập"
-                            th:field="*{anh}" />
-                        <label for="floatingInput">Ảnh đại diện</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" required id="floatingInput" placeholder="Email"
-                            th:field="*{link}" />
-                        <label for="floatingInput">Link</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" required id="floatingInput" placeholder="Số điện thoại"
                             th:field="*{thuTu}" />
                         <label for="floatingInput">Thứ tự</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" required id="floatingInput" placeholder="Số điện thoại"
-                            th:field="*{noiBat}" />
-                        <label for="floatingInput">Nổi bật</label>
-                    </div>
-                </div>
 
+                </div>
             </div>
             <button th:text="${title_sm}" type="submit" class="btn btn-outline-success">Cập Nhật</button>
         </form>

@@ -22,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hoang_vuong.project.doan.qdl.Qdl;
 
-// public class QdlKhachHang {
 @Controller
 @RequestMapping("/admin")
 public class KhachHangController {
@@ -73,8 +72,9 @@ public class KhachHangController {
 
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
+        model.addAttribute("phan_trang", "khach-hang");
         model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("title", "Khách Hàng");
+        model.addAttribute("title", "Quản Lý Khách Hàng");
         model.addAttribute("title_duyet", "Khách Hàng");
         model.addAttribute("title_btn_add", "Thêm khách Hàng");
         model.addAttribute("content", "admin/khachhang/duyet.html");
@@ -82,20 +82,6 @@ public class KhachHangController {
         return "layouts/layout-admin.html";
     }
 
-    @GetMapping("/khach-hang/them")
-    public String getThem(Model model) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
-
-        var dl = new KhachHang();
-
-        model.addAttribute("dl", dl);
-        model.addAttribute("title_add", "Thêm Khách Hàng");
-        model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("action", "/admin/khach-hang/them");
-
-        return "layouts/layout-admin.html";
-    }
 
     @PostMapping("/khach-hang/them")
     public String postThem(@ModelAttribute("KhachHang") KhachHang dl,
@@ -118,12 +104,11 @@ public class KhachHangController {
         return "redirect:/admin/khach-hang";
     }
 
-    @GetMapping("/khach-hang/sua-ajax")
+    @GetMapping("/khach-hang/sua")
     public String getSuaAjax(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        // NhanVien dl = dvl.xemNhanVien(id);
         var dl = dvl.xemKhachHang(id);
         model.addAttribute("title_body", "Sửa Khách Hàng");
         model.addAttribute("title_sm", "Cập nhật");
@@ -152,6 +137,39 @@ public class KhachHangController {
 
         return "redirect:/admin/khach-hang";
     }
+
+    @GetMapping("/khach-hang/xem")
+    public String getXem(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xemKhachHang(id);
+
+        model.addAttribute("title_body", "Xem Khách Hàng");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/khach-hang/xem");
+
+        return "admin/khachhang/form-xem-kh-bs4.html";
+
+    }
+
+    @PostMapping("/khach-hang/xoa")
+    public String postXoa(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        System.out.println("ID nhận được trong controller là: " + id);
+
+        try {
+            this.dvl.xoaKhachHang(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa nhân viên. Lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/khach-hang";
+    }
 }
 
-// }
+

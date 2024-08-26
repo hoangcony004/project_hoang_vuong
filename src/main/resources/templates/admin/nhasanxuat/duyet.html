@@ -31,7 +31,6 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-
             <!-- Modal Body -->
             <div class="modal-body">
                 <i th:replace="admin/nhasanxuat/form-bs4-nsx.html"></i>
@@ -52,7 +51,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa Nhân Viên</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Nhà Sản Xuất</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -82,8 +81,6 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-sm-4">
-                        <!-- <a href="#" th:href="@{/admin/nha-san-xuat/them}" th:text="${title_btn_add}" class="btn btn-danger mb-2"><i
-                                class="mdi mdi-plus-circle me-2"></i> Thêm Cài Đặt</a> -->
                         <div class="col-sm-4">
                             <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
                                 data-target="#modalThem">
@@ -91,19 +88,10 @@
                             </button>
                         </div>
                     </div>
-                    <!-- <div class="col-sm-8">
-                        <div class="text-sm-end">
-                            <button type="button" class="btn btn-success mb-2 me-1"><i
-                                    class="mdi mdi-cog-outline"></i></button>
-                            <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                            <button type="button" class="btn btn-light mb-2">Export</button>
-                        </div>
-                    </div> -->
-                    <!-- end col-->
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
                                 <th class="all" style="width: 20px;">
@@ -112,7 +100,6 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th>
-                                <!-- <th>Id</th> -->
                                 <th class="all">Tên Nhà Sản Xuất</th>
                                 <th>Ảnh</th>
                                 <th>Link</th>
@@ -141,26 +128,15 @@
                                 <td th:text="${dl.noiBat}"></td>
 
                                 <td class="table-action">
-                                    <!-- <a href="#" th:href="@{/admin/cai-dat/xem/{id}(id=${dl.Id})}" class="action-icon">
-                                        <i class="mdi mdi-eye"></i></a>
-                                    <a href="#" th:href="@{/admin/cai-dat/sua(id=${dl.Id})}" class="action-icon"> <i
-                                            class="mdi mdi-square-edit-outline"></i></a> -->
-                                    <!-- <a href="#" th:href="@{/admin/cai-dat/xoa(id=${dl.Id})}" class="action-icon"> <i
-                                            class="mdi mdi-delete"></i></a> -->
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
                                         href="#modalXoa" th:data-id="${dl.id}">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
 
                                     <script>
-                                        // https://stackoverflow.com/questions/10626885/passing-data-to-a-bootstrap-modal
-                                        //triggered when modal is about to be shown
                                         $('#modalXoa').on('show.bs.modal', function (e) {
-
-                                            //get data-id attribute of the clicked element
                                             var id = $(e.relatedTarget).data('id');
-                                            console.log("ID nhận được: ", id);
-                                            //populate the textbox
+                                            // console.log("ID nhận được: ", id);
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>
@@ -169,57 +145,75 @@
 
                         </tbody>
                     </table>
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
+                    <!-- Hiển thị phân trang -->
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <!-- Trang đầu -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                            </li>
+
+                            <!-- Trang trước -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang đầu tiên -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">1</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2 and currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Các trang giữa -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2 and currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li>
+
+                            <!-- Trang tiếp theo -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col -->
 </div>
 <!-- end row -->
-
-<style>
-    .close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        line-height: 1;
-        color: #000;
-        opacity: 0.5;
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        margin-top: 4px;
-    }
-
-    #alert-box {
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-    #alert-box.hide {
-        opacity: 0;
-        transition: opacity 0.5s ease-out;
-        /* Hiệu ứng mờ dần */
-    }
-
-
-    .close:hover {
-        opacity: 1;
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var closeButton = document.getElementById('close-button');
-        var alertBox = document.getElementById('alert-box');
-
-        if (closeButton && alertBox) {
-            closeButton.addEventListener('click', function () {
-                alertBox.classList.add('hide');
-                setTimeout(function () {
-                    alertBox.style.display = 'none';
-                }, 500);
-            });
-        }
-    });
-</script>
+<div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>

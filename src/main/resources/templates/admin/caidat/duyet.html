@@ -1,20 +1,3 @@
-<div class="ui positive message" th:if="${THONG_BAO_OK}">
-    <i class="close icon"></i>
-    <div class="header" th:text="${THONG_BAO_OK}">
-        You are eligible for a reward
-    </div>
-    <p>Minh họa tin nhắn RedirectAttribute Flash.</p>
-</div>
-
-<div class="ui positive message" th:if="${session.message}">
-    <i class="close icon"></i>
-    <div class="header" th:text="${session.message}">
-        You are eligible for a reward
-    </div>
-    <p>Bạn có thể tiếp tục các tác vụ khác được rồi.</p>
-    <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
-</div>
-
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -22,63 +5,87 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                    <li class="breadcrumb-item active">Cài Đặt</li>
+                    <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
                 </ol>
             </div>
-            <h4 class="page-title">Cài Đặt</h4>
+            <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
         </div>
+    </div>
+    <!-- Thông báo lỗi -->
+    <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO_SUCCESS}">
+        <div th:text="${THONG_BAO_SUCCESS}">
+            Thông báo đẩy ra ở đây
+        </div>
+        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
+    </div>
+    <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ERROR}">
+        <div th:text="${THONG_BAO_ERROR}">
+            Thông báo đẩy ra ở đây
+        </div>
+        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
     </div>
 </div>
 <!-- end page title -->
 
+<div class="modal fade" id="modalThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <i th:replace="admin/caidat/form-bs4-caidat.html"></i>
+            </div>
 
-<!-- <table class="table table-hover table-centered mb-0">
-    <div class="col-sm-4">
-        <a href="#" th:href="@{/admin/cai-dat/them}" class="btn btn-danger mb-2"><i
-                class="mdi mdi-plus-circle me-2"></i> Thêm Cài Đặt</a>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+
+        </div>
     </div>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Khóa</th>
-            <th>Giá Trị</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="dl : ${ds}">
-            <td th:text="${dl.Id}"></td>
-            <td th:text="${dl.Khoa}"></td>
-            <td th:text="${dl.GiaTri}"></td>
-            <td class="table-action">
-                <a href="#" th:href="@{/admin/cai-dat/xem(id=${dl.Id})}" class="action-icon"> <i
-                        class="mdi mdi-eye"></i></a>
-                <a href="#" th:href="@{/admin/cai-dat/sua(id=${dl.Id})} " class="action-icon"> <i
-                        class="mdi mdi-square-edit-outline"></i></a>
-                <a href="#" th:href="@{/admin/cai-dat/xoa(id=${dl.Id})} " class="action-icon"> <i
-                        class="mdi mdi-delete"></i></a>
-            </td>
-        </tr>
-    </tbody>
-</table> -->
+</div>
+
+<!-- BS4 MODAL: DELETE -->
+<div class="modal fade" id="modalXoa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Cài Đặt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formXoa" action="/admin/cai-dat/xoa" method="post">
+                    <input type="hidden" name="id" id="idInput" value="" />
+                    <p>
+                        Bạn có chắc muốn xóa?
+                    </p>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="bi-x"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi-trash"></i> Xóa
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-sm-4">
-                        <a href="#" th:href="@{/admin/cai-dat/them}" class="btn btn-danger mb-2"><i
-                                class="mdi mdi-plus-circle me-2"></i> Thêm Cài Đặt</a>
+                        <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
+                            data-target="#modalThem">
+                            <i class="bi-plus-circle"></i> Thêm Nhân Viên
+                        </button>
                     </div>
-                    <!-- <div class="col-sm-8">
-                        <div class="text-sm-end">
-                            <button type="button" class="btn btn-success mb-2 me-1"><i
-                                    class="mdi mdi-cog-outline"></i></button>
-                            <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                            <button type="button" class="btn btn-light mb-2">Export</button>
-                        </div>
-                    </div> -->
-                    <!-- end col-->
                 </div>
 
                 <div class="table-responsive">
@@ -91,7 +98,7 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th>
-                                <th>Id</th>
+                                <!-- <th>Id</th> -->
                                 <th class="all">Khóa</th>
                                 <th>Giá Trị</th>
                                 <th style="width: 85px;">Action</th>
@@ -105,22 +112,95 @@
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td th:text="${dl.Id}"></td>
+                                <!-- <td th:text="${dl.Id}"></td> -->
                                 <td th:text="${dl.Khoa}"></td>
                                 <td th:text="${dl.GiaTri}"></td>
 
                                 <td class="table-action">
-                                    <a href="#" th:href="@{/admin/cai-dat/xem/{id}(id=${dl.Id})}" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                    <a href="#" th:href="@{/admin/cai-dat/sua(id=${dl.Id})}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                    <a href="#" th:href="@{/admin/cai-dat/xoa(id=${dl.Id})}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
+                                        href="#modalXoa" th:data-id="${dl.id}">
+                                        <i class="mdi mdi-delete"></i>
+                                    </a>
+
+                                    <script>
+                                        $('#modalXoa').on('show.bs.modal', function (e) {
+                                            var id = $(e.relatedTarget).data('id');
+                                            console.log("ID nhận được: ", id);
+                                            $(e.currentTarget).find('input[name="id"]').val(id);
+                                        });
+                                    </script>
                                 </td>
                             </tr>
 
                         </tbody>
                     </table>
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <!-- Trang đầu -->
+                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                            </li> -->
+
+                            <!-- Trang trước -->
+                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
+                                </a>
+                            </li> -->
+
+                            <!-- Trang đầu tiên -->
+                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">1</a>
+                            </li> -->
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <!-- <li class="page-item" th:if="${totalPages > 2 and currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li> -->
+
+                            <!-- Các trang giữa -->
+                            <!-- <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li> -->
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <!-- <li class="page-item" th:if="${totalPages > 2 and currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li> -->
+
+                            <!-- Trang cuối -->
+                            <!-- <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li> -->
+
+                            <!-- Trang tiếp theo -->
+                            <!-- <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
+                                </a>
+                            </li> -->
+
+                            <!-- Trang cuối -->
+                            <!-- <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                            </li> -->
+                        </ul>
+                    </nav>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col -->
 </div>
 <!-- end row -->
+
+<div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>

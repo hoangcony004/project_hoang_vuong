@@ -1,0 +1,40 @@
+<div class="title">
+    Đổi Mật Khẩu
+</div>
+<form th:action="@{/admin/doi-mat-khau}" th:object="${dl}" method="post">
+    <div class="field">
+        <input type="password" th:field="*{matKhau}" required>
+        <label>Mật khẩu Cũ</label>
+    </div>
+
+    <div class="field">
+        <input type="password" th:field="*{matKhauMoi}" required>
+        <label>Mật khẩu Mới</label>
+    </div>
+
+    <div class="field">
+        <input type="password" th:field="*{nhapLaiMatKhauMoi}" required>
+        <label>Nhập Lại Mật khẩu</label>
+    </div>
+    <br>
+
+    <div class="alert alert-success" th:if="${THONG_BAO}"
+        style="color: red; font-size: 14px; margin-top: 10px; text-align: center;">
+        <span th:text="${THONG_BAO}"></span>
+    </div>
+
+    <div class="alert alert-success" th:if="${THONG_BAO_SS}"
+        style="color: green; font-size: 14px; margin-top: 10px; text-align: center;">
+        <span th:text="${THONG_BAO}"></span>
+    </div>
+
+    <div>
+        <a style="color: #262626; text-decoration: none;" href="/admin/dashboard">
+            Quay lại trang chủ.
+        </a>
+    </div>
+
+    <div class="field">
+        <input type="submit" value="Đổi mật khẩu">
+    </div>
+</form>

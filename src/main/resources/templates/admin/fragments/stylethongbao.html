@@ -1,0 +1,50 @@
+<div th:fragment="stylethongbao">
+    <!-- Nội dung của fragment -->
+    <style>
+        .close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #000;
+            opacity: 0.5;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            margin-top: 4px;
+        }
+
+        #alert-box {
+            transition: opacity 0.5s ease-out;
+            /* Hiệu ứng mờ dần */
+        }
+
+        #alert-box.hide {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+            /* Hiệu ứng mờ dần */
+        }
+
+
+        .close:hover {
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var closeButton = document.getElementById('close-button');
+            var alertBox = document.getElementById('alert-box');
+
+            if (closeButton && alertBox) {
+                closeButton.addEventListener('click', function () {
+                    alertBox.classList.add('hide');
+                    setTimeout(function () {
+                        alertBox.style.display = 'none';
+                    }, 500);
+                });
+            }
+        });
+    </script>
+</div>

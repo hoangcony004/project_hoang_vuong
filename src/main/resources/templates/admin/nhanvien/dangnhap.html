@@ -9,8 +9,8 @@
 </div>
 <form th:action="@{/admin/dang-nhap}" th:object="${dl}" method="post">
     <div class="field">
-        <input type="text" th:field="*{TenDangNhap}" required>
-        <label>Tên đăng nhập</label>
+        <input type="text" th:field="*{TenDangNhap}" required autofocus>
+        <label>Tên đăng nhập (Email, Số Điện Thoại)</label>
     </div>
     <div class="field">
         <input type="password" th:field="*{MatKhau}" required>
@@ -22,6 +22,11 @@
         <span th:text="${THONG_BAO}"></span>
     </div>
 
+    <div class="alert alert-success" th:if="${THONG_BAO_SS}"
+        style="color: green; font-size: 14px; margin-top: 10px; text-align: center;">
+        <span th:text="${THONG_BAO_SS}"></span>
+    </div>
+
     <div class="content">
         <div class="checkbox">
             <input type="checkbox" id="remember-me" checked>
@@ -29,7 +34,7 @@
         </div>
     </div>
     <div>
-        <a style="color: #262626; text-decoration: none;" href="#">
+        <a style="color: #262626; text-decoration: none;" href="/admin/quen-mat-khau">
             Quên mật khẩu.
         </a>
     </div>

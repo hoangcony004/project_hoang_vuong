@@ -1,0 +1,20 @@
+<div class="title">
+    Quên Mật Khẩu
+</div>
+<form th:action="@{/admin/quen-mat-khau}" th:object="${dl}" method="post">
+
+    <div class="field">
+        <input type="text" th:field="*{email}" required autofocus>
+        <label>Nhập email </label>
+    </div>
+    <br>
+
+    <div class="alert alert-success" th:if="${THONG_BAO}"
+        style="color: red; font-size: 14px; margin-top: 10px; text-align: center;">
+        <span th:text="${THONG_BAO}"></span>
+    </div>
+
+    <div class="field">
+        <input type="submit" value="Lấy mật khẩu">
+    </div>
+</form>

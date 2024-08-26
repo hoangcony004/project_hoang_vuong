@@ -1,35 +1,35 @@
-package hoang_vuong.project.doan.admin.sanpham;
+package hoang_vuong.project.doan.admin.anhsanpham;
 
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SanPhamService {
+public class AnhSanPhamService {
     @Autowired
-    private SanPhamRepository kdl;
+    private AnhSanPhamReponsitory kdl;
 
-    public Page<SanPham> duyetSanPham(Pageable pageable) {
+    public Page<AnhSanPham> duyetAnhSanPham(Pageable pageable) {
         return kdl.findAll(pageable);
     }
 
-    public List<SanPham> dsSanPham() {
+    public List<AnhSanPham> dsAnhSanPham() {
         return kdl.findAll();
     }
 
-    public List<SanPham> duyet() {
+    public List<AnhSanPham> duyet() {
         return kdl.findAll();
     }
 
-    public SanPham timTheoId(int id) {
-        SanPham dl = null;
+    public AnhSanPham timTheoId(int id) {
+        AnhSanPham dl = null;
 
-        Optional<SanPham> optional = kdl.findById(id);
+        Optional<AnhSanPham> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
@@ -41,11 +41,11 @@ public class SanPhamService {
 
     }
 
-    public SanPham xem(int id) {
+    public AnhSanPham xem(int id) {
 
-        SanPham dl = null;
+        AnhSanPham dl = null;
 
-        Optional<SanPham> optional = kdl.findById(id);
+        Optional<AnhSanPham> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
@@ -57,21 +57,20 @@ public class SanPhamService {
 
     }
 
-    public void luu(SanPham dl) {
+    public void luu(AnhSanPham dl) {
         this.kdl.save(dl);
     }
 
-    public void them(SanPham dl) {
+    public void them(AnhSanPham dl) {
         this.kdl.save(dl);
     }
 
-    public void sua(SanPham dl) {
+    public void sua(AnhSanPham dl) {
         this.kdl.save(dl);
     }
 
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
-
 
 }
