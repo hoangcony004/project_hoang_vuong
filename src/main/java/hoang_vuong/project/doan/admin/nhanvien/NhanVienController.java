@@ -96,21 +96,21 @@ public class NhanVienController {
         return "layouts/layout-admin.html";
     }
 
-    @GetMapping("/nhan-vien/them")
-    public String getThem(Model model) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
+    // @GetMapping("/nhan-vien/them")
+    // public String getThem(Model model) {
+    //     if (Qdl.NhanVienChuaDangNhap(request))
+    //         return "redirect:/admin/dang-nhap";
 
-        var dl = new NhanVien();
+    //     var dl = new NhanVien();
 
-        model.addAttribute("dl", dl);
-        model.addAttribute("title", "Thêm Nhân Viên");
-        model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("action", "/admin/nhan-vien/them");
-        model.addAttribute("content", "admin/nhanvien/them.html");
+    //     model.addAttribute("dl", dl);
+    //     model.addAttribute("title", "Thêm Nhân Viên");
+    //     model.addAttribute("title_sm", "Thêm mới");
+    //     model.addAttribute("action", "/admin/nhan-vien/them");
+    //     model.addAttribute("content", "admin/nhanvien/them.html");
 
-        return "layouts/layout-admin.html";
-    }
+    //     return "layouts/layout-admin.html";
+    // }
 
     @PostMapping("/nhan-vien/them")
     public String postThem(@ModelAttribute("NhanVien") NhanVien dl,

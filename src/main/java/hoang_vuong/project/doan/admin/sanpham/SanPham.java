@@ -66,6 +66,6 @@ public class SanPham {
             return null;
         }
         DecimalFormat df = new DecimalFormat("#,###.##");
-        return df.format(donGia) + " VND";
+        return df.format(donGia) + " vnd";
     }
 }

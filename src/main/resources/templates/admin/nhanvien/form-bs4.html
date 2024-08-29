@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" required id="floatingInput" placeholder="Mật khẩu"
+                        <input type="password" class="form-control" id="floatingInput" placeholder="Mật khẩu"
                             th:field="*{matKhau}" />
                         <label for="floatingInput">Mật khẩu</label>
                     </div>
@@ -58,12 +58,6 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" required id="floatingInput" placeholder="Ảnh đại diện"
-                            th:field="*{AnhDaiDien}" />
-                        <label for="floatingInput">Link ảnh đại diện</label>
-                        <a href="https://postimages.org/">Cách lấy link</a>
-                    </div>
 
                     <div class="row g-2">
                         <div class="col-md">
@@ -85,16 +79,31 @@
                             </div>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="date" required class="form-control" id="floatingInput"
-                                placeholder="Ngày hết hạn" th:field="*{ngayHetHan}" />
-                            <label for="floatingInput">Ngày hết hạn</label>
-                        </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="hidden" class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
-                                th:field="*{NgayTao}" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" required class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
+                            th:field="*{ngayHetHan}" />
+                        <label for="floatingInput">Ngày hết hạn</label>
+                    </div>
+
+                    <!-- <div class="form-floating mb-3">
+                        <div class="input-group">
+                            <input type="date" th:field="*{ngayHetHan}" class="form-control form-control-light"
+                                id="dash-daterange">
                         </div>
+                    </div> -->
+
+                    <div class="form-floating mb-3">
+                        <input type="hidden" class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
+                            th:field="*{NgayTao}" />
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" required id="floatingInput" placeholder="Ảnh đại diện"
+                            th:field="*{AnhDaiDien}" />
+                        <label for="floatingInput">Link ảnh đại diện</label>
+                        <a href="https://postimages.org/">Cách lấy link</a>
                     </div>
                 </div>
             </div>
