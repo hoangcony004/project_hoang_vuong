@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;
@@ -80,25 +79,28 @@ public class SanPhamController {
             return "redirect:/admin/dang-nhap";
 
         dl.setNgayTao(LocalDate.now());
-
-        dvl.them(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.them(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR","Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/san-pham";
-
     }
 
     @GetMapping("/san-pham/xem")
-    public String getShowSP(Model model, @RequestParam("id") int id) {
+    public String getShowSP(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        var dl = dvl.xem(id);
-
-        model.addAttribute("title_body", "Xem Sản Phẩm");
-        model.addAttribute("dl", dl);
-        model.addAttribute("action", "/admin/san-pham/xem");
+        try {
+            var dl = dvl.xem(id);model.addAttribute("title_body", "Xem Sản Phẩm");
+            model.addAttribute("dl", dl);
+            model.addAttribute("action", "/admin/san-pham/xem");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR","Không thể xem. Mã lỗi: " + e.getMessage());
+        }
 
         return "admin/sanpham/form-xem-sp-bs4.html";
 
@@ -130,12 +132,15 @@ public class SanPhamController {
             return "redirect:/admin/dang-nhap";
 
         dl.setNgaySua(LocalDate.now());
-        dvl.sua(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã sửa thành công !");
+        
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/san-pham";
-
     }
 
     @PostMapping("/san-pham/xoa")
@@ -146,10 +151,10 @@ public class SanPhamController {
 
         try {
             this.dvl.xoa(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa. Lỗi: " + e.getMessage());
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/san-pham";

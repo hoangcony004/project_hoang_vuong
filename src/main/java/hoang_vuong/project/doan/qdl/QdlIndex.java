@@ -44,7 +44,6 @@ public class QdlIndex {
         model.addAttribute("title", "Quản Lý Tìm Kiếm");
         model.addAttribute("content", "admin/timkiem/tim-kiem-result.html");
 
-        // Trả về trang giao diện hiển thị kết quả tìm kiếm
         return "layouts/layout-admin.html";
     }
 

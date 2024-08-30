@@ -82,7 +82,6 @@ public class KhachHangController {
         return "layouts/layout-admin.html";
     }
 
-
     @PostMapping("/khach-hang/them")
     public String postThem(@ModelAttribute("KhachHang") KhachHang dl,
             RedirectAttributes redirectAttributes) {
@@ -97,9 +96,12 @@ public class KhachHangController {
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
 
-        dvl.luuKhachHang(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.luuKhachHang(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/khach-hang";
     }
@@ -112,12 +114,10 @@ public class KhachHangController {
         var dl = dvl.xemKhachHang(id);
         model.addAttribute("title_body", "Sửa Khách Hàng");
         model.addAttribute("title_sm", "Cập nhật");
-        // Gửi đối tượng dữ liệu sang bên view
         model.addAttribute("dl", dl);
         model.addAttribute("action", "/admin/khach-hang/sua");
 
         return "admin/khachhang/form-bs4-kh.html";
-
     }
 
     @PostMapping("/khach-hang/sua")
@@ -130,27 +130,31 @@ public class KhachHangController {
 
         dl.setMatKhau(hash);
 
-        dvl.luuKhachHang(dl);
-
-        // Gửi thông báo thành công từ view Add/Edit sang view List
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã sửa thành công !");
+        try {
+            dvl.luuKhachHang(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/khach-hang";
     }
 
     @GetMapping("/khach-hang/xem")
-    public String getXem(Model model, @RequestParam("id") int id) {
+    public String getXem(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        var dl = dvl.xemKhachHang(id);
-
-        model.addAttribute("title_body", "Xem Khách Hàng");
-        model.addAttribute("dl", dl);
-        model.addAttribute("action", "/admin/khach-hang/xem");
+        try {
+            var dl = dvl.xemKhachHang(id);
+            model.addAttribute("title_body", "Xem Khách Hàng");
+            model.addAttribute("dl", dl);
+            model.addAttribute("action", "/admin/khach-hang/xem");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể xem. Mã lỗi: " + e.getMessage());
+        }
 
         return "admin/khachhang/form-xem-kh-bs4.html";
-
     }
 
     @PostMapping("/khach-hang/xoa")
@@ -158,18 +162,16 @@ public class KhachHangController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        System.out.println("ID nhận được trong controller là: " + id);
+        // System.out.println("ID nhận được trong controller là: " + id);
 
         try {
             this.dvl.xoaKhachHang(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa nhân viên. Lỗi: " + e.getMessage());
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/khach-hang";
     }
 }
-
-

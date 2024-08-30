@@ -1,6 +1,5 @@
 package hoang_vuong.project.doan.admin.quangcao;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +69,12 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        dvl.them(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.them(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/quang-cao";
     }
@@ -84,13 +86,13 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        try {
-            this.dvl.xoa(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa. Lỗi: " + e.getMessage());
-        }
+            try {
+                this.dvl.xoa(id);
+                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                        "Không thể xóa. Mã lỗi: " + e.getMessage());
+            }
 
         return "redirect:/admin/quang-cao";
     }

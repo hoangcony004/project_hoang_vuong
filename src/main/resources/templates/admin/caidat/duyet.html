@@ -12,18 +12,7 @@
         </div>
     </div>
     <!-- Thông báo lỗi -->
-    <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO_SUCCESS}">
-        <div th:text="${THONG_BAO_SUCCESS}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
-    <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ERROR}">
-        <div th:text="${THONG_BAO_ERROR}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
+    <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
 </div>
 <!-- end page title -->
 
