@@ -64,6 +64,9 @@ public class LienHeController {
         model.addAttribute("action", "/admin/lien-he/them");
         model.addAttribute("content", "admin/lienhe/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 

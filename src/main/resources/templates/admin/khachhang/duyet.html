@@ -159,8 +159,8 @@
                         </thead>
 
                         <tbody>
-                            <tr th:each="dl : ${ds}">
-                                <td th:text="${dl.thuTu}">ID </td>
+                            <tr th:each="dl, iterStat  : ${ds}">
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
                                 <td>
                                     <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
                                         class="rounded me-3" height="48">

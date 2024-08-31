@@ -70,6 +70,9 @@ public class AnhSanPhamController {
         model.addAttribute("action", "/admin/anh-san-pham/them");
         model.addAttribute("content", "admin/anhsanpham/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 

@@ -172,7 +172,6 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th> -->
-                                <th>STT</th>
                                 <th>Cấu Hình</th>
                                 <th class="all">Tên Sản Phẩm</th>
                                 <th>Ảnh</th>
@@ -185,8 +184,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dl, iterStat  : ${ds}">
-                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
+                            <tr th:each="dl : ${ds}">
                                 <!-- <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -257,7 +255,7 @@
                         </tbody>
                     </table>
                     <!-- Hiển thị phân trang -->
-                    <div th:insert="/admin/pages/pageable.html"></div>
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

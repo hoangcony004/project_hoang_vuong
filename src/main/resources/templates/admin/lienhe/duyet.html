@@ -119,6 +119,7 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th>
+                                <th>STT</th>
                                 <th>Tên Liên Hệ</th>
                                 <th>Email</th>
                                 <th>Tiêu Đề</th>
@@ -132,13 +133,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dl : ${ds}">
+                            <tr th:each="dl, iterStat : ${ds}">
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="customCheck2">
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td>
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
                                 <td th:text="${dl.ten}">Tên</td>
                                 <td th:text="${dl.email}">xxx</td>
                                 <td th:text="${dl.tieuDe}">xxx</td>

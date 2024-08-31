@@ -41,6 +41,7 @@ public class CaiDatController {
         model.addAttribute("action", "/admin/cai-dat/them");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("content", "admin/caidat/duyet.html");
+        
         return "layouts/layout-admin.html";
     }
 

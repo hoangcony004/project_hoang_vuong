@@ -58,6 +58,9 @@ public class NhaSanXuatController {
         model.addAttribute("action", "/admin/nha-san-xuat/them");
         model.addAttribute("content", "admin/nhasanxuat/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 
@@ -72,7 +75,7 @@ public class NhaSanXuatController {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR","Không thể thêm mới. Mã lỗi: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/nha-san-xuat";
@@ -84,13 +87,13 @@ public class NhaSanXuatController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-            try {
-                this.dvl.xoa(id);
-                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                        "Không thể xóa. Mã lỗi: " + e.getMessage());
-            }
+        try {
+            this.dvl.xoa(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/nha-san-xuat";
     }

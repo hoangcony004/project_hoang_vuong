@@ -53,10 +53,6 @@ public class SanPham {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 
-    public String getNgaySuaText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
-    }
-
     public String getNgayHetHanText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayHetHan);
     }
@@ -67,5 +63,12 @@ public class SanPham {
         }
         DecimalFormat df = new DecimalFormat("#,###.##");
         return df.format(donGia) + " vnd";
+    }
+
+    public String getNgaySuaText() {
+        if (ngaySua == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
     }
 }

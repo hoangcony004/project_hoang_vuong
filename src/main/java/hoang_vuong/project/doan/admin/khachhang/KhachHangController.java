@@ -79,6 +79,9 @@ public class KhachHangController {
         model.addAttribute("title_btn_add", "Thêm khách Hàng");
         model.addAttribute("content", "admin/khachhang/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 

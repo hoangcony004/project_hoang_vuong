@@ -1,0 +1,104 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_loc}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_loc}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <form th:action="${action_loc}" th:object="${dl}" method="post">
+            <div class="row mb-3">
+                <h4>Chọn khoảng giá</h4>
+                <div class="slider-container">
+                    <!-- Nhãn cho thanh trượt giá thấp nhất -->
+                    <label for="minRange">Giá thấp nhất</label>
+                    <input type="range" id="minRange" name="minPrice" min="0" max="500000" value="500000" step="10"
+                        class="custom-range">
+                    <span class="slider-value min" id="minValue">500,000</span>
+                    <br>
+                    <!-- Nhãn cho thanh trượt giá cao nhất -->
+                    <label for="maxRange">Giá cao nhất</label>
+                    <input type="range" id="maxRange" name="maxPrice" min="500000" max="50000000" value="5000000"
+                        step="10" class="custom-range">
+                    <span class="slider-value max" id="maxValue">5,000,000</span>
+                </div>
+                <p>Khoảng giá: <span id="priceRange">500,000 - 5,000,000</span></p>
+            </div>
+            <script>
+                // Khởi tạo giá trị ban đầu cho thanh trượt
+                var minRange = document.getElementById('minRange');
+                var maxRange = document.getElementById('maxRange');
+                var minValueDisplay = document.getElementById('minValue');
+                var maxValueDisplay = document.getElementById('maxValue');
+                var priceRangeDisplay = document.getElementById('priceRange');
+
+                function updateSlider() {
+                    // Đảm bảo giá trị min không lớn hơn giá trị max
+                    if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+                        minRange.value = maxRange.value;
+                    }
+
+                    // Hiển thị giá trị đã định dạng
+                    minValueDisplay.textContent = parseInt(minRange.value).toLocaleString();
+                    maxValueDisplay.textContent = parseInt(maxRange.value).toLocaleString();
+                    priceRangeDisplay.textContent = parseInt(minRange.value).toLocaleString() + " - " + parseInt(maxRange.value).toLocaleString();
+                }
+
+                // Cập nhật giá trị khi kéo thanh trượt
+                minRange.addEventListener('input', updateSlider);
+                maxRange.addEventListener('input', updateSlider);
+
+                // Khởi tạo giá trị hiển thị ban đầu
+                updateSlider();
+            </script>
+
+            <div class="row mb-3">
+                <!-- Lọc theo nhà sản xuất -->
+                <div class="form-floating mb-3 col-md">
+                    <select class="form-select" th:field="*{maNSX}" id="floatingSelectGrid"
+                        aria-label="Floating label select example">
+                        <option value="" selected>Chọn nhà sản xuất</option>
+                        <option th:each="nsx : ${dsNhaSanXuat}" th:value="${nsx.id}" th:text="${nsx.ten}">
+                        </option>
+                    </select>
+                    <label for="floatingSelectGrid">Nhà Sản Xuất</label>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating  mb-3">
+                        <select class="form-select" th:field="*{banChay}" id="floatingSelectGrid"
+                            aria-label="Floating label select example">
+                            <option value="true" th:text="'Có bán chạy'"></option>
+                            <option value="false" th:text="'Không bán chạy'"></option>
+                        </select>
+
+                        <label for="floatingSelectGrid">Bán chạy</label>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating  mb-3">
+                        <select class="form-select" th:field="*{noiBat}" id="floatingSelectGrid"
+                            aria-label="Floating label select example">
+                            <option value="true" th:text="'Có nổi bật'"></option>
+                            <option value="false" th:text="'Không nổi bật'"></option>
+                        </select>
+                        <label for="floatingSelectGrid">Nổi bật</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút lọc sản phẩm -->
+            <button th:text="${title_loc}" type="submit" class="btn btn-outline-success">Lọc Sản Phẩm</button>
+        </form>
+
+    </div>
+</div>
