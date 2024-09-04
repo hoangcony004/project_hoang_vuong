@@ -40,7 +40,9 @@ public class AnhSanPhamService {
         return dl;
 
     }
-
+    public List<AnhSanPham> dsmasp(int id) {
+        return kdl.findByMaSP(id);
+    }
     public AnhSanPham xem(int id) {
 
         AnhSanPham dl = null;
@@ -72,5 +74,7 @@ public class AnhSanPhamService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
+
+   
 
 }

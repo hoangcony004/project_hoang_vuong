@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-
-<!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
-<head th:replace="client/fragments/head :: head"></head>
-
-<body>
-    <div class="page-wrapper">
-        <header th:replace="client/fragments/header :: header"></header>
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
@@ -39,75 +30,48 @@
 		                			<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
 		                				<div class="row">
 		                					<div class="col-sm-6">
-		                						<label>First Name *</label>
+		                						<label>Họ và tên *</label>
 		                						<input type="text" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 
 		                					<div class="col-sm-6">
-		                						<label>Last Name *</label>
-		                						<input type="text" class="form-control" required>
-		                					</div><!-- End .col-sm-6 -->
-		                				</div><!-- End .row -->
-
-	            						<label>Company Name (Optional)</label>
-	            						<input type="text" class="form-control">
-
-	            						<label>Country *</label>
-	            						<input type="text" class="form-control" required>
-
-	            						<label>Street address *</label>
-	            						<input type="text" class="form-control" placeholder="House number and Street name" required>
-	            						<input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
-
-	            						<div class="row">
-		                					<div class="col-sm-6">
-		                						<label>Town / City *</label>
-		                						<input type="text" class="form-control" required>
-		                					</div><!-- End .col-sm-6 -->
-
-		                					<div class="col-sm-6">
-		                						<label>State / County *</label>
+		                						<label>Số điện thoại</label>
 		                						<input type="text" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
-		                				<div class="row">
-		                					<div class="col-sm-6">
-		                						<label>Postcode / ZIP *</label>
-		                						<input type="text" class="form-control" required>
-		                					</div><!-- End .col-sm-6 -->
+	            						<label>Tỉnh/Thành phố  *</label>
+										<select  class="form-control" name="" id='city' >
+											<option value=''>Tỉnh/Thành phố</option>
+										  </select>
+										  <label>Quận huyện  *</label>
+										  <select  class="form-control" name="" id='district' >
+											<option value=''>Quận/huyện</option>
+										  </select>
+										  <label>Phường xã  *</label>
+										  <select  class="form-control" name="" id='ward'>
+											<option value=''>Phường/xã</option>
+										  </select>
 
-		                					<div class="col-sm-6">
-		                						<label>Phone *</label>
-		                						<input type="tel" class="form-control" required>
-		                					</div><!-- End .col-sm-6 -->
-		                				</div><!-- End .row -->
-
+										  <label>Số nhà số ngõ địa chỉ chi tiết *</label>
+										  <input type="email" class="form-control" required>
+  
+	            					
 	                					<label>Email address *</label>
 	        							<input type="email" class="form-control" required>
 
-	        							<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-											<label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-										</div><!-- End .custom-checkbox -->
-
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-											<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-										</div><!-- End .custom-checkbox -->
-
-	                					<label>Order notes (optional)</label>
-	        							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+	                					<label>Ghi chú </label>
+	        							<textarea class="form-control" cols="30" rows="4" placeholder="ghi chú điều cần chú ý."></textarea>
 		                		</div><!-- End .col-lg-9 -->
 		                		<aside class="col-lg-3">
 		                			<div class="summary">
-		                				<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+		                				<h3 class="summary-title">Đơn hàng của bạn</h3><!-- End .summary-title -->
 
 		                				<table class="table table-summary">
 		                					<thead>
 		                						<tr>
-		                							<th>Product</th>
-		                							<th>Total</th>
+		                							<th>Sản phẩm</th>
+		                							<th>Tổng</th>
 		                						</tr>
 		                					</thead>
 
@@ -223,23 +187,9 @@
 	                </div><!-- End .container -->
                 </div><!-- End .checkout -->
             </div><!-- End .page-content -->
-        </main><!-- End .main -->
+        </main><!-- End .main -->	
 
-        <footer  th:replace="client/fragments/footer :: footer" ></footer>
-    </div><!-- End .page-wrapper -->
-    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
-
-    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
-    <!-- Sign in / Register Modal -->
-    <div th:replace="client/fragments/register_modal :: register_modal"></div><!-- End .modal -->
-
-    <!-- Plugins JS File -->
-    <div th:replace="client/fragments/script :: script"></div>
-</body>
-
-
-<!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
-</html>
+	  <!-- api adress -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	  <script src="/client/assets/js/apiprovince.js"></script>

@@ -37,8 +37,9 @@ public class DangNhapDangKyController {
         model.addAttribute("dl", dl);
         model.addAttribute("title_add", "Thêm Khách Hàng");
         model.addAttribute("title_sm", "Thêm mới");
+        model.addAttribute("content", "client/login.html");
         model.addAttribute("action", "/apps/dang-ky");
-     return "client/login";
+     return "layouts/layout-client";
     }
   @PostMapping("/dang-ky")
     public String postThem(@ModelAttribute("KhachHang") KhachHang dl,
@@ -49,10 +50,13 @@ public class DangNhapDangKyController {
 
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
+                try {
+                    dvl.luuKhachHang(dl);
+                    redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+                } catch (Exception e) {
+                    redirectAttributes.addFlashAttribute("THONG_BAO", "Đăng ký ko thành công!");
+                }
 
-        dvl.luuKhachHang(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
 
         return "redirect:/apps/dang-ky";
     }

@@ -45,10 +45,7 @@ public class SanPham {
     private String tag;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-    @ManyToOne
-    @JoinColumn(name = "maNSX")
-    private NhaSanXuat nhaSanXuat;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayHetHan;
 

@@ -1,12 +1,22 @@
 package hoang_vuong.project.doan.client.trangchu;
 
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
+import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
+import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
+import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,29 +29,65 @@ public class home {
     private HttpServletRequest request;
       @Autowired
     private SanPhamService dvl;
+    @Autowired
+    private NhaSanXuatService nsxdv;
+    @Autowired
+    private AnhSanPhamService anhdv;
    
-     @GetMapping("/home") 
+    @GetMapping({
+      "/",
+      "/home"
+})
     public String get(Model model, HttpSession session) {
         Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
         String khachhang_Email = (String) session.getAttribute("khachhang_Email");
-        java.util.List<SanPham> list = dvl.dsSanPham();
-       model.addAttribute("ds", list);
+        Integer cartQuantity = (Integer)session.getAttribute("SoSanPhamTrongGioHang");
+if (cartQuantity == null) {
+    cartQuantity = 0; // Hoặc giá trị mặc định khác
+}
+        // java.util.List<SanPham> list = dvl.dsSanPham();
+      List<SanPham> noibat = dvl.dsSanPhamNoiBat();
+        List<SanPham> banchay = dvl.dsSanPhamBanChay();        
+                  model.addAttribute("ds_noibat", noibat);
+                  model.addAttribute("ds_banchay", banchay);    
+      //  model.addAttribute("ds", list);
+       java.util.List<NhaSanXuat> nsx=  nsxdv.duyet();
+       model.addAttribute("dlnsx", nsx);
+       model.addAttribute("content", "client/index.html");
         model.addAttribute("khachhang_Id", khachhang_Id);
         model.addAttribute("khachhang_Email", khachhang_Email);
+        model.addAttribute("SoSanPhamTrongGioHang", cartQuantity);
         // System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
-        // model.addAttribute("content", "client/index.hml");
-     return "client/index.html";
+     return "layouts/layout-client.html";
     }
     @GetMapping("/product") 
  public String getXem(Model model, @RequestParam(value = "id") int id) {
         // if (Qdl.KhachHangChuaDangNhap(request))
         //     return "redirect:/apps/dang-ky";
+      var dl = anhdv.dsmasp(id);
+    model.addAttribute("ds", dl);
+        var dls = dvl.timTheoId(id);
 
-        var dl = dvl.timTheoId(id);
+        float price = dls.getDonGia();
+        NumberFormat formatTienViet = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+      String giaDinhDang = formatTienViet.format(price);
+      model.addAttribute("price", giaDinhDang);
 
-        model.addAttribute("dl", dl);
-       // model.addAttribute("content", "admin/nhanvien/xem.html");
-
-        return "client/product-centered.html";
+        model.addAttribute("dl", dls);
+       java.util.List<NhaSanXuat> nsx=  nsxdv.duyet();
+        model.addAttribute("dlnsx", nsx);
+       model.addAttribute("content", "client/product-sidebar.html");
+        return "layouts/layout-client.html";
+        
     }
+    @GetMapping("/checkout") 
+    public String getviewcart(Model model) {
+         
+          model.addAttribute("content", "client/checkout.html");
+           return "layouts/layout-client.html";
+           
+       }
+ 
+    
+
 }
