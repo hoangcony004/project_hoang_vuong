@@ -28,7 +28,7 @@ public class QuangCaoController {
     private QuangCaoService dvl;
 
     @GetMapping("/quang-cao")
-    public String getDuyetQuangCao(Model model,
+    public String getDuyet(Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int pageSize,
             HttpServletRequest request) {
@@ -63,7 +63,7 @@ public class QuangCaoController {
     }
 
     @PostMapping("/quang-cao/them")
-    public String postAddQuangCao(@ModelAttribute("QuangCao") QuangCao dl,
+    public String postAdd(@ModelAttribute("QuangCao") QuangCao dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -80,7 +80,7 @@ public class QuangCaoController {
     }
 
     @PostMapping("/quang-cao/xoa")
-    public String postMethodName(@RequestParam("id") int id,
+    public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnhSanPhamService {
     @Autowired
-    private AnhSanPhamReponsitory kdl;
+    private AnhSanPhamRepository kdl;
 
     public Page<AnhSanPham> duyetAnhSanPham(Pageable pageable) {
         return kdl.findAll(pageable);

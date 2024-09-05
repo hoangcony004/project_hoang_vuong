@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LienHeService {
     @Autowired
-    private LienHeReponsitory kdl;
+    private LienHeRepository kdl;
 
     public Page<LienHe> duyetLienHe(Pageable pageable) {
         return kdl.findAll(pageable);

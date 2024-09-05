@@ -98,7 +98,7 @@ public class NhanVienController {
     }
 
     @PostMapping("/nhan-vien/them")
-    public String postThem(@ModelAttribute("NhanVien") NhanVien dl,
+    public String postAdd(@ModelAttribute("NhanVien") NhanVien dl,
             RedirectAttributes redirectAttributes) {
 
         // Mã hóa mật khẩu
@@ -120,7 +120,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/sua")
-    public String getSua(Model model, @RequestParam("id") int id) {
+    public String getEdit(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -135,7 +135,7 @@ public class NhanVienController {
     }
 
     @PostMapping("/nhan-vien/sua")
-    public String postSua(@ModelAttribute("NhanVien") NhanVien dl,
+    public String postEdit(@ModelAttribute("NhanVien") NhanVien dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
@@ -168,12 +168,55 @@ public class NhanVienController {
         return "redirect:/admin/nhan-vien";
     }
 
+    // v1
+    // @PostMapping("/nhan-vien/xoa")
+    // public String postXoa(@RequestParam("id") int id, RedirectAttributes
+    // redirectAttributes) {
+    // if (Qdl.NhanVienChuaDangNhap(request))
+    // return "redirect:/admin/dang-nhap";
+
+    // System.out.println("ID nhận được trong controller là: " + id);
+
+    // try {
+    // this.dvl.xoaNhanVien(id);
+    // redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công
+    // !");
+    // } catch (Exception e) {
+    // redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+    // "Không thể xóa. Mã lỗi: " + e.getMessage());
+    // }
+
+    // return "redirect:/admin/nhan-vien";
+    // }
+
+    // v2
     @PostMapping("/nhan-vien/xoa")
-    public String postXoa(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String postDelete(@RequestParam("id") int id,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
+
+        // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        System.out.println("ID nhận được trong controller là: " + id);
+        // Lấy ID nhân viên hiện đang đăng nhập từ session
+        Integer idNhanVienDangNhap = (Integer) request.getSession().getAttribute("NhanVien_Id");
+
+        // Kiểm tra nếu ID cần xóa trùng với ID của nhân viên đang đăng nhập
+        if (idNhanVienDangNhap != null && id == idNhanVienDangNhap) {
+            System.out.println("ID nhận được trong controller là: " + id);
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa! - Do tài khoản bạn xóa đang đăng nhập.");
+            return "redirect:/admin/nhan-vien";
+        }
+
+        // Kiểm tra tài khoản không được phép xóa
+        NhanVien nhanVien = dvl.timNhanVienTheoId(id);
+        if (nhanVien != null && "admin".equals(nhanVien.getTenDangNhap())) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa tài khoản này vì đây là tài khoản mặc định.");
+            return "redirect:/admin/nhan-vien";
+        }
 
         try {
             this.dvl.xoaNhanVien(id);
@@ -187,7 +230,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/xem")
-    public String getXem(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String getShow(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -204,7 +247,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien/tim-kiem")
-    public String getTimKiem(Model model,
+    public String getSearch(Model model,
             @RequestParam("criteria") String criteria,
             @RequestParam("query") String query,
             @RequestParam(defaultValue = "1") int page,
@@ -299,7 +342,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/dang-nhap")
-    public String getDangNhap(Model model, HttpSession session) {
+    public String getLogin(Model model, HttpSession session) {
 
         System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
 
@@ -311,7 +354,7 @@ public class NhanVienController {
     }
 
     @PostMapping("/dang-nhap")
-    public String postDangNhap(Model model,
+    public String postLogin(Model model,
             RedirectAttributes redirectAttributes,
             @RequestParam("TenDangNhap") String TenDangNhap,
             @RequestParam("MatKhau") String MatKhau,
@@ -357,7 +400,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/dang-xuat")
-    public String getDangXuat(Model model,
+    public String getLogout(Model model,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
 
@@ -367,7 +410,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/quen-mat-khau")
-    public String getQuenMatKhau(Model model) {
+    public String getForgotPassword(Model model) {
         var dl = new NhanVien();
 
         model.addAttribute("dl", dl);
@@ -378,7 +421,7 @@ public class NhanVienController {
     }
 
     @PostMapping("/quen-mat-khau")
-    public String postQuenMatKhau(@RequestParam("email") String email,
+    public String postForgotPassword(@RequestParam("email") String email,
             RedirectAttributes redirectAttributes) {
         // Tạo mật khẩu mới
         String newPassword = generateRandomPassword();
@@ -449,7 +492,7 @@ public class NhanVienController {
     }
 
     @GetMapping("/doi-mat-khau")
-    public String getDoiMatKhau(@ModelAttribute("dl") NhanVien dl, Model model, HttpServletRequest request) {
+    public String getChangePassword(@ModelAttribute("dl") NhanVien dl, Model model, HttpServletRequest request) {
         if (Qdl.NhanVienChuaDangNhap(request)) {
             return "redirect:/admin/dang-nhap";
         }
@@ -461,7 +504,7 @@ public class NhanVienController {
     }
 
     @PostMapping("/doi-mat-khau")
-    public String doiMatKhau(
+    public String PostChangePassword(
             @RequestParam("matKhau") String matKhau,
             @RequestParam("matKhauMoi") String matKhauMoi,
             @RequestParam("nhapLaiMatKhauMoi") String nhapLaiMatKhauMoi,

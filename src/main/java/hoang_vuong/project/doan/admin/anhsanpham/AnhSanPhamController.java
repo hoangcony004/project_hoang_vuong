@@ -77,7 +77,7 @@ public class AnhSanPhamController {
     }
 
     @PostMapping("/anh-san-pham/them")
-    public String postAddAnhSanPham(@ModelAttribute("AnhSanPham") AnhSanPham dl,
+    public String postAdd(@ModelAttribute("AnhSanPham") AnhSanPham dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";

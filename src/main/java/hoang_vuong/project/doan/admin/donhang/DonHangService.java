@@ -1,4 +1,4 @@
-package hoang_vuong.project.doan.admin.quangcao;
+package hoang_vuong.project.doan.admin.donhang;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,26 +9,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QuangCaoService {
+public class DonHangService {
     @Autowired
-    private QuangCaoRepository kdl;
+    private DonHangRepository kdl;
 
-    public Page<QuangCao> duyetQuangCao(Pageable pageable) {
+    public Page<DonHang> duyetDonHang(Pageable pageable) {
         return kdl.findAll(pageable);
     }
 
-    public List<QuangCao> dsQuangCao() {
+    public List<DonHang> dsDonHang() {
         return kdl.findAll();
     }
 
-    public List<QuangCao> duyet() {
+    public List<DonHang> duyet() {
         return kdl.findAll();
     }
 
-    public QuangCao timTheoId(int id) {
-        QuangCao dl = null;
+    public DonHang timTheoId(int id) {
+        DonHang dl = null;
 
-        Optional<QuangCao> optional = kdl.findById(id);
+        Optional<DonHang> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
@@ -40,31 +40,30 @@ public class QuangCaoService {
 
     }
 
-    public QuangCao xem(int id) {
+    public DonHang xem(int id) {
 
-        QuangCao dl = null;
+        DonHang dl = null;
 
-        Optional<QuangCao> optional = kdl.findById(id);
+        Optional<DonHang> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
         } else {
-
         }
 
         return dl;
 
     }
 
-    public void luu(QuangCao dl) {
+    public void luu(DonHang dl) {
         this.kdl.save(dl);
     }
 
-    public void them(QuangCao dl) {
+    public void them(DonHang dl) {
         this.kdl.save(dl);
     }
 
-    public void sua(QuangCao dl) {
+    public void sua(DonHang dl) {
         this.kdl.save(dl);
     }
 

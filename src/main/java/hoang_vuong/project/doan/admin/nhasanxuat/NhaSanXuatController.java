@@ -65,7 +65,7 @@ public class NhaSanXuatController {
     }
 
     @PostMapping("/nha-san-xuat/them")
-    public String postThemNSX(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
+    public String postAdd(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -82,7 +82,7 @@ public class NhaSanXuatController {
     }
 
     @PostMapping("/nha-san-xuat/xoa")
-    public String postXoa(@RequestParam("id") int id,
+    public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";

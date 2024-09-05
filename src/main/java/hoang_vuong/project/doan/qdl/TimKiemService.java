@@ -10,7 +10,6 @@ public class TimKiemService {
     public List<TimKiem> timKiemChucNang(String keyword) {
         List<TimKiem> chucNangs = new ArrayList<>();
 
-        // Các chức năng cũ
         if (keyword.toLowerCase().contains("cài đặt")) {
             chucNangs.add(new TimKiem("Cài Đặt", "/admin/settings"));
         }
@@ -24,7 +23,6 @@ public class TimKiemService {
             chucNangs.add(new TimKiem("Đơn Hàng", "/admin/don-hang"));
         }
 
-        // Các chức năng mới
         if (keyword.toLowerCase().contains("khách hàng")) {
             chucNangs.add(new TimKiem("Khách Hàng", "/admin/khach-hang"));
         }

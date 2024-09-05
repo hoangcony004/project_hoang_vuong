@@ -5,14 +5,16 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                    <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
+                    <li class="breadcrumb-item active" th:text="${title_duyet}">Khách Hàng</li>
                 </ol>
             </div>
-            <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
+            <h4 class="page-title" th:text="${title_duyet}">Khách Hàng</h4>
         </div>
     </div>
     <!-- Thông báo lỗi -->
     <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
+    <!-- <div th:replace="~{admin/pages/thongbao :: thongbao}"></div> -->
+
 </div>
 <!-- end page title -->
 
@@ -23,12 +25,29 @@
         <div class="modal-content">
             <!-- Modal Body -->
             <div class="modal-body">
-                <i th:replace="admin/caidat/form-bs4-caidat.html"></i>
+                <div th:insert="admin/donhang/form-bs4-dh.html"></div>
             </div>
 
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BS4 MODAL Show -->
+<div class="modal" id="modalXem">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- <div th:insert="admin/donhang/form-xem-kh-bs4.html"></div> -->
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
             </div>
 
         </div>
@@ -58,13 +77,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa Cài Đặt</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Đơn Hàng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formXoa" action="/admin/cai-dat/xoa" method="post">
+                <form id="formXoa" action="/admin/don-hang/xoa" method="post">
                     <input type="hidden" name="id" id="idInput" value="" />
                     <p>
                         Bạn có chắc muốn xóa?
@@ -76,7 +95,6 @@
                         <i class="bi-trash"></i> Xóa
                     </button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -93,10 +111,35 @@
                             <i class="bi-plus-circle"></i> Thêm Nhân Viên
                         </button>
                     </div>
+                    <div class="col-sm-8">
+                        <div class="text-sm-end">
+                            <!-- Các nút chức năng -->
+                            <form action="#" method="post" class="mb-3">
+                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-light btn-sm me-2">Import</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button>
+                            </form>
+
+                            <!-- Form tìm kiếm -->
+                            <!-- <form action="/admin/khach-hang/tim-kiem" method="GET" class="d-flex justify-content-end">
+                                <select name="criteria" class="form-select form-select-sm me-2"
+                                    style="max-width: 150px;">
+                                    <option value="tenDayDu">Họ và Tên</option>
+                                    <option value="Id">ID</option>
+                                    <option value="email">Email</option>
+                                    <option value="dienThoai">Số điện thoại</option>
+                                </select>
+                                <input type="search" name="query" class="form-control form-control-sm me-2"
+                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
+                            </form> -->
+                        </div>
+                    </div>
+                    <!-- end col-->
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
                         <thead class="table-light">
                             <tr>
                                 <th class="all" style="width: 20px;">
@@ -105,25 +148,73 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th>
-                                <!-- <th>Id</th> -->
-                                <th class="all">Khóa</th>
-                                <th>Giá Trị</th>
+                                <th>STT</th>
+                                <th>Tên Khách Hàng</th>
+                                <th class="all">
+                                    Tên Khách Hàng Vãn Lai
+                                </th>
+                                <th>Email</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Tổng Tiền</th>
+                                <th>Ghi Chú</th>
+                                <th>Địa Chỉ</th>
+                                <th>Trạng Thái</th>
+                                <th>Ngày Tạo</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            <tr th:each="dl : ${ds}">
+                            <tr th:each="dl, iterStat  : ${ds}">
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="customCheck2">
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td>
-                                <!-- <td th:text="${dl.Id}"></td> -->
-                                <td th:text="${dl.Khoa}"></td>
-                                <td th:text="${dl.GiaTri}"></td>
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
+
+                                <td th:text="${dl.maKH}">
+
+                                </td>
+
+                                <td th:text="${dl.tenDayDu}">
+                                    <p class="m-0 d-inline-block align-middle font-16">
+                                        Họ Và Tên
+                                    </p>
+                                </td>
+
+                                <td th:text="${dl.email}">
+                                    Email
+                                </td>
+
+                                <td th:text="${dl.dienThoai}">
+                                    254
+                                </td>
+                                <td th:text="${dl.tongTien}"></td>
+                                <td th:text="${dl.ghiChu}"></td>
+
+                                <td th:text="${dl.diaChi}"></td>
+
+                                <td>
+                                    <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
+                                    <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
+                                </td>
+
+                                <td th:text="${dl.getNgayTaoText}"></td>
 
                                 <td class="table-action">
+                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
+                                        th:data-id="${dl.id}">
+                                        <i class="mdi mdi-eye"></i>
+                                    </a>
+                                    <script>
+                                        $('#modalXem').on('show.bs.modal', function (e) {
+                                            var id = $(e.relatedTarget).data('id');
+
+                                            $('#modalXem .modal-body').load("/admin/khach-hang/xem?id=" + id);
+                                        });
+                                    </script>
 
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalSua"
                                         th:data-id="${dl.id}">
@@ -133,7 +224,7 @@
                                         $('#modalSua').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalSua .modal-body').load("/admin/cai-dat/sua?id=" + id);
+                                            $('#modalSua .modal-body').load("/admin/khach-hang/sua?id=" + id);
                                         });
                                     </script>
 
@@ -145,77 +236,17 @@
                                     <script>
                                         $('#modalXoa').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
-                                            console.log("ID nhận được: ", id);
+                                            // console.log("ID nhận được: ", id);
                                             $(e.currentTarget).find('input[name="id"]').val(id);
                                         });
                                     </script>
                                 </td>
-                            </tr>
 
+                            </tr>
                         </tbody>
                     </table>
-                    <nav class="pagination-container">
-                        <ul class="pagination justify-content-center">
-                            <!-- Trang đầu -->
-                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">Đầu</a>
-                            </li> -->
-
-                            <!-- Trang trước -->
-                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
-                                    <i class="dripicons-chevron-left"></i>
-                                </a>
-                            </li> -->
-
-                            <!-- Trang đầu tiên -->
-                            <!-- <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=1&pageSize=' + ${pageSize}}">1</a>
-                            </li> -->
-
-                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <!-- <li class="page-item" th:if="${totalPages > 2 and currentPage > 4}">
-                                <span class="page-link">...</span>
-                            </li> -->
-
-                            <!-- Các trang giữa -->
-                            <!-- <li class="page-item"
-                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
-                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
-                            </li> -->
-
-                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <!-- <li class="page-item" th:if="${totalPages > 2 and currentPage < totalPages - 3}">
-                                <span class="page-link">...</span>
-                            </li> -->
-
-                            <!-- Trang cuối -->
-                            <!-- <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
-                                th:if="${totalPages > 1}">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
-                            </li> -->
-
-                            <!-- Trang tiếp theo -->
-                            <!-- <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
-                                    <i class="dripicons-chevron-right"></i>
-                                </a>
-                            </li> -->
-
-                            <!-- Trang cuối -->
-                            <!-- <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/nha-san-xuat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
-                            </li> -->
-                        </ul>
-                    </nav>
+                    <!-- Hiển thị phân trang -->
+                    <div th:insert="/admin/pages/pageable.html"></div>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

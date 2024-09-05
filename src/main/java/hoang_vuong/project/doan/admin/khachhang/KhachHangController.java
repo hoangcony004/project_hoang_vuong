@@ -86,7 +86,7 @@ public class KhachHangController {
     }
 
     @PostMapping("/khach-hang/them")
-    public String postThem(@ModelAttribute("KhachHang") KhachHang dl,
+    public String postAdd(@ModelAttribute("KhachHang") KhachHang dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -110,7 +110,7 @@ public class KhachHangController {
     }
 
     @GetMapping("/khach-hang/sua")
-    public String getSuaAjax(Model model, @RequestParam("id") int id) {
+    public String getEdit(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -124,7 +124,7 @@ public class KhachHangController {
     }
 
     @PostMapping("/khach-hang/sua")
-    public String postSua(@ModelAttribute("KhachHang") KhachHang dl,
+    public String postEdit(@ModelAttribute("KhachHang") KhachHang dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
@@ -144,7 +144,7 @@ public class KhachHangController {
     }
 
     @GetMapping("/khach-hang/xem")
-    public String getXem(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String getShow(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -161,7 +161,7 @@ public class KhachHangController {
     }
 
     @PostMapping("/khach-hang/xoa")
-    public String postXoa(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String postDelete(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 

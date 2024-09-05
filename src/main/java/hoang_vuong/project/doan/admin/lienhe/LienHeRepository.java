@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LienHeReponsitory extends JpaRepository<LienHe, Integer>
+public interface LienHeRepository extends JpaRepository<LienHe, Integer>
 {
     List<LienHe> findByTen(String ten);
 }

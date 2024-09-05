@@ -76,7 +76,7 @@ public class SanPhamController {
     }
 
     @PostMapping("/san-pham/them")
-    public String postAddSanPham(@ModelAttribute("SanPham") SanPham dl,
+    public String postAdd(@ModelAttribute("SanPham") SanPham dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
@@ -93,7 +93,7 @@ public class SanPhamController {
     }
 
     @GetMapping("/san-pham/xem")
-    public String getShowSP(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String getShow(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -111,7 +111,7 @@ public class SanPhamController {
     }
 
     @GetMapping("/san-pham/sua")
-    public String getEditSP(Model model, @RequestParam("id") int id) {
+    public String getEdit(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -129,7 +129,7 @@ public class SanPhamController {
     }
 
     @PostMapping("/san-pham/sua")
-    public String postEditSP(@ModelAttribute("SanPham") SanPham dl,
+    public String postEdit(@ModelAttribute("SanPham") SanPham dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -165,7 +165,7 @@ public class SanPhamController {
     }
 
     @PostMapping("/san-pham/loc")
-    public String locSanPham(
+    public String postFilter(
             @RequestParam(value = "minPrice", required = false) Float minPrice,
             @RequestParam(value = "maxPrice", required = false) Float maxPrice,
             @RequestParam(value = "maNSX", required = false) Integer maNSX,

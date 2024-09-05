@@ -1,22 +1,21 @@
 package hoang_vuong.project.doan.qdl;
 
-
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import hoang_vuong.project.doan.admin.caidat.CaiDatService;
 
 @ControllerAdvice
-public class QdlLayout
-{
+public class QdlLayout {
     @Autowired
     CaiDatService dvlCaiDat;
 
     @ModelAttribute("testGlobalText")
-    public String getTest(){
+    public String getTest() {
         return "THIS IS A GLOBAL TEXT for All *.html(s), really cool ";
     }
 
@@ -29,12 +28,12 @@ public class QdlLayout
         return map;
     }
 
-     @ModelAttribute("caidat")
-    public HashMap<String, String> getCaiDat() {
+    @ModelAttribute("caidat")
+    public HashMap<String, String> getCaiDat(Model model) {
         var map = new HashMap<String, String>();
 
         var list = dvlCaiDat.duyetCaiDat();
-        for(var obj : list){
+        for (var obj : list) {
             map.put(obj.getKhoa(), obj.getGiaTri());
         }
         return map;
