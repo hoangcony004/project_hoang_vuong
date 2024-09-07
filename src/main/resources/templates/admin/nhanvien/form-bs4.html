@@ -36,8 +36,11 @@
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="floatingInput" placeholder="Mật khẩu"
                             th:field="*{matKhau}" />
+
                         <label for="floatingInput">Mật khẩu</label>
                     </div>
+                    <input type="hidden" class="form-control" id="floatingInput" placeholder="Mật khẩu"
+                        th:field="*{xacNhanMatKhau}" />
 
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" required id="floatingInput"
@@ -78,21 +81,13 @@
                                 <label for="floatingSelectGrid">Trạng thái</label>
                             </div>
                         </div>
-
-
                     </div>
+
                     <div class="form-floating mb-3">
                         <input type="date" required class="form-control" id="floatingInput" placeholder="Ngày hết hạn"
                             th:field="*{ngayHetHan}" />
                         <label for="floatingInput">Ngày hết hạn</label>
                     </div>
-
-                    <!-- <div class="form-floating mb-3">
-                        <div class="input-group">
-                            <input type="date" th:field="*{ngayHetHan}" class="form-control form-control-light"
-                                id="dash-daterange">
-                        </div>
-                    </div> -->
 
                     <div class="form-floating mb-3">
                         <input type="hidden" class="form-control" id="floatingInput" placeholder="Ngày hết hạn"

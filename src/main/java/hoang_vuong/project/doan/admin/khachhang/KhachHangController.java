@@ -99,6 +99,29 @@ public class KhachHangController {
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
 
+        // Kiểm tra xem email đã tồn tại hay chưa
+        List<KhachHang> khachHangList = dvl.timKiemTheoEmail(dl.getEmail());
+        if (!khachHangList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+            return "redirect:/admin/khach-hang";
+        }
+
+        // Kiểm tra xem tên đăng nhập đã tồn tại hay chưa
+        KhachHang khachHangByTenDangNhap = dvl.timKhachHangTheoTenDangNhap(dl.getTenDangNhap());
+        if (khachHangByTenDangNhap != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Tên đăng nhập đã tồn tại. Vui lòng sử dụng tên đăng nhập khác.");
+            return "redirect:/admin/khach-hang";
+        }
+
+        // Kiểm tra xem số điện thoại đã tồn tại
+        List<KhachHang> khachHangDienThoaiList = dvl.timKiemTheoDienThoai(dl.getDienThoai());
+        if (!khachHangDienThoaiList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Số điện thoại đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
+            return "redirect:/admin/khach-hang";
+        }
+
         try {
             dvl.luuKhachHang(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");

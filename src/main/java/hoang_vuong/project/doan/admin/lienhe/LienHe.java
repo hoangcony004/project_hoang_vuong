@@ -3,6 +3,7 @@ package hoang_vuong.project.doan.admin.lienhe;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +20,11 @@ public class LienHe {
     private Integer Id;
 
     private String ten;
+    @Column(unique = true)
     private String email;
     private String tieuDe;
     private String tinNhan;
+    @Column(unique = true)
     private String dienThoai;
     private String diaChi;
     private String webSite;

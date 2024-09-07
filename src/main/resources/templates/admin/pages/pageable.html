@@ -31,13 +31,6 @@
             <a class="page-link"
                 th:href="@{'/admin/' + ${phan_trang} + '?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
         </li>
-        <!-- <li class="page-item"
-            th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 1 : 2, currentPage < totalPages - 1 ? currentPage + 1 : totalPages)}"
-            th:classappend="${currentPage == i} ? 'active' : ''">
-            <a class="page-link"
-                th:href="@{'/admin/' + ${phan_trang} + '?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
-        </li> -->
-
 
         <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
         <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">

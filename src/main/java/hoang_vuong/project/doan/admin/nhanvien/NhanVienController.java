@@ -12,11 +12,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springframework.data.domain.Page;
@@ -24,7 +27,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.apache.commons.lang3.RandomStringUtils;
+import java.util.Map;
 import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -168,28 +173,6 @@ public class NhanVienController {
         return "redirect:/admin/nhan-vien";
     }
 
-    // v1
-    // @PostMapping("/nhan-vien/xoa")
-    // public String postXoa(@RequestParam("id") int id, RedirectAttributes
-    // redirectAttributes) {
-    // if (Qdl.NhanVienChuaDangNhap(request))
-    // return "redirect:/admin/dang-nhap";
-
-    // System.out.println("ID nhận được trong controller là: " + id);
-
-    // try {
-    // this.dvl.xoaNhanVien(id);
-    // redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công
-    // !");
-    // } catch (Exception e) {
-    // redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-    // "Không thể xóa. Mã lỗi: " + e.getMessage());
-    // }
-
-    // return "redirect:/admin/nhan-vien";
-    // }
-
-    // v2
     @PostMapping("/nhan-vien/xoa")
     public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes,
@@ -382,6 +365,7 @@ public class NhanVienController {
             if (dung_mat_khau) {
                 request.getSession().setAttribute("NhanVien_Id", old_dl.getId());
                 request.getSession().setAttribute("NhanVien_TenDayDu", old_dl.getTenDayDu());
+                request.getSession().setAttribute("NhanVien_AnhDaiDien", old_dl.getAnhDaiDien());
 
                 var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN");
                 if (uriBeforeLogin == null)
@@ -422,7 +406,20 @@ public class NhanVienController {
 
     @PostMapping("/quen-mat-khau")
     public String postForgotPassword(@RequestParam("email") String email,
+            @RequestParam("g-recaptcha-response") String recaptchaResponse,
             RedirectAttributes redirectAttributes) {
+        // In ra giá trị g-recaptcha-response để kiểm tra
+        System.out.println("Đã nhận được phản hồi reCAPTCHA: " + recaptchaResponse);
+
+        // Kiểm tra reCAPTCHA
+        boolean isCaptchaVerified = verifyRecaptcha(recaptchaResponse);
+        if (!isCaptchaVerified) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Vui lòng xác minh reCAPTCHA.");
+            return "redirect:/admin/quen-mat-khau";
+        } else {
+            System.out.println("Recaptcha hợp lệ");
+        }
+
         // Tạo mật khẩu mới
         String newPassword = generateRandomPassword();
         // Cập nhật mật khẩu mới trong cơ sở dữ liệu và lấy trạng thái
@@ -489,6 +486,35 @@ public class NhanVienController {
         helper.setText(body, true);
 
         mailSender.send(message);
+    }
+
+    private boolean verifyRecaptcha(String recaptchaResponse) {
+        String secretKey = "6LdxSzkqAAAAALIXGDpmzpqa9Y4iAKY4_qIvGg7d";
+        String url = "https://www.google.com/recaptcha/api/siteverify";
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+            requestBody.add("secret", secretKey);
+            requestBody.add("response", recaptchaResponse);
+
+            // Gửi yêu cầu POST tới API của Google
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, requestBody, Map.class);
+            Map<String, Object> responseBody = response.getBody();
+
+            // In ra toàn bộ phản hồi để kiểm tra chi tiết
+            System.out.println("reCAPTCHA response: " + responseBody);
+
+            // Kiểm tra giá trị success trong phản hồi
+            boolean success = responseBody != null && Boolean.TRUE.equals(responseBody.get("success"));
+            if (!success) {
+                System.out.println("reCAPTCHA verification failed: " + responseBody);
+            }
+            return success;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @GetMapping("/doi-mat-khau")

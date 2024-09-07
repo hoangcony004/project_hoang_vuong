@@ -65,7 +65,7 @@
                 <div class="p-2">
                     <div class="row g-0">
                         <div class="col">
-                            <a class="dropdown-icon-item" href="#" target="_blank">
+                            <a class="dropdown-icon-item" href="" target="_blank">
                                 <img src="/admin/assets/images/brands/slack.png" alt="slack">
                                 <span>Trang Chủ</span>
                             </a>
@@ -97,7 +97,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="/admin/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img th:src="${session.NhanVien_AnhDaiDien}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
                     <span class="account-user-name" th:text="${session.NhanVien_TenDayDu}">Tên Nhân

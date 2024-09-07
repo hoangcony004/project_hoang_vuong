@@ -1,5 +1,6 @@
 package hoang_vuong.project.doan.admin.donhang;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,8 +28,11 @@ public class DonHang {
     @JoinColumn(name = "maKH", insertable = false, updatable = false)
     private KhachHang khachHang;
 
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String dienThoai;
+    
     private String tenDayDu;
     private String diaChi;
     private String ghiChu;
