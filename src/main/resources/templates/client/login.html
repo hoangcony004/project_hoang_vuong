@@ -23,11 +23,7 @@
 							    </li>
 							</ul>
 							<div class="tab-content">
-								
-								<div class="alert alert-success" th:if="${THONG_BAO}"
-								style="color: rgb(242, 242, 242); font-size: 14px; margin-top: 10px; text-align: center;">
-								<span th:text="${THONG_BAO}"></span>
-								</div> 
+						
 							    <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
 							    	<form th:action="@{/apps/dang-nhap}"  th:object="${dl}" method="post">
 							    		<div class="form-group">

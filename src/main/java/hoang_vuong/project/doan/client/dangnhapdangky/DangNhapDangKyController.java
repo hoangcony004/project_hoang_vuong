@@ -87,8 +87,8 @@ public class DangNhapDangKyController {
                 request.getSession().setAttribute("khachhang_Id", old_dl.getId());
                 request.getSession().setAttribute("khachhang_Email", old_dl.getEmail());
         
-                var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN");
-                return uriBeforeLogin != null ? "redirect:" + uriBeforeLogin : "redirect:/apps/home";
+                var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN_USER");
+                return uriBeforeLogin != null ? "redirect:" + uriBeforeLogin : "redirect:/apps/";
             } else {
                 // Sai mật khẩu
                 redirectAttributes.addFlashAttribute("THONG_BAO", "Sai tên đăng nhập hoặc mật khẩu!");
@@ -107,6 +107,6 @@ public class DangNhapDangKyController {
 
         redirectAttributes.addFlashAttribute("THONG_BAO", "Đăng xuất thành công.");
         request.getSession().invalidate();
-        return "redirect:/apps/home";
+        return "redirect:/apps/";
     }
 }
