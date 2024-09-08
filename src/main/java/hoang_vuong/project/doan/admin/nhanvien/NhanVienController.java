@@ -105,6 +105,24 @@ public class NhanVienController {
     @PostMapping("/nhan-vien/them")
     public String postAdd(@ModelAttribute("NhanVien") NhanVien dl,
             RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        // Kiểm tra trùng lặp tên đăng nhập, email, và số điện thoại
+        if (dvl.timNhanVienTheoTenDangNhap(dl.getTenDangNhap()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Tên đăng nhập đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
+
+        if (dvl.timNhanVienTheoEmail(dl.getEmail()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Email đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
+
+        if (dvl.timNhanVienTheoDienThoai(dl.getDienThoai()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Số điện thoại đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
 
         // Mã hóa mật khẩu
         var inputPassword = dl.getMatKhau();
@@ -144,6 +162,22 @@ public class NhanVienController {
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
+
+        // Kiểm tra trùng lặp tên đăng nhập, email, và số điện thoại
+        if (dvl.timNhanVienTheoTenDangNhap(dl.getTenDangNhap()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Tên đăng nhập đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
+
+        if (dvl.timNhanVienTheoEmail(dl.getEmail()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Email đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
+
+        if (dvl.timNhanVienTheoDienThoai(dl.getDienThoai()) != null) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Số điện thoại đã tồn tại!");
+            return "redirect:/admin/nhan-vien";
+        }
 
         // Kiểm tra nếu mật khẩu mới không được nhập
         if (dl.getMatKhau() == null || dl.getMatKhau().isEmpty()) {
@@ -267,26 +301,36 @@ public class NhanVienController {
                         list.add(nv);
                         total = 1; // Chỉ có 1 kết quả
                     }
-                    model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm thành công.");
+                    model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm theo ID thành công.");
                 } catch (NumberFormatException e) {
                     model.addAttribute("THONG_BAO_ERROR", "ID phải là số nguyên.");
                 }
                 break;
+
             case "tenDayDu":
                 list = dvl.timKiemTheoTen(query);
                 total = list.size();
-                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm thành công.");
+                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm theo họ và tên thành công.");
                 break;
+
+            case "tenDangNhap":
+                list = dvl.timKiemTheoTenDangNhap(query);
+                total = list.size();
+                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm theo tên đăng nhập thành công.");
+                break;
+
             case "email":
                 list = dvl.timKiemTheoEmail(query);
                 total = list.size();
-                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm thành công.");
+                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm theo email thành công.");
                 break;
+
             case "dienThoai":
                 list = dvl.timKiemTheoDienThoai(query);
                 total = list.size();
-                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm thành công.");
+                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm theo số điện thoại thành công.");
                 break;
+
             default:
                 model.addAttribute("THONG_BAO_ERROR", "Tiêu chí tìm kiếm không hợp lệ.");
                 break;
@@ -302,6 +346,10 @@ public class NhanVienController {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), list.size());
         Page<NhanVien> nhanVienPage = new PageImpl<>(list.subList(start, end), pageable, total);
+
+        // thêm số thứ tự
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
 
         model.addAttribute("ds", nhanVienPage.getContent());
         model.addAttribute("page", nhanVienPage);
@@ -575,11 +623,16 @@ public class NhanVienController {
             nhanVien.setMatKhau(hash);
 
             nhanVien.setXacNhanMatKhau(matKhauMoi);
-            dvl.luuNhanVien(nhanVien);
 
-            // session.setAttribute("nhanVien", nhanVien);
-            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đổi mật khẩu thành công.");
-            request.getSession().invalidate();
+            try {
+                dvl.luuNhanVien(nhanVien);
+                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đổi mật khẩu thành công.");
+                request.getSession().invalidate();
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                        "Không thể đổi mật khẩu. Mã lỗi: " + e.getMessage());
+            }
+
             return "redirect:/admin/dang-nhap";
         }
 

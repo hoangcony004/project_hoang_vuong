@@ -11,7 +11,7 @@ public class TimKiemService {
         List<TimKiem> chucNangs = new ArrayList<>();
 
         if (keyword.toLowerCase().contains("cài đặt")) {
-            chucNangs.add(new TimKiem("Cài Đặt", "/admin/settings"));
+            chucNangs.add(new TimKiem("Cài Đặt", "/admin/cai-dat"));
         }
         if (keyword.toLowerCase().contains("dashboard")) {
             chucNangs.add(new TimKiem("Dashboard", "/admin/dashboard"));

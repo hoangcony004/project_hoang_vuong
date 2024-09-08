@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/apps")
 public class home {
  @Autowired
     private HttpServletRequest request;
@@ -37,8 +36,10 @@ public class home {
    
 
  
-    @GetMapping(
-      "/home"
+    @GetMapping({
+      "/apps/",
+    "/"
+    }
 )
     public String get(Model model, HttpSession session) {
       
@@ -55,7 +56,7 @@ public class home {
         // System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
      return "layouts/layout-client.html";
     }
-    @GetMapping("/product") 
+    @GetMapping("/apps/product") 
  public String getXem(Model model, @RequestParam(value = "id") int id) {
         // if (Qdl.KhachHangChuaDangNhap(request))
         //     return "redirect:/apps/dang-ky";
