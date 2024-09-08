@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+<head th:insert="client/fragments/head :: head"></head>
+
+<body>
+    <div class="page-wrapper">
+        <header th:insert="client/fragments/header :: header"></header>
+        <main class="main">
+            <div th:insert="${content}"></div>
+        </main><!-- End .main -->
+
+        <footer  th:insert="client/fragments/footer :: footer" ></footer>
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div th:insert="client/fragments/menu_mobile :: menu_mobile"></div>
+    <!-- Sign in / Register Modal -->
+    <div th:insert="client/fragments/register_modal :: register_modal"></div>
+
+    <!-- Plugins JS File -->
+    <div th:insert="client/fragments/script :: script">
+</body>
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+</html>

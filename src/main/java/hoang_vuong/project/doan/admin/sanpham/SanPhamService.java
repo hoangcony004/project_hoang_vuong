@@ -3,11 +3,14 @@ package hoang_vuong.project.doan.admin.sanpham;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 
 @Service
 public class SanPhamService {
@@ -33,7 +36,10 @@ public class SanPhamService {
     public List<SanPham> duyet() {
         return kdl.findAll();
     }
+    public SanPham timMnsx(int id) {
+        return kdl.findOneByMaNSX(id);
 
+    }
     public SanPham timTheoId(int id) {
         SanPham dl = null;
 
@@ -48,7 +54,9 @@ public class SanPhamService {
         return dl;
 
     }
-
+    public List<SanPham> timMaNSX(int maNSX) {
+        return kdl.findByMaNSX(maNSX);
+    }
     public SanPham xem(int id) {
 
         SanPham dl = null;
@@ -79,6 +87,14 @@ public class SanPhamService {
 
     public void xoa(int id) {
         this.kdl.deleteById(id);
+    }
+    public List<SanPham> dsSanPhamNoiBat() 
+    {
+        return kdl.findByNoiBat(true);
+    }
+    public List<SanPham> dsSanPhamBanChay() 
+    {
+        return kdl.findByBanChay(true);
     }
 
 }

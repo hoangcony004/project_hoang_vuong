@@ -43,9 +43,9 @@ public class SanPham {
     private Boolean banChay;
     private Boolean noiBat;
     private String tag;
-
     private LocalDate ngayTao;
     private LocalDate ngaySua;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayHetHan;
 
