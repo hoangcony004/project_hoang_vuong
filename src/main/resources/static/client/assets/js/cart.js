@@ -10,26 +10,7 @@ var cart = {
 				//$('#cart > button').button('loading');
 			},
 			success: function(json) {	
-					// Ngay sau khi nhận được thông tin phúc đáp/phản hồi của máy chủ
-					// về việc yêu cầu thêm mới giỏ hàng thì:
-					
-					// gỡ bỏ các hộp thoại cảnh báo, hộp thoại thông báo, hộp thoại lỗi
-					// hộp thoại cung cấp thông tin, v.v...
-				//$('.alert, .text-danger .success, .warning, .attention, .information, .error').remove();
 
-				//$('#cart > button').button('reset');
-
-					// Nếu như máy chủ yêu cầu điều hướng sang trang khác
-					// vì cần thêm yêu cầu: màu sản phẩm là gì ? model máy nào ? v.v...
-					// khi đó người dùng phải thêm vào nhiều option (lựa chọn) thì hệ thống mới
-					// cho thêm mới vào giỏ hàng thực sự.
-				// if (json['redirect']) {
-				// 		// error products are to be redirected ?
-				// 		// example: json['error']['recurring'];
-				// 		location = json['redirect'];
-				// }
-					// Cập nhật lại thông tin về giỏ hàng trên giao diện html
-					// sau khi vừa thêm mới sản phẩm
 				if (json['success']) {
 					alert(' thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
 						// đoạn html này thông báo thêm giỏ hàng thành công.
@@ -37,7 +18,8 @@ var cart = {
 						// $('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');				
 						// $('.alert-success').fadeOut(10000);
 						// cập nhật thông tin số sản phẩm trong giỏ hàng
-						$('#cart-total').text(json['total']);
+					$('#cart-total').text(json['total']);
+					$('#cart_total_down').text(json['total']);
 						// cuộn lên đầu trang
 						//$('html, body').animate({ scrollTop: 0 }, 'slow');
 						// tải lại nội dung html của giỏ hàng bằng (ajax load) lấy từ nguồn: /cart-ajax.php
@@ -46,8 +28,8 @@ var cart = {
 						// $('#cart').load('/cart-ajax.php#cart > *');		
                         // alert(json['success']);
 						toastr.success(json['success'], 'Thêm Sản Phẩm vào Giỏ OK')
-						
 						$('#cart').load('/giohang/ajax/get-html');
+						//$('#cart-total').load('/');
 						alert(' thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
 				}
 			},
@@ -70,7 +52,8 @@ var cart = {
 			success: function(json) {
 				//$('#cart > button').button('reset');
 
-
+				$('#cart-total').text(json['total']);
+				$('#cart_total_down').text(json['total']);
 				if ( window.location.pathname == '/apps/cart')
 					{ 
 						// Nếu như đường dẫn hiện tại đang là: http://localhost:6868/giohang/chitiet
@@ -106,7 +89,8 @@ var cart = {
 				$('#cart > button').button('loading');
 			},
 			success: function(json) { 
-
+				$('#cart-total').text(json['total']);
+				$('#cart_total_down').text(json['total']);
 				if ( window.location.pathname == '/apps/cart')
 				{ 
 					// Nếu như đường dẫn hiện tại đang là: http://localhost:6868/giohang/chitiet

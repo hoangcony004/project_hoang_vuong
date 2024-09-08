@@ -125,11 +125,11 @@
                     </a>
                 </div><!-- End .compare-dropdown -->
 
-                <div class="dropdown cart-dropdown">
+                <div class="dropdown cart-dropdown " id="cart">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <div class="icon">
-                            <i class="icon-shopping-cart"></i>
-                            <!-- <span class="cart-count" th:text="${SoSanPhamTrongGioHang}" id="cart-total"></span> -->
+                        <div class="icon ">
+                            <i class="icon-shopping-cart " ></i>
+                            <span class="cart-count load"   th:text="${SoSanPhamTrongGioHang}" id="cart-total">0</span>
                           
                         </div>
                         <p>Cart</p>
@@ -137,11 +137,11 @@
 
                     <div class="dropdown-menu dropdown-menu-right">
                         
-                        <div class="dropdown-cart-total">
+                        <div class="dropdown-cart-total " >
 
                             <span > Số sản phẩm trong giỏ hàng:</span>
 
-                            <!-- <span class="cart-total-price"  id="cart-total" th:text="${SoSanPhamTrongGioHang}"> </span>  -->
+                            <span class="cart-total-price load" id="cart_total_down" th:text="${SoSanPhamTrongGioHang}">0 </span> 
                         </div><!-- End .dropdown-cart-total -->
 
                         <div class="dropdown-cart-action">

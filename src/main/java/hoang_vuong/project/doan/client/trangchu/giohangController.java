@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.http.MediaType;
 import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
@@ -69,8 +70,11 @@ public class giohangController {
         model.addAttribute("cartData", cartData);
         // model.addAttribute("tongGiaTriGioHang", tongGiaTriGioHang());
         // model.addAttribute("tongGiaTriGioHangVi", tongGiaTriGioHangVi());
-        
-        return "client/cart.html";
+        model.addAttribute("content", "client/cart.html"); 
+        //return "client/checkout.html";
+        // ...được đặt vào bố cục chung của toàn website
+        return "layouts/layout-client.html"; // layout.html
+
         
     }
     @PostMapping(path = "/giohang/them/ajax", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -105,20 +109,45 @@ public class giohangController {
 
         // Cập nhật giỏ hàng trong Session
         session.setAttribute("cart", cartMap);
-
-        System.out.println("Đã thêm mới vào giỏ hàng sản phẩm id: "+id);
         session.setAttribute("SoSanPhamTrongGioHang", cartQuantity);
 
         // Gửi dữ liệu json trở lại cho View
         Map<String, Object> data = new HashMap<>();
         data.put("success", "Đã thêm thành công vào giỏ hàng sản phẩm "+ten);
-       // data.put("total", demSanPhamTrongGioHang());// tạm thôi
-
+        data.put("total", demSanPhamTrongGioHang());// tạm thôi
         // Nếu mà thất bại trong việc thêm vào giỏ hàng
         //data.put("redirect", "đường dẫn đến thông tin sản phẩm");// "/product-info.php?product_id={$_POST['product_id']}";
-
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
+    private int demSanPhamTrongGioHang() // cartCountProducts
+    {
+        @SuppressWarnings("unchecked")
+        Map<Integer,Integer> cartMap = (Map<Integer,Integer>)session.getAttribute("cart");
+
+        if(cartMap==null || cartMap.isEmpty())
+            return 0;
+
+        // int product_total = 0;
+
+        // $products = cartGetProducts();
+
+        // foreach ($products as $product) 
+        // {
+        //     $product_total += $product['quantity'];
+        // }
+
+        // return $product_total;
+
+        int tongSoSanPham = 0;
+        for (Integer maSanPham : cartMap.keySet()) 
+        {
+            // System.out.println(key + ":" + map.get(key));
+            tongSoSanPham += cartMap.get(maSanPham);
+        }
+
+        return tongSoSanPham;
+    }
+
     private boolean gioHangCoSanPham()
     {
         @SuppressWarnings("unchecked")

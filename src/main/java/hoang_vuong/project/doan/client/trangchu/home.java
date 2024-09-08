@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,17 +35,13 @@ public class home {
     @Autowired
     private AnhSanPhamService anhdv;
    
-    @GetMapping({
-      "/",
+
+ 
+    @GetMapping(
       "/home"
-})
+)
     public String get(Model model, HttpSession session) {
-        Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
-        String khachhang_Email = (String) session.getAttribute("khachhang_Email");
-        Integer cartQuantity = (Integer)session.getAttribute("SoSanPhamTrongGioHang");
-if (cartQuantity == null) {
-    cartQuantity = 0; // Hoặc giá trị mặc định khác
-}
+      
         // java.util.List<SanPham> list = dvl.dsSanPham();
       List<SanPham> noibat = dvl.dsSanPhamNoiBat();
         List<SanPham> banchay = dvl.dsSanPhamBanChay();        
@@ -54,9 +51,7 @@ if (cartQuantity == null) {
        java.util.List<NhaSanXuat> nsx=  nsxdv.duyet();
        model.addAttribute("dlnsx", nsx);
        model.addAttribute("content", "client/index.html");
-        model.addAttribute("khachhang_Id", khachhang_Id);
-        model.addAttribute("khachhang_Email", khachhang_Email);
-        model.addAttribute("SoSanPhamTrongGioHang", cartQuantity);
+       
         // System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
      return "layouts/layout-client.html";
     }
@@ -80,13 +75,7 @@ if (cartQuantity == null) {
         return "layouts/layout-client.html";
         
     }
-    @GetMapping("/checkout") 
-    public String getviewcart(Model model) {
-         
-          model.addAttribute("content", "client/checkout.html");
-           return "layouts/layout-client.html";
-           
-       }
+  
  
     
 
