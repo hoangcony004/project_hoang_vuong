@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
+// v1
 @Controller
 public class QdlError implements ErrorController {
 
@@ -19,16 +20,13 @@ public class QdlError implements ErrorController {
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
-            if (statusCode == HttpStatus.NOT_FOUND.value(
-
-            )) {
-                return "admin/errors/error-404.html";
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                return "admin/errors/error-404";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "admin/errors/error-500.html";
+                return "admin/errors/error-500";
             }
         }
-
-        return "admin/errors/error.html";
+        return "admin/errors/error";
     }
 
 }

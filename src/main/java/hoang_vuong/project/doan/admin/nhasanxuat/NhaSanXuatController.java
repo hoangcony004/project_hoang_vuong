@@ -1,7 +1,5 @@
 package hoang_vuong.project.doan.admin.nhasanxuat;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
-// import ch.qos.logback.core.model.Model;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -63,35 +58,41 @@ public class NhaSanXuatController {
         model.addAttribute("action", "/admin/nha-san-xuat/them");
         model.addAttribute("content", "admin/nhasanxuat/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 
     @PostMapping("/nha-san-xuat/them")
-    public String postThemNSX(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
+    public String postAdd(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        dvl.them(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.them(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/nha-san-xuat";
     }
 
     @PostMapping("/nha-san-xuat/xoa")
-    public String postXoa(@RequestParam("id") int id,
+    public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
         try {
             this.dvl.xoa(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa. Lỗi: " + e.getMessage());
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/nha-san-xuat";

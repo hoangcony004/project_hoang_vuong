@@ -1,6 +1,4 @@
 package hoang_vuong.project.doan.qdl;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +12,21 @@ import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-@Controller
 
-public class QdlIndex 
-{
-  @Autowired
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@Controller
+@RequestMapping("admin")
+public class QdlIndex {
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private TimKiemService dvls;
+    @Autowired
     private SanPhamService dvl;
     @Autowired
     private NhaSanXuatService nsxdv;
@@ -40,6 +48,22 @@ public class QdlIndex
    return "layouts/layout-client.html";
     }
 
+    @GetMapping("/tim-kiem-in-app")
+    public String getTimKiemApp(@RequestParam("search") String search, Model model, HttpServletRequest request) {
+        if (Qdl.NhanVienChuaDangNhap(request)) {
+            return "redirect:/admin/dang-nhap";
+        }
+
+        if (search != null && !search.isEmpty()) {
+            List<TimKiem> results = dvls.timKiemChucNang(search);
+            model.addAttribute("results", results);
+            model.addAttribute("searchQuery", search);
+        }
+
+        model.addAttribute("title", "Quản Lý Tìm Kiếm");
+        model.addAttribute("content", "admin/timkiem/tim-kiem-result.html");
+
+        return "layouts/layout-admin.html";
+    }
+
 }
-
-

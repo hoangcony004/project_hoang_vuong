@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;
@@ -30,9 +29,6 @@ public class SanPhamController {
 
     @Autowired
     private SanPhamService dvl;
-
-    @Autowired
-    private SanPhamService dvlSanPhamService;
 
     @Autowired
     private NhaSanXuatService nhaSanXuatService;
@@ -51,7 +47,7 @@ public class SanPhamController {
         int pageIndex = page - 1;
 
         // Lấy dữ liệu phân trang từ dịch vụ
-        Page<SanPham> sanPhamPage = dvlSanPhamService.duyetSanPham(PageRequest.of(pageIndex, pageSize));
+        Page<SanPham> sanPhamPage = dvl.duyetSanPham(PageRequest.of(pageIndex, pageSize));
 
         // Cập nhật mô hình với dữ liệu phân trang
         List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
@@ -64,65 +60,58 @@ public class SanPhamController {
         model.addAttribute("dl", new SanPham());
         model.addAttribute("title", "Quản Lý Sản Phẩm");
         model.addAttribute("title_duyet", "Sản Phẩm");
-        model.addAttribute("title_btn_add", "Thêm Sản Phẩm");
+        model.addAttribute("title_body", "Thêm Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("phan_trang", "san-pham");
         model.addAttribute("action", "/admin/san-pham/them");
         model.addAttribute("content", "admin/sanpham/duyet.html");
 
-        return "layouts/layout-admin.html";
-    }
+        model.addAttribute("title_loc", "Lọc Sản Phẩm");
+        model.addAttribute("action_loc", "/admin/san-pham/loc");
 
-    @GetMapping("/san-pham/them")
-    public String getThem(Model model) {
-        if (Qdl.NhanVienChuaDangNhap(request))
-            return "redirect:/admin/dang-nhap";
-
-        var dl = new NhanVien();
-        // List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
-        // model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
-        model.addAttribute("dl", dl);
-        model.addAttribute("title_body", "Thêm Sản Phẩm");
-        model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("action", "/admin/san-pham/them");
-        model.addAttribute("content", "admin/sanpham/them.html");
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
 
         return "layouts/layout-admin.html";
     }
 
     @PostMapping("/san-pham/them")
-    public String postAddSanPham(@ModelAttribute("SanPham") SanPham dl,
+    public String postAdd(@ModelAttribute("SanPham") SanPham dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
         dl.setNgayTao(LocalDate.now());
-
-        dvl.them(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.them(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/san-pham";
-
     }
 
     @GetMapping("/san-pham/xem")
-    public String getShowSP(Model model, @RequestParam("id") int id) {
+    public String getShow(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        var dl = dvl.xem(id);
-
-        model.addAttribute("title_body", "Xem Sản Phẩm");
-        model.addAttribute("dl", dl);
-        model.addAttribute("action", "/admin/san-pham/xem");
+        try {
+            var dl = dvl.xem(id);
+            model.addAttribute("title_body", "Xem Sản Phẩm");
+            model.addAttribute("dl", dl);
+            model.addAttribute("action", "/admin/san-pham/xem");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể xem. Mã lỗi: " + e.getMessage());
+        }
 
         return "admin/sanpham/form-xem-sp-bs4.html";
 
     }
 
     @GetMapping("/san-pham/sua")
-    public String getEditSP(Model model, @RequestParam("id") int id) {
+    public String getEdit(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
@@ -140,19 +129,22 @@ public class SanPhamController {
     }
 
     @PostMapping("/san-pham/sua")
-    public String postEditSP(@ModelAttribute("SanPham") SanPham dl,
+    public String postEdit(@ModelAttribute("SanPham") SanPham dl,
             RedirectAttributes redirectAttributes) {
 
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
         dl.setNgaySua(LocalDate.now());
-        dvl.sua(dl);
 
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã sửa thành công !");
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/san-pham";
-
     }
 
     @PostMapping("/san-pham/xoa")
@@ -163,13 +155,120 @@ public class SanPhamController {
 
         try {
             this.dvl.xoa(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa. Lỗi: " + e.getMessage());
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/san-pham";
     }
+
+    @PostMapping("/san-pham/loc")
+    public String postFilter(
+            @RequestParam(value = "minPrice", required = false) Float minPrice,
+            @RequestParam(value = "maxPrice", required = false) Float maxPrice,
+            @RequestParam(value = "maNSX", required = false) Integer maNSX,
+            @RequestParam(value = "banChay", required = false) Boolean banChay,
+            @RequestParam(value = "noiBat", required = false) Boolean noiBat,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            HttpServletRequest request) {
+
+        // Kiểm tra nếu nhân viên chưa đăng nhập
+        if (Qdl.NhanVienChuaDangNhap(request)) {
+            return "redirect:/admin/dang-nhap";
+        }
+
+        try {
+            // Gọi service để lọc sản phẩm
+            Page<SanPham> sanPhams = dvl.locSanPham(minPrice, maxPrice, maNSX, banChay, noiBat, PageRequest.of(0, 5));
+
+            // Kiểm tra nếu không có sản phẩm nào được tìm thấy
+            if (sanPhams.isEmpty()) {
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không có kết quả nào khớp với nội dung lọc.");
+                return "redirect:/admin/san-pham";
+            } else {
+                // Nếu có kết quả, truyền dữ liệu vào model
+                List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+                model.addAttribute("ds", sanPhams.getContent());
+                model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+                model.addAttribute("dl", new SanPham());
+                model.addAttribute("title", "Quản Lý Sản Phẩm");
+                model.addAttribute("title_duyet", "Sản Phẩm");
+                model.addAttribute("title_body", "Thêm Sản Phẩm");
+                model.addAttribute("title_sm", "Thêm mới");
+                model.addAttribute("phan_trang", "san-pham");
+                model.addAttribute("action", "/admin/san-pham/them");
+                model.addAttribute("content", "admin/sanpham/duyet-loc.html");
+                model.addAttribute("title_loc", "Lọc Sản Phẩm");
+                model.addAttribute("action_loc", "/admin/san-pham/loc");
+                model.addAttribute("THONG_BAO_SUCCESS", "Lọc thành công!");
+
+            }
+
+        } catch (Exception e) {
+            // Xử lý lỗi
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể lọc. Mã lỗi: " + e.getMessage());
+            return "redirect:/admin/san-pham";
+        }
+
+        return "layouts/layout-admin.html";
+    }
+
+    // v3 có phân trang nhưng bị xung đột với phân trang khác
+    // @PostMapping("/san-pham/loc")
+    // public String locSanPham(
+    // @RequestParam(value = "minPrice", required = false) Float minPrice,
+    // @RequestParam(value = "maxPrice", required = false) Float maxPrice,
+    // @RequestParam(value = "maNSX", required = false) Integer maNSX,
+    // @RequestParam(value = "banChay", required = false) Boolean banChay,
+    // @RequestParam(value = "noiBat", required = false) Boolean noiBat,
+    // @RequestParam(defaultValue = "1") int page,
+    // @RequestParam(defaultValue = "5") int pageSize,
+    // RedirectAttributes redirectAttributes,
+    // Model model,
+    // HttpServletRequest request) {
+
+    // // Kiểm tra xem nhân viên đã đăng nhập chưa
+    // if (Qdl.NhanVienChuaDangNhap(request)) {
+    // return "redirect:/admin/dang-nhap";
+    // }
+
+    // try {
+    // int pageIndex = page - 1;
+
+    // // Gọi service để lọc sản phẩm và phân trang
+    // Page<SanPham> sanPhamPage = dvl.locSanPham(minPrice, maxPrice, maNSX,
+    // banChay, noiBat,
+    // PageRequest.of(pageIndex, pageSize));
+
+    // // Truyền thông tin lọc vào model để hiển thị lại trên giao diện
+    // List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
+    // model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+    // model.addAttribute("currentPage", page);
+    // model.addAttribute("totalPages", sanPhamPage.getTotalPages());
+    // model.addAttribute("pageSize", pageSize);
+    // model.addAttribute("ds", sanPhamPage.getContent());
+    // model.addAttribute("dl", new SanPham());
+    // model.addAttribute("title", "Quản Lý Sản Phẩm");
+    // model.addAttribute("title_duyet", "Sản Phẩm");
+    // model.addAttribute("title_body", "Thêm Sản Phẩm");
+    // model.addAttribute("title_sm", "Thêm mới");
+    // model.addAttribute("phan_trang", "san-pham");
+    // model.addAttribute("action", "/admin/san-pham/them");
+    // model.addAttribute("content", "admin/sanpham/duyet.html");
+    // model.addAttribute("title_loc", "Lọc Sản Phẩm");
+    // model.addAttribute("action_loc", "/admin/san-pham/loc");
+
+    // model.addAttribute("ds", sanPhamPage.getContent());
+    // model.addAttribute("THONG_BAO_SUCCESS", "Lọc thành công!");
+    // } catch (Exception e) {
+    // model.addAttribute("THONG_BAO_ERROR", "Không thể lọc. Mã lỗi: " +
+    // e.getMessage());
+    // }
+
+    // return "layouts/layout-admin.html";
+    // }
 
 }

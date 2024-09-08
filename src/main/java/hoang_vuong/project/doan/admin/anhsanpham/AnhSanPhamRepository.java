@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-
-public interface AnhSanPhamReponsitory extends JpaRepository<AnhSanPham, Integer>
+public interface AnhSanPhamRepository extends JpaRepository<AnhSanPham, Integer>
 {
 
     List<AnhSanPham> findByMaSP(int masp);

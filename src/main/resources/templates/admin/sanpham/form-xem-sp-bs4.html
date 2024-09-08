@@ -22,7 +22,7 @@
                     <input disabled type="hidden" th:field="*{Id}" />
 
                     <div class="mb-3">
-                        <h5>Model: </h5>
+                        <h5>Cấu hình: </h5>
                         <p th:text="${dl.model}"></p>
                     </div>
 
@@ -99,20 +99,20 @@
                         <div class="col-md">
                             <div class="mb-3">
                                 <h5>Ngày tạo:</h5>
-                                <p th:text="${dl.ngayTao}"></p>
+                                <p th:text="${dl.getNgayTaoText}"></p>
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="mb-3">
                                 <h5>Ngày sửa</h5>
-                                <p th:text="${dl.ngaySua}"></p>
+                                <p th:text="${dl.getNgaySuaText}"></p>
                             </div>
                         </div>
 
                         <div class="col-md">
                             <div class="mb-3">
                                 <h5>Ngày hết hạn:</h5>
-                                <p th:text="${dl.ngayHetHan}"></p>
+                                <p th:text="${dl.getNgayHetHanText}"></p>
                             </div>
                         </div>
                     </div>

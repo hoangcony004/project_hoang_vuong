@@ -70,19 +70,25 @@ public class AnhSanPhamController {
         model.addAttribute("action", "/admin/anh-san-pham/them");
         model.addAttribute("content", "admin/anhsanpham/duyet.html");
 
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
         return "layouts/layout-admin.html";
     }
 
     @PostMapping("/anh-san-pham/them")
-    public String postAddAnhSanPham(@ModelAttribute("AnhSanPham") AnhSanPham dl,
+    public String postAdd(@ModelAttribute("AnhSanPham") AnhSanPham dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
         dl.setNgayTao(LocalDate.now());
-        dvl.them(dl);
-
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.them(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR","Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/anh-san-pham";
     }
@@ -95,10 +101,10 @@ public class AnhSanPhamController {
 
         try {
             this.dvl.xoa(id);
-            redirectAttributes.addFlashAttribute("THONG_BAO", "Đã xóa thành công !");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                    "Không thể xóa. Lỗi: " + e.getMessage());
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/anh-san-pham";

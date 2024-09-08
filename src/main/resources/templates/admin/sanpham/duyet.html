@@ -12,18 +12,7 @@
         </div>
     </div>
     <!-- Thông báo lỗi -->
-    <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO}">
-        <div th:text="${THONG_BAO}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
-    <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ER}">
-        <div th:text="${THONG_BAO_ER}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
+    <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
 </div>
 <!-- end page title -->
 
@@ -111,6 +100,25 @@
     </div>
 </div>
 
+<!-- BS4 MODAL lọc -->
+<div class="modal fade" id="modalLoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div th:insert="admin/sanpham/loc.html"></div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -120,7 +128,7 @@
                         <!-- <a href="#" th:href="@{/admin/san-pham/them}" th:text="${title_btn_add}" class="btn btn-danger mb-2"><i
                                 class="mdi mdi-plus-circle me-2"></i> Thêm Cài Đặt</a> -->
                         <div class="col-sm-4">
-                            <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
+                            <button type="button" th:text="${title_body}" class="btn btn-success" data-toggle="modal"
                                 data-target="#modalThem">
                                 <i class="bi-plus-circle"></i> Thêm Nhân Viên
                             </button>
@@ -130,7 +138,8 @@
                         <div class="text-sm-end">
                             <!-- Các nút chức năng -->
                             <form action="#" method="post" class="mb-3">
-                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-primary btn-sm me-2" data-toggle="modal"
+                                    data-target="#modalLoc">Lọc</button>
                                 <button type="button" class="btn btn-light btn-sm me-2">Import</button>
                                 <button type="button" class="btn btn-light btn-sm">Export</button>
                             </form>
@@ -163,7 +172,8 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th> -->
-                                <th>Model</th>
+                                <th>STT</th>
+                                <th>Cấu Hình</th>
                                 <th class="all">Tên Sản Phẩm</th>
                                 <th>Ảnh</th>
                                 <th>Đơn Giá</th>
@@ -175,7 +185,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dl : ${ds}">
+                            <tr th:each="dl, iterStat  : ${ds}">
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
                                 <!-- <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -246,7 +257,68 @@
                         </tbody>
                     </table>
                     <!-- Hiển thị phân trang -->
-                    <div th:insert="/admin/pages/pageable.html"></div>
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <!-- Trang đầu -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                            </li>
+
+                            <!-- Trang trước -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang đầu tiên -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+                                <a class="page-link" th:href="@{'/admin/san-pham?page=1&pageSize=' + ${pageSize}}">1</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Các trang giữa -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li>
+
+                            <!-- Trang tiếp theo -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/san-pham?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

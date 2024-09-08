@@ -1,0 +1,11 @@
+<div class="container"><br><br><br>
+    <h1 style="text-align: center; display: block;">Kết quả tìm kiếm cho: "<span th:text="${searchQuery}"></span>"</h1>
+    <ul style="font-size: 24px;" th:if="${#lists.size(results) > 0}">
+        <li th:each="result : ${results}">
+            <a th:href="${result.link}" th:text="${result.name}"></a>
+        </li>
+    </ul><br>
+    <h4 style="color: red;" th:if="${#lists.size(results) == 0}">- Không tìm thấy chức năng nào khớp với từ
+        khóa.
+    </h4>
+</div>

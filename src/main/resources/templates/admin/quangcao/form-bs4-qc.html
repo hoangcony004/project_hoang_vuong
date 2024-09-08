@@ -1,0 +1,75 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_btn_add}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_btn_add}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <form th:action="${action}" th:object="${dl}" method="post">
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" th:field="*{Id}" />
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required placeholder="Tên đăng nhập"
+                            th:field="*{tuaDe}" />
+                        <label for="floatingInput">Tên quảng cáo</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required placeholder="Tên đăng nhập"
+                            th:field="*{tuaDePhu}" />
+                        <label for="floatingInput">Tên phụ</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required placeholder="Tên đăng nhập"
+                            th:field="*{link}" />
+                        <label for="floatingInput">Link</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required placeholder="Giá bán"
+                            th:field="*{moTa}" />
+                        <label for="floatingInput">Mô tả</label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" required placeholder="Ảnh đại diện"
+                            th:field="*{giaTien}" />
+                        <label for="floatingInput">Giá tiền</label>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" required th:field="*{trangThai}" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option value="1">Cho phép</option>
+                                <option value="0">Không cho phép</option>
+                            </select>
+                            <label for="floatingSelectGrid">Trạng thái</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required placeholder="Giá bán"
+                            th:field="*{anh}" />
+                        <label for="floatingInput">Link ảnh</label>
+                        <a href="https://postimages.org/">Cách lấy link</a>
+                    </div>
+                </div>
+            </div>
+
+            <button th:text="${title_sm}" type="submit" class="btn btn-outline-success">Cập Nhật</button>
+        </form>
+    </div>
+</div>

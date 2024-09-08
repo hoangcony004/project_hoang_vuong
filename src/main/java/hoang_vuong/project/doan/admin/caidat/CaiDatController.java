@@ -1,5 +1,6 @@
 package hoang_vuong.project.doan.admin.caidat;
 
+import java.time.LocalDate;
 import java.util.List;
 
 // Thư viện web: Java Spring
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import hoang_vuong.project.doan.admin.lienhe.LienHe;
 import hoang_vuong.project.doan.qdl.Qdl;
 
 @Controller
@@ -41,25 +43,58 @@ public class CaiDatController {
         model.addAttribute("action", "/admin/cai-dat/them");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("content", "admin/caidat/duyet.html");
+
         return "layouts/layout-admin.html";
     }
 
     @PostMapping("/cai-dat/them")
-    public String postThem(@ModelAttribute("CaiDat") CaiDat dl,
+    public String postAdd(@ModelAttribute("CaiDat") CaiDat dl,
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/qdl/nhanvien/dangnhap";
 
-        dvl.luuCaiDat(dl);
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã thêm mới thành công!");
+        try {
+            dvl.luuCaiDat(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/cai-dat";
+    }
+
+    @GetMapping("/cai-dat/sua")
+    public String getEdit(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xemCaiDat(id);
+        model.addAttribute("title_body", "Sửa Cài Đặt");
+        model.addAttribute("title_sm", "Cập nhật");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/cai-dat/sua");
+
+        return "admin/caidat/form-bs4-caidat.html";
+    }
+
+    @PostMapping("/cai-dat/sua")
+    public String postEdit(@ModelAttribute("CaiDat") CaiDat dl,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            dvl.luuCaiDat(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/cai-dat";
     }
 
     @PostMapping("/cai-dat/xoa")
-    public String postXoa(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes)
-    // public String postXoa(Model model, @RequestParam("Id") int id)
-    {
+    public String postDelete(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/qdl/nhanvien/dangnhap";
 
@@ -71,9 +106,7 @@ public class CaiDatController {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
                     "Không thể xóa. Lỗi: " + e.getMessage());
         }
-        redirectAttributes.addFlashAttribute("THONG_BAO", "Đã hoàn tất việc xóa !");
 
-        // Điều hướng sang trang giao diện
         return "redirect:/admin/cai-dat";
     }
 }

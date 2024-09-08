@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,9 +23,13 @@ public class KhachHang {
     private int Id;
 
     private String tenDayDu;
+
+    @Column(unique = true)
     private String tenDangNhap;
     private String matKhau;
+    @Column(unique = true)
     private String dienThoai;
+    @Column(unique = true)
     private String email;
     private String anhDaiDien;
     private Boolean trangThai;

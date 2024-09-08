@@ -24,7 +24,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" required placeholder="Tên đăng nhập"
                             th:field="*{model}" />
-                        <label for="floatingInput">Tên model</label>
+                        <label for="floatingInput">Cấu hình máy</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -38,13 +38,12 @@
                             th:field="*{anhDaiDien}" />
                         <label for="floatingInput">Ảnh đại diện</label>
                     </div>
+
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Giá bán"
-                            th:field="*{donGia}" />
+                        <input type="number" class="form-control" id="donGia" placeholder="Giá bán" name="donGia"
+                            th:value="${#numbers.formatDecimal(dl.donGia, 0, 0)}" />
                         <label for="floatingInput">Giá bán</label>
                     </div>
-
-
 
                     <div class="col-md">
                         <div class="form-floating mb-3">
@@ -57,7 +56,6 @@
                             <label for="floatingSelectGrid">Nhà Sản Xuất</label>
                         </div>
                     </div>
-
 
                     <div class="form-floating mb-3">
                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"

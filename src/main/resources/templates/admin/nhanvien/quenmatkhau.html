@@ -9,9 +9,24 @@
     </div>
     <br>
 
-    <div class="alert alert-success" th:if="${THONG_BAO}"
+    <div class="alert alert-success" th:if="${THONG_BAO_ERROR}"
         style="color: red; font-size: 14px; margin-top: 10px; text-align: center;">
-        <span th:text="${THONG_BAO}"></span>
+        <span th:text="${THONG_BAO_ERROR}"></span>
+    </div>
+
+    <div class="alert alert-success" th:if="${THONG_BAO_SUCCESS}"
+        style="color: green; font-size: 14px; margin-top: 10px; text-align: center;">
+        <span th:text="${THONG_BAO_SUCCESS}"></span>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <div class="g-recaptcha" data-sitekey="6LdxSzkqAAAAACR-dVaDv-EO31193naAY4aAS74h"></div>
+    </div>
+
+    <div>
+        <a style="color: #262626; text-decoration: none;" href="javascript:history.back()">
+            Quay lại.
+        </a>
     </div>
 
     <div class="field">

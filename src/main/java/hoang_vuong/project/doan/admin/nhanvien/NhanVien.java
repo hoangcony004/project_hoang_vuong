@@ -22,13 +22,14 @@ public class NhanVien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
+    @Column(unique = true)
     private String tenDangNhap;
 
     @Column(unique = true)
     private String email;
     @Column(unique = true)
     private String dienThoai;
-    
+
     private String tenDayDu;
     private String matKhau;
     private String xacNhanMatKhau;

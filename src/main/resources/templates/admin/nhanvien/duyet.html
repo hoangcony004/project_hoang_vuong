@@ -12,18 +12,7 @@
         </div>
     </div>
     <!-- Thông báo lỗi -->
-    <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO}">
-        <div th:text="${THONG_BAO}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
-    <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ER}">
-        <div th:text="${THONG_BAO_ER}">
-            Thông báo đẩy ra ở đây
-        </div>
-        <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
-    </div>
+    <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
 </div>
 <!-- end page title -->
 
@@ -111,6 +100,25 @@
     </div>
 </div>
 
+<!-- BS4 MODAL lọc -->
+<div class="modal fade" id="modalLoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div th:insert="admin/nhanvien/loc.html"></div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -125,7 +133,8 @@
                         <div class="text-sm-end">
                             <!-- Các nút chức năng -->
                             <form action="#" method="post" class="mb-3">
-                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-primary btn-sm me-2" data-toggle="modal"
+                                    data-target="#modalLoc">Lọc</button>
                                 <button type="button" class="btn btn-light btn-sm me-2">Import</button>
                                 <button type="button" class="btn btn-light btn-sm">Export</button>
                             </form>
@@ -156,7 +165,7 @@
                                 <th>Ảnh Đại Diện</th>
                                 <th class="all">
                                     <a th:href="@{/admin/nhan-vien(page=${currentPage}, pageSize=${pageSize}, sort='tenDayDu', direction=${direction == 'asc' ? 'desc' : 'asc'})}"
-                                        class="text-body" style="color: black;">Tên Nhân Viên</a>
+                                        class="text-body" style="color: black;">Họ Và Tên</a>
                                 </th>
                                 <th>Tên Đăng Nhập</th>
                                 <th>Email</th>
@@ -169,8 +178,8 @@
                         </thead>
 
                         <tbody>
-                            <tr th:each="dl : ${ds}">
-                                <td th:text="${dl.thuTu}">ID </td>
+                            <tr th:each="dl, iterStat  : ${ds}">
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
 
                                 <td>
                                     <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"

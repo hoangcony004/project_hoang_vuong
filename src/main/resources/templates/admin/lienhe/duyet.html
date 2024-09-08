@@ -1,0 +1,256 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                    <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
+                </ol>
+            </div>
+            <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
+        </div>
+    </div>
+    <!-- Thông báo lỗi -->
+    <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
+</div>
+<!-- end page title -->
+
+<div class="modal fade" id="modalThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <i th:replace="admin/lienhe/form-bs4-lh.html"></i>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- BS4 MODAL EDIT -->
+<div class="modal" id="modalSua">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- BS4 MODAL: DELETE -->
+<div class="modal fade" id="modalXoa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Nhân Viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formXoa" action="/admin/lien-he/xoa" method="post">
+                    <input type="hidden" name="id" id="idInput" value="" />
+                    <p>
+                        Bạn có chắc muốn xóa?
+                    </p>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="bi-x"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi-trash"></i> Xóa
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-4">
+                        <div class="col-sm-4">
+                            <button type="button" th:text="${title_btn_add}" class="btn btn-success" data-toggle="modal"
+                                data-target="#modalThem">
+                                <i class="bi-plus-circle"></i> Thêm Nhân Viên
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="text-sm-end">
+                            <!-- Các nút chức năng -->
+                            <form action="#" method="post" class="mb-3">
+                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <button type="button" class="btn btn-light btn-sm me-2">Import</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end col-->
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover" id="products-datatable">
+                        <thead class="table-light">
+                            <tr>
+
+                                <th class="all" style="width: 20px;">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="customCheck1">
+                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                    </div>
+                                </th>
+                                <th>STT</th>
+                                <th>Tên Liên Hệ</th>
+                                <th>Email</th>
+                                <th>Tiêu Đề</th>
+                                <th>Tin Nhắn</th>
+                                <th>Điện Thoại</th>
+                                <th>Địa Chỉ</th>
+                                <th>Web Site</th>
+                                <th>Ngày Thêm</th>
+                                <th>Ngày Sửa</th>
+                                <th style="width: 85px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dl, iterStat : ${ds}">
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="customCheck2">
+                                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                    </div>
+                                </td>
+                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
+                                <td th:text="${dl.ten}">Tên</td>
+                                <td th:text="${dl.email}">xxx</td>
+                                <td th:text="${dl.tieuDe}">xxx</td>
+                                <td th:text="${dl.tinNhan}">Nhà Sản Xuất</td>
+                                <td th:text="${dl.dienThoai}">Nhà Sản Xuất</td>
+                                <td th:text="${dl.diaChi}">Nhà Sản Xuất</td>
+                                <td th:text="${dl.webSite}">Nhà Sản Xuất</td>
+                                <td th:text="${dl.getNgayTaoText}">xxx</td>
+                                <td th:text="${dl.getNgaySuaText}">xxx</td>
+
+                                <td class="table-action">
+
+                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalSua"
+                                        th:data-id="${dl.id}">
+                                        <i class="mdi mdi-square-edit-outline"></i>
+                                    </a>
+                                    <script>
+                                        $('#modalSua').on('show.bs.modal', function (e) {
+
+                                            var id = $(e.relatedTarget).data('id');
+
+                                            $('#modalSua .modal-body').load("/admin/lien-he/sua?id=" + id);
+                                        });
+                                    </script>
+
+                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
+                                        href="#modalXoa" th:data-id="${dl.id}">
+                                        <i class="mdi mdi-delete"></i>
+                                    </a>
+                                    <script>
+                                        $('#modalXoa').on('show.bs.modal', function (e) {
+                                            var id = $(e.relatedTarget).data('id');
+                                            console.log("ID nhận được: ", id);
+                                            $(e.currentTarget).find('input[name="id"]').val(id);
+                                        });
+                                    </script>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <!-- Hiển thị phân trang -->
+                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <!-- Trang đầu -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                            </li>
+
+                            <!-- Trang trước -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang đầu tiên -->
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+                                <a class="page-link" th:href="@{'/admin/lien-he?page=1&pageSize=' + ${pageSize}}">1</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Các trang giữa -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                            </li>
+
+                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+                                <span class="page-link">...</span>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+                                th:if="${totalPages > 1}">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                            </li>
+
+                            <!-- Trang tiếp theo -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    <i class="dripicons-chevron-right"></i>
+                                </a>
+                            </li>
+
+                            <!-- Trang cuối -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+                                <a class="page-link"
+                                    th:href="@{'/admin/lien-he?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>
