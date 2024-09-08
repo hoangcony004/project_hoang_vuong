@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("admin")
 public class QdlIndex {
     @Autowired
     private HttpServletRequest request;
@@ -29,8 +27,9 @@ public class QdlIndex {
         return "Hello Java Web Spring Boot !";
     }
 
-    @GetMapping("/tim-kiem-in-app")
-    public String getTimKiemApp(@RequestParam("search") String search, Model model, HttpServletRequest request) {
+    @GetMapping("/admin/tim-kiem-in-app")
+    public String getTimKiemApp(@RequestParam("search") String search,
+            Model model, HttpServletRequest request) {
         if (Qdl.NhanVienChuaDangNhap(request)) {
             return "redirect:/admin/dang-nhap";
         }

@@ -23,4 +23,6 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Integer>
     List<NhanVien> findByEmailContainingIgnoreCase(String email);
 
     List<NhanVien> findByDienThoaiContainingIgnoreCase(String dienThoai);
+
+    List<NhanVien> findByTenDangNhapContainingIgnoreCase(String tenDangNhap);
 }

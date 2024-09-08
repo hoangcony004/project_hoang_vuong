@@ -13,7 +13,6 @@ public class Qdl
         (request.getSession().getAttribute("NhanVien_Id") == null) 
         {
             request.getSession().setAttribute("URI_BEFORE_LOGIN", request.getRequestURI());
-            
             // rồi điều hướng sang trang đăng nhập
             return true;
         }
