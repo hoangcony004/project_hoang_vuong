@@ -24,7 +24,7 @@ public class Qdl
         if
         (request.getSession().getAttribute("khachhang_Id") == null) 
         {
-            request.getSession().setAttribute("URI_BEFORE_LOGIN", request.getRequestURI());
+            request.getSession().setAttribute("URI_BEFORE_LOGIN_USER", request.getRequestURI());
             
             // rồi điều hướng sang trang đăng nhập
             return true;

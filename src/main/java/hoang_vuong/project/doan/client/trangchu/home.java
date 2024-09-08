@@ -1,5 +1,6 @@
 package hoang_vuong.project.doan.client.trangchu;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +35,10 @@ public class home {
     @Autowired
     private AnhSanPhamService anhdv;
    
-
+public String formatPrice(float price) {
+    DecimalFormat formatter = new DecimalFormat("#,###.00");  // Định dạng: phân cách hàng nghìn và 2 chữ số thập phân
+    return formatter.format(price);
+}
  
     @GetMapping({
       "/apps/",
@@ -45,7 +49,11 @@ public class home {
       
         // java.util.List<SanPham> list = dvl.dsSanPham();
       List<SanPham> noibat = dvl.dsSanPhamNoiBat();
-        List<SanPham> banchay = dvl.dsSanPhamBanChay();        
+        List<SanPham> banchay = dvl.dsSanPhamBanChay();  
+      
+      
+      // Format giá cho từng sản phẩm trong danh sách banchay
+
                   model.addAttribute("ds_noibat", noibat);
                   model.addAttribute("ds_banchay", banchay);    
       //  model.addAttribute("ds", list);
