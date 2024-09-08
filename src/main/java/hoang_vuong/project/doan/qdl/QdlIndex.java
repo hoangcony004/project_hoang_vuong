@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("admin")
 public class QdlIndex {
     @Autowired
     private HttpServletRequest request;
@@ -48,7 +47,7 @@ public class QdlIndex {
    return "layouts/layout-client.html";
     }
 
-    @GetMapping("/tim-kiem-in-app")
+    @GetMapping("/admin/tim-kiem-in-app")
     public String getTimKiemApp(@RequestParam("search") String search, Model model, HttpServletRequest request) {
         if (Qdl.NhanVienChuaDangNhap(request)) {
             return "redirect:/admin/dang-nhap";
