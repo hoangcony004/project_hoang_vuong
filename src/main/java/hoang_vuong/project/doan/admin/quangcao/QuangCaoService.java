@@ -25,6 +25,10 @@ public class QuangCaoService {
         return kdl.findAll();
     }
 
+    public List<QuangCao> choPhep() {
+        return kdl.findByTrangThai(true);
+    }
+
     public QuangCao timTheoId(int id) {
         QuangCao dl = null;
 

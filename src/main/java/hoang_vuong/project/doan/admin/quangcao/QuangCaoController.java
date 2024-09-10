@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
+import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -79,6 +82,41 @@ public class QuangCaoController {
         return "redirect:/admin/quang-cao";
     }
 
+    @GetMapping("/quang-cao/sua")
+    public String getEdit(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            var dl = dvl.xem(id);
+            model.addAttribute("title_body", "Sửa Quảng Cáo");
+            model.addAttribute("title_sm", "Cập nhật");
+            model.addAttribute("dl", dl);
+            model.addAttribute("action", "/admin/quang-cao/sua");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "admin/quangcao/form-bs4-qc.html";
+    }
+
+    @PostMapping("/quang-cao/sua")
+    public String postEdit(@ModelAttribute("QuangCao") QuangCao dl,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/quang-cao";
+    }
+
     @PostMapping("/quang-cao/xoa")
     public String postDelete(@RequestParam("id") int id,
             RedirectAttributes redirectAttributes) {
@@ -86,13 +124,13 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-            try {
-                this.dvl.xoa(id);
-                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                        "Không thể xóa. Mã lỗi: " + e.getMessage());
-            }
+        try {
+            this.dvl.xoa(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/quang-cao";
     }
