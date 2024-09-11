@@ -14,6 +14,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer>
    SanPham findOneByMaNSX(int maNSX);
    List<SanPham> findByNoiBat(Boolean noiBat);
    List<SanPham> findByBanChay(Boolean banChay);
+   List<SanPham> findByTenSPContaining(String tenSP);
 
         @Query("SELECT sp FROM SanPham sp WHERE "
                         + "(:minPrice IS NULL OR sp.donGia >= :minPrice) AND "

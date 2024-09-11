@@ -125,12 +125,13 @@
                                 <select name="criteria" class="form-select form-select-sm me-2"
                                     style="max-width: 150px;">
                                     <option value="tenDayDu">Họ và Tên</option>
+                                    <option value="tenDangNhap">Tên đăng nhập</option>
                                     <option value="Id">ID</option>
                                     <option value="email">Email</option>
                                     <option value="dienThoai">Số điện thoại</option>
                                 </select>
                                 <input type="search" name="query" class="form-control form-control-sm me-2"
-                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                    placeholder="Tìm kiếm khách hàng..." style="max-width: 200px;">
                                 <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
@@ -152,8 +153,8 @@
                                 <th>Email</th>
                                 <th>Số Điện Thoại</th>
                                 <th>Trạng Thái</th>
-                                <th>Ngày Tạo</th>
-                                <th>Ngày Hết Hạn</th>
+                                <th>Ngày Thêm</th>
+                                <th>Ngày Sửa</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                         </thead>
@@ -191,7 +192,7 @@
 
                                 <td th:text="${dl.getNgayTaoText}"></td>
 
-                                <td th:text="${dl.getNgayHetHanText}"></td>
+                                <td th:text="${dl.getNgaySuaText}"></td>
 
                                 <td class="table-action">
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXem"
@@ -255,7 +256,8 @@
 
                             <!-- Trang đầu tiên -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link" th:href="@{'/admin/khach-hang?page=1&pageSize=' + ${pageSize}}">1</a>
+                                <a class="page-link"
+                                    th:href="@{'/admin/khach-hang?page=1&pageSize=' + ${pageSize}}">1</a>
                             </li>
 
                             <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->

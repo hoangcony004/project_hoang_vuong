@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
-import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin")
@@ -72,6 +71,7 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+        dl.setNgayTao(LocalDate.now());
         try {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
@@ -89,7 +89,7 @@ public class QuangCaoController {
 
         try {
             var dl = dvl.xem(id);
-            model.addAttribute("title_body", "Sửa Quảng Cáo");
+            model.addAttribute("title_btn_add", "Sửa Quảng Cáo");
             model.addAttribute("title_sm", "Cập nhật");
             model.addAttribute("dl", dl);
             model.addAttribute("action", "/admin/quang-cao/sua");
@@ -107,6 +107,7 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+        dl.setNgaySua(LocalDate.now());
         try {
             dvl.sua(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");

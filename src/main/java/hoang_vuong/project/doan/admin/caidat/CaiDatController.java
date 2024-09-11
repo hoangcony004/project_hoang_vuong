@@ -40,6 +40,7 @@ public class CaiDatController {
         model.addAttribute("title", "Quản Lý Cài Đặt");
         model.addAttribute("title_duyet", "Cài Đặt");
         model.addAttribute("title_btn_add", "Thêm Cài Đặt");
+        model.addAttribute("title_body", "Thêm Cài Đặt");
         model.addAttribute("action", "/admin/cai-dat/them");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("content", "admin/caidat/duyet.html");

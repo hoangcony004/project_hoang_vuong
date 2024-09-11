@@ -58,12 +58,6 @@
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="mb-3">
-                                <h5>Thứ tự:</h5>
-                                <p th:text="${dl.thuTu}"></p>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div class="mb-3">
                                 <h5>Trạng thái:</h5>
                                 <!-- <p th:text="${dl.TrangThai == 1 ? 'Cho phép' : 'Không cho phép'}"></p> -->
                                 <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
@@ -78,20 +72,14 @@
                         <div class="col-md">
                             <div class="mb-3">
                                 <h5>Ngày tạo:</h5>
-                                <p th:text="${dl.ngayTao}"></p>
+                                <p th:text="${dl.getNgayTaoText}"></p>
                             </div>
                         </div>
-                        <!-- <div class="col-md">
-                            <div class="mb-3">
-                                <h5>Ngày sửa</h5>
-                                <p th:text="${dl.ngaySua}"></p>
-                            </div>
-                        </div> -->
 
                         <div class="col-md">
                             <div class="mb-3">
-                                <h5>Ngày hết hạn:</h5>
-                                <p th:text="${dl.ngayHetHan}"></p>
+                                <h5>Ngày sửa:</h5>
+                                <p th:text="${dl.getNgaySuaText}"></p>
                             </div>
                         </div>
                     </div>

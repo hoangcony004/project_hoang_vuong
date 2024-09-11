@@ -1,10 +1,12 @@
 package hoang_vuong.project.doan.admin.sanpham;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
+import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;
@@ -216,59 +219,61 @@ public class SanPhamController {
         return "layouts/layout-admin.html";
     }
 
-    // v3 có phân trang nhưng bị xung đột với phân trang khác
-    // @PostMapping("/san-pham/loc")
-    // public String locSanPham(
-    // @RequestParam(value = "minPrice", required = false) Float minPrice,
-    // @RequestParam(value = "maxPrice", required = false) Float maxPrice,
-    // @RequestParam(value = "maNSX", required = false) Integer maNSX,
-    // @RequestParam(value = "banChay", required = false) Boolean banChay,
-    // @RequestParam(value = "noiBat", required = false) Boolean noiBat,
-    // @RequestParam(defaultValue = "1") int page,
-    // @RequestParam(defaultValue = "5") int pageSize,
-    // RedirectAttributes redirectAttributes,
-    // Model model,
-    // HttpServletRequest request) {
+    @GetMapping("/san-pham/tim-kiem")
+    public String getSearch(Model model,
+            @RequestParam("query") String query,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int pageSize,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
 
-    // // Kiểm tra xem nhân viên đã đăng nhập chưa
-    // if (Qdl.NhanVienChuaDangNhap(request)) {
-    // return "redirect:/admin/dang-nhap";
-    // }
+        // Kiểm tra nếu nhân viên chưa đăng nhập thì điều hướng đến trang đăng nhập
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
 
-    // try {
-    // int pageIndex = page - 1;
+        // Kiểm tra nếu không có từ khóa tìm kiếm
+        if (query == null || query.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Chưa nhập từ khóa tìm kiếm.");
+            return "redirect:/admin/san-pham";
+        }
 
-    // // Gọi service để lọc sản phẩm và phân trang
-    // Page<SanPham> sanPhamPage = dvl.locSanPham(minPrice, maxPrice, maNSX,
-    // banChay, noiBat,
-    // PageRequest.of(pageIndex, pageSize));
+        // Tìm kiếm sản phẩm dựa trên từ khóa
+        List<SanPham> list = dvl.timSanPhamTheoTen(query);
+        int total = list.size();
 
-    // // Truyền thông tin lọc vào model để hiển thị lại trên giao diện
-    // List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
-    // model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
-    // model.addAttribute("currentPage", page);
-    // model.addAttribute("totalPages", sanPhamPage.getTotalPages());
-    // model.addAttribute("pageSize", pageSize);
-    // model.addAttribute("ds", sanPhamPage.getContent());
-    // model.addAttribute("dl", new SanPham());
-    // model.addAttribute("title", "Quản Lý Sản Phẩm");
-    // model.addAttribute("title_duyet", "Sản Phẩm");
-    // model.addAttribute("title_body", "Thêm Sản Phẩm");
-    // model.addAttribute("title_sm", "Thêm mới");
-    // model.addAttribute("phan_trang", "san-pham");
-    // model.addAttribute("action", "/admin/san-pham/them");
-    // model.addAttribute("content", "admin/sanpham/duyet.html");
-    // model.addAttribute("title_loc", "Lọc Sản Phẩm");
-    // model.addAttribute("action_loc", "/admin/san-pham/loc");
+        // Kiểm tra nếu không có kết quả nào
+        if (total == 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không có kết quả nào trùng với từ khóa tìm kiếm.");
+            return "redirect:/admin/san-pham";
+        }
 
-    // model.addAttribute("ds", sanPhamPage.getContent());
-    // model.addAttribute("THONG_BAO_SUCCESS", "Lọc thành công!");
-    // } catch (Exception e) {
-    // model.addAttribute("THONG_BAO_ERROR", "Không thể lọc. Mã lỗi: " +
-    // e.getMessage());
-    // }
+        // Phân trang danh sách kết quả
+        int start = (page - 1) * pageSize;
+        int end = Math.min((start + pageSize), list.size());
+        Page<SanPham> sanPhamPage = new PageImpl<>(list.subList(start, end), PageRequest.of(page - 1, pageSize), total);
 
-    // return "layouts/layout-admin.html";
-    // }
+        // Thêm số thứ tự
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
+        // Thêm các thuộc tính cho giao diện
+        model.addAttribute("ds", sanPhamPage.getContent());
+        model.addAttribute("page", sanPhamPage);
+        model.addAttribute("dl", new SanPham());
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sanPhamPage.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+
+        model.addAttribute("action", "/admin/san-pham/them");
+        model.addAttribute("title_body", "Thêm Sản Phẩm");
+        model.addAttribute("title_sm", "Thêm mới");
+        model.addAttribute("title", "Quản Lý Sản Phẩm");
+        model.addAttribute("content", "admin/sanpham/duyet.html");
+
+        return "layouts/layout-admin.html";
+    }
 
 }

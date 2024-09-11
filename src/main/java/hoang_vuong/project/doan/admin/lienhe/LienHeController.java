@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.qdl.Qdl;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,7 +93,7 @@ public class LienHeController {
             return "redirect:/admin/dang-nhap";
 
         var dl = dvl.xem(id);
-        model.addAttribute("title_body", "Sửa Liên Hệ");
+        model.addAttribute("title_btn_add", "Sửa Liên Hệ");
         model.addAttribute("title_sm", "Cập nhật");
         model.addAttribute("dl", dl);
         model.addAttribute("action", "/admin/lien-he/sua");

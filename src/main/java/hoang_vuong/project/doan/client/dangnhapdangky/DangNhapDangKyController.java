@@ -49,7 +49,7 @@ public class DangNhapDangKyController {
 
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
-        dl.setNgayHetHan(LocalDate.now());
+        dl.setNgaySua(LocalDate.now());
         try {
             dvl.luuKhachHang(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");

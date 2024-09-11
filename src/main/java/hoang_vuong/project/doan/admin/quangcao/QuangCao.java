@@ -10,6 +10,9 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Getter
 @Setter
@@ -26,6 +29,30 @@ public class QuangCao {
     private String moTa;
     private Float giaTien;
     private Boolean trangThai;
+    private LocalDate ngayTao;
+    private LocalDate ngaySua;
+    private LocalDate ngayHetHan;
+
+    public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
+    }
+
+    public String getNgaySuaText() {
+        if (ngaySua == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
+    }
+
+    public String getNgayHetHanText() {
+        if (ngayHetHan == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayHetHan);
+    }
 
     public String getFomatGiaBan() {
         if (giaTien == null) {
