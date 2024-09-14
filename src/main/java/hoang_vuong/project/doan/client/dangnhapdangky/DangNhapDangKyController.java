@@ -20,6 +20,7 @@ import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+
 @Controller
 @RequestMapping("/apps")
 public class DangNhapDangKyController {
@@ -49,6 +50,7 @@ public class DangNhapDangKyController {
 
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
+
         dl.setNgaySua(LocalDate.now());
         try {
             dvl.luuKhachHang(dl);
@@ -67,6 +69,7 @@ public class DangNhapDangKyController {
             @RequestParam("matKhau") String MatKhau,
             HttpServletRequest request,
             HttpSession session) {
+
 
         String old_pss = null;
 

@@ -12,12 +12,9 @@ var cart = {
 			success: function(json) {	
 
 				if (json['success']) {
-					alert(' thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
-						// đoạn html này thông báo thêm giỏ hàng thành công.
-						// Thêm đoạn mã html vào trước thẻ cha của thẻ con có id="content"
-						// $('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');				
-						// $('.alert-success').fadeOut(10000);
-						// cập nhật thông tin số sản phẩm trong giỏ hàng
+
+					alert(' thêm sản phẩm vào giỏ hàng thành công được!.');
+
 					$('#cart-total').text(json['total']);
 					$('#cart_total_down').text(json['total']);
 						// cuộn lên đầu trang
@@ -30,7 +27,7 @@ var cart = {
 						toastr.success(json['success'], 'Thêm Sản Phẩm vào Giỏ OK')
 						$('#cart').load('/giohang/ajax/get-html');
 						//$('#cart-total').load('/');
-						alert(' thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
+
 				}
 			},
 			error: function(){

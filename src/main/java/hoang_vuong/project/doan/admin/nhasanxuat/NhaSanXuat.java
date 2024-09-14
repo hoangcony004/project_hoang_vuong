@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +18,7 @@ public class NhaSanXuat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
 
     private String ten;
     private String anh;

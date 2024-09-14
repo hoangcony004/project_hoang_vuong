@@ -1,5 +1,4 @@
 package hoang_vuong.project.doan.admin.sanpham;
-
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,15 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
-      List<SanPham> findByMaNSX(int maNSX);
 
-      SanPham findOneByMaNSX(int maNSX);
 
-      List<SanPham> findByNoiBat(Boolean noiBat);
-
-      List<SanPham> findByBanChay(Boolean banChay);
-
+public interface SanPhamRepository extends JpaRepository<SanPham, Integer>
+{
+   List<SanPham> findByMaNSX(int maNSX);
+   SanPham findOneByMaNSX(int maNSX);
+   List<SanPham> findByNoiBat(Boolean noiBat);
+   List<SanPham> findByBanChay(Boolean banChay);
       List<SanPham> findByTenSPContaining(String tenSP);
 
       @Query("SELECT sp FROM SanPham sp WHERE "

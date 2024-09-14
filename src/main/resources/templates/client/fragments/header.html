@@ -52,6 +52,7 @@
         </div>
     </div>
 
+
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -71,6 +72,7 @@
                         <div class="header-search-wrapper search-wrapper-wide">
                             <label for="q" class="sr-only">Tìm kiếm</label>
                             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+
                             <input type="search" class="form-control" name="query" id="q"
                                 placeholder="Tìm kiếm Sản phẩm ..." required>
                         </div>
@@ -80,6 +82,7 @@
             </div>
 
             <div class="header-right">
+
                 <div class="wishlist">
                     <a href="wishlist.html" title="Wishlist">
                         <div class="icon">
@@ -126,6 +129,7 @@
         <div class="container">
             <div class="header-left">
                 <div class="dropdown category-dropdown">
+
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" data-display="static" title="Browse Categories">
                         Danh Mục<i class="icon-angle-down"></i>
@@ -134,8 +138,9 @@
                     <div class="dropdown-menu">
                         <nav class="side-nav">
                             <ul class="menu-vertical sf-arrows" th:each="dl : ${dlnsx}">
-                                <li class="item-lead"><a th:href="${dl.link}" th:text=${dl.ten}></a></li>
 
+                                <li class="item-lead"><a th:href="@{/apps/categories?id=}+${dl.id}"  ><h8 th:text="${dl.ten}"></h8></a></li>
+                                <li class="item-lead"><a th:href="${dl.link}" th:text=${dl.ten}></a></li>
                             </ul><!-- End .menu-vertical -->
                         </nav><!-- End .side-nav -->
                     </div><!-- End .dropdown-menu -->
@@ -145,6 +150,7 @@
             <div class="header-center">
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
+
                         <li class="megamenu-container">
                             <a href="/">Trang Chủ</a>
                         </li>
@@ -227,3 +233,4 @@
         </div><!-- End .container -->
     </div><!-- End .header-bottom -->
 </header><!-- End .header -->
+

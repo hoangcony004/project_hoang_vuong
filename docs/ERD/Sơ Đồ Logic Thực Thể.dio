@@ -1,6 +1,10 @@
 <mxfile host="65bd71144e" pages="6">
     <diagram id="-7CXg11_z8YP-IRPVlsC" name="Sơ Đồ Logic Hệ Thống">
+<<<<<<< HEAD
+        <mxGraphModel dx="833" dy="288" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+=======
         <mxGraphModel dx="706" dy="427" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -569,7 +573,11 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Logic Thực Thể- Sản Phẩm" id="ZeCtSjspzsKkmO008xEH">
+<<<<<<< HEAD
+        <mxGraphModel dx="833" dy="288" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+=======
         <mxGraphModel dx="1412" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
             <root>
                 <mxCell id="_qyWszMRyD4zUYtbiq6x-0"/>
                 <mxCell id="_qyWszMRyD4zUYtbiq6x-1" parent="_qyWszMRyD4zUYtbiq6x-0"/>
@@ -1177,7 +1185,11 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Logic Thực Thể-Khách Hàng" id="2UbCjclTsoD61GaA9NlS">
+<<<<<<< HEAD
+        <mxGraphModel dx="833" dy="288" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+=======
         <mxGraphModel dx="1284" dy="776" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
             <root>
                 <mxCell id="u7s-GGeG2fkGSxzJOqJq-0"/>
                 <mxCell id="u7s-GGeG2fkGSxzJOqJq-1" parent="u7s-GGeG2fkGSxzJOqJq-0"/>

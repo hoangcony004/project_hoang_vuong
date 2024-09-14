@@ -24,23 +24,38 @@
             					<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
             				</form>
             			</div><!-- End .checkout-discount -->
-            			<form action="#">
+
+            			<form th:action="${action}" method="post" th:object="${alldatakh}">
 		                	<div class="row">
 		                		<div class="col-lg-9">
-		                			<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+		                			<h2 class="checkout-title" >Billing Details</h2><!-- End .checkout-title -->
 		                				<div class="row">
 		                					<div class="col-sm-6">
 		                						<label>Họ và tên *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input th:field="${alldatakh.tenDayDu}"  type="text" class="form-control" required>
+
 		                					</div><!-- End .col-sm-6 -->
 
 		                					<div class="col-sm-6">
 		                						<label>Số điện thoại</label>
-		                						<input type="text" class="form-control" required>
+<<<<<<< HEAD
+		                						<input type="text" th:field="${alldatakh.dienThoai}"  class="form-control" required>
+
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
 	            						<label>Tỉnh/Thành phố  *</label>
+<<<<<<< HEAD
+										<select  class="form-control" required name="city" id='city' >
+											<option value=''>Tỉnh/Thành phố</option>
+										  </select>
+										  <label>Quận huyện  *</label>
+										  <select  class="form-control" required name="district" id='district' >
+											<option value=''>Quận/huyện</option>
+										  </select>
+										  <label>Phường xã  *</label>
+										  <select  class="form-control" required name="ward" id='ward'>
+=======
 										<select  class="form-control" name="" id='city' >
 											<option value=''>Tỉnh/Thành phố</option>
 										  </select>
@@ -50,10 +65,21 @@
 										  </select>
 										  <label>Phường xã  *</label>
 										  <select  class="form-control" name="" id='ward'>
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
 											<option value=''>Phường/xã</option>
 										  </select>
 
 										  <label>Số nhà số ngõ địa chỉ chi tiết *</label>
+<<<<<<< HEAD
+										  <input type="" name="fullAdress"  class="form-control" required>
+  
+	            					
+	                					<label>Email address *</label>
+	        							<input type="email" th:field="${alldatakh.email}"  class="form-control" required>
+
+	                					<label>Ghi chú </label>
+	        							<textarea class="form-control" name="note" cols="30" rows="4" placeholder="ghi chú điều cần chú ý." ></textarea>
+=======
 										  <input type="email" class="form-control" required>
   
 	            					
@@ -62,11 +88,16 @@
 
 	                					<label>Ghi chú </label>
 	        							<textarea class="form-control" cols="30" rows="4" placeholder="ghi chú điều cần chú ý."></textarea>
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
 		                		</div><!-- End .col-lg-9 -->
 		                		<aside class="col-lg-3">
 		                			<div class="summary">
 		                				<h3 class="summary-title">Đơn hàng của bạn</h3><!-- End .summary-title -->
+<<<<<<< HEAD
+							
+=======
 
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
 		                				<table class="table table-summary" >
 		                					<thead>
 		                						<tr>
@@ -79,7 +110,11 @@
 		                						<tr  th:each="sp:${cartData}">
 		                							<td>
 														<span th:text="${sp.get('ten')}" ></span> 
+<<<<<<< HEAD
+														(Số lượng:<span th:text="${sp.get('soluong')}"  ></span>)
+=======
 														(Số lượng:<span th:text="${sp.get('soluong')}" ></span>)
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
 													</td>
 		                							<td th:text="${sp.get('thanhTien')}"></td>
 		                						</tr>
@@ -96,6 +131,14 @@
 		                					</tbody>
 		                				</table><!-- End .table table-summary -->
 
+<<<<<<< HEAD
+		                				<!-- nếu làm banking lấy lại ở đây -->
+										<!-- End .accordion -->
+
+		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+		                					<span class="btn-text">Đặt hàng</span>
+		                					<span class="btn-hover-text">Tiến hành đặt hàng</span>
+=======
 		                				<div class="accordion-summary" id="accordion-payment">
 										    <div class="card">
 										        <div class="card-header" id="heading-1">
@@ -175,6 +218,7 @@
 		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
 		                					<span class="btn-text">Place Order</span>
 		                					<span class="btn-hover-text">Proceed to Checkout</span>
+>>>>>>> eb5f16a3744dd3b67524dc58a4c0bbbe162fbe88
 		                				</button>
 		                			</div><!-- End .summary -->
 		                		</aside><!-- End .col-lg-3 -->

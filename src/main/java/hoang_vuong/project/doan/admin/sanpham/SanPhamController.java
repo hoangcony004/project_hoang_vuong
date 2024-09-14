@@ -54,8 +54,8 @@ public class SanPhamController {
 
         // Cập nhật mô hình với dữ liệu phân trang
         List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
-
         model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+        
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", sanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
