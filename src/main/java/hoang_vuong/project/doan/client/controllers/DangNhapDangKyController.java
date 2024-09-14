@@ -1,4 +1,4 @@
-package hoang_vuong.project.doan.client.dangnhapdangky;
+package hoang_vuong.project.doan.client.controllers;
 
 import java.time.LocalDate;
 
@@ -89,7 +89,7 @@ public class DangNhapDangKyController {
                 request.getSession().setAttribute("khachhang_Email", old_dl.getEmail());
 
                 var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN_USER");
-                return uriBeforeLogin != null ? "redirect:" + uriBeforeLogin : "redirect:/apps";
+                return uriBeforeLogin != null ? "redirect:" + uriBeforeLogin : "redirect:/";
             } else {
                 // Sai mật khẩu
                 redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Sai tên đăng nhập hoặc mật khẩu!");

@@ -14,7 +14,7 @@ public class ShopController {
 
         model.addAttribute("title", "Shop");
         model.addAttribute("content", "client/shop.html");
-        return "layouts/layout-client.html";
+        return "layouts/layout-client";
     }
 
 }
