@@ -36,9 +36,7 @@ public class giohangController {
     {
         // if//nếu không có sản phẩm
         // (!gioHangCoSanPham())
-        //     return "client/giohang-trong.html";
-
-       
+        // return "redirect:/apps/";
 
         @SuppressWarnings("unchecked")
         Map<Integer,Integer> cartMap = (Map<Integer,Integer>)session.getAttribute("cart");
@@ -73,7 +71,7 @@ public class giohangController {
         model.addAttribute("content", "client/cart.html"); 
         //return "client/checkout.html";
         // ...được đặt vào bố cục chung của toàn website
-        return "layouts/layout-client.html"; // layout.html
+        return "layouts/layout-client"; // layout.html
 
         
     }
@@ -189,15 +187,8 @@ public class giohangController {
     {
         if//nếu không có sản phẩm
         (!gioHangCoSanPham())
-        {
-            model.addAttribute("content", "client/cart.html"); 
-
-            // ...được đặt vào bố cục chung của toàn website
-            return "layouts/layout-client.html"; // layout.html
-        }
+        return "redirect:/";
             
-
-
         @SuppressWarnings("unchecked")
         Map<Integer,Integer> cartMap = (Map<Integer,Integer>)session.getAttribute("cart");
 

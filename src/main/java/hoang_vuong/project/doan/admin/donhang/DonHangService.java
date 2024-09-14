@@ -54,7 +54,9 @@ public class DonHangService {
         return dl;
 
     }
-
+    public DonHang luuDonHang(DonHang dl) {
+       return this.kdl.save(dl);
+    }
     public void luu(DonHang dl) {
         this.kdl.save(dl);
     }

@@ -167,7 +167,7 @@
                     <div class="dropdown-menu">
                         <nav class="side-nav">
                             <ul class="menu-vertical sf-arrows" th:each="dl : ${dlnsx}">
-                                <li class="item-lead"><a href="#" th:text="${dl.ten}" ></a></li>
+                                <li class="item-lead"><a th:href="@{/apps/categories?id=}+${dl.id}"  ><h8 th:text="${dl.ten}"></h8></a></li>
                        
                             </ul><!-- End .menu-vertical -->
                         </nav><!-- End .side-nav -->

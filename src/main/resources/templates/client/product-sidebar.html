@@ -76,10 +76,10 @@
                                                 <div class="details-action-col">
                                                     <label for="qty">Qty:</label>
                                                     <div class="product-details-quantity">
-                                                        <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                                        <input type="number"  class="form-control"  id="soluong" value="1"  min="1" max="10" step="1" data-decimals="0" required>
                                                     </div><!-- End .product-details-quantity -->
 
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                    <button  th:onclick="cart.add([[${dl.id}]], $('#soluong').val(), [[${dl.tenSP}]])" class="btn-product btn-cart"> <span>add to cart</span></button>
                                                 </div><!-- End .details-action-col -->
 
                                                 <div class="details-action-wrapper">

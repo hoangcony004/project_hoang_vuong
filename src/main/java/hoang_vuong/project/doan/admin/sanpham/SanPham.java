@@ -2,7 +2,9 @@ package hoang_vuong.project.doan.admin.sanpham;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +12,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,6 +40,9 @@ public class SanPham {
     @JoinColumn(name = "maNSX", insertable = false, updatable = false)
     private NhaSanXuat nhaSanXuat;
 
+ @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+    private List<AnhSanPham> anhSanPham;
+    
     @Column(columnDefinition = "LONGTEXT")
     private String moTa;
 

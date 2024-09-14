@@ -30,8 +30,7 @@ public class home {
     private HttpServletRequest request;
       @Autowired
     private SanPhamService dvl;
-    @Autowired
-    private NhaSanXuatService nsxdv;
+
     @Autowired
     private AnhSanPhamService anhdv;
    
@@ -57,12 +56,11 @@ public String formatPrice(float price) {
                   model.addAttribute("ds_noibat", noibat);
                   model.addAttribute("ds_banchay", banchay);    
       //  model.addAttribute("ds", list);
-       java.util.List<NhaSanXuat> nsx=  nsxdv.duyet();
-       model.addAttribute("dlnsx", nsx);
+     
        model.addAttribute("content", "client/index.html");
        
         // System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
-     return "layouts/layout-client.html";
+     return "layouts/layout-client";
     }
     @GetMapping("/apps/product") 
  public String getXem(Model model, @RequestParam(value = "id") int id) {
@@ -78,11 +76,18 @@ public String formatPrice(float price) {
       model.addAttribute("price", giaDinhDang);
 
         model.addAttribute("dl", dls);
-       java.util.List<NhaSanXuat> nsx=  nsxdv.duyet();
-        model.addAttribute("dlnsx", nsx);
+     
        model.addAttribute("content", "client/product-sidebar.html");
-        return "layouts/layout-client.html";
+        return "layouts/layout-client";
         
+    }
+    @GetMapping("/apps/categories") 
+    public String getXemdanhmuc(Model model, @RequestParam(value = "id") int id) {
+    var listdm= dvl.timMaNSX(id);
+    
+    model.addAttribute("dlns", listdm);
+    model.addAttribute("content", "client/category.html");
+    return "layouts/layout-client";
     }
   
  
