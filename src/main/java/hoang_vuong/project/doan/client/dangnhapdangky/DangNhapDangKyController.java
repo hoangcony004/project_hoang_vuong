@@ -57,7 +57,7 @@ public class DangNhapDangKyController {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đăng ký ko thành công!");
         }
 
-        return "redirect:/apps";
+        return "redirect:/apps/auth";
     }
 
     @PostMapping("/auth_login")
