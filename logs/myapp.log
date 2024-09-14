@@ -1,0 +1,40 @@
+2024-09-14T14:40:46.008+07:00  INFO 912 --- [doan] [main] h.project.doan.DoanApplication           : Starting DoanApplication using Java 21.0.1 with PID 912 (D:\code\Java\Project_Ban_Hang\doan\target\classes started by ADMIN in D:\code\Java\Project_Ban_Hang\doan)
+2024-09-14T14:40:46.013+07:00  INFO 912 --- [doan] [main] h.project.doan.DoanApplication           : No active profile set, falling back to 1 default profile: "default"
+2024-09-14T14:40:46.564+07:00  INFO 912 --- [doan] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-14T14:40:46.649+07:00  INFO 912 --- [doan] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 10 JPA repository interfaces.
+2024-09-14T14:40:47.166+07:00  INFO 912 --- [doan] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 6868 (http)
+2024-09-14T14:40:47.177+07:00  INFO 912 --- [doan] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-14T14:40:47.177+07:00  INFO 912 --- [doan] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-09-14T14:40:47.229+07:00  INFO 912 --- [doan] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-14T14:40:47.230+07:00  INFO 912 --- [doan] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1178 ms
+2024-09-14T14:40:47.402+07:00  INFO 912 --- [doan] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-14T14:40:47.461+07:00  INFO 912 --- [doan] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-14T14:40:47.492+07:00  INFO 912 --- [doan] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-14T14:40:47.733+07:00  INFO 912 --- [doan] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-14T14:40:47.752+07:00  INFO 912 --- [doan] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-14T14:40:47.880+07:00  INFO 912 --- [doan] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d717f19
+2024-09-14T14:40:47.884+07:00  INFO 912 --- [doan] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-14T14:40:47.916+07:00  WARN 912 --- [doan] [main] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2024-09-14T14:40:47.920+07:00  WARN 912 --- [doan] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-14T14:40:48.724+07:00  INFO 912 --- [doan] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-14T14:40:48.850+07:00 DEBUG 912 --- [doan] [main] org.hibernate.SQL                        : alter table nhan_vien modify column mo_ta LONGTEXT
+2024-09-14T14:40:48.855+07:00 DEBUG 912 --- [doan] [main] org.hibernate.SQL                        : alter table san_pham modify column mo_ta LONGTEXT
+2024-09-14T14:40:48.878+07:00  INFO 912 --- [doan] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-14T14:40:49.174+07:00  INFO 912 --- [doan] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-09-14T14:40:49.872+07:00  WARN 912 --- [doan] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-14T14:40:49.911+07:00  INFO 912 --- [doan] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2024-09-14T14:40:50.324+07:00  INFO 912 --- [doan] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 6868 (http) with context path '/'
+2024-09-14T14:40:50.334+07:00  INFO 912 --- [doan] [main] h.project.doan.DoanApplication           : Started DoanApplication in 4.668 seconds (process running for 4.947)
+2024-09-14T14:40:50.523+07:00  INFO 912 --- [doan] [http-nio-6868-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-14T14:40:50.525+07:00  INFO 912 --- [doan] [http-nio-6868-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-14T14:40:50.526+07:00  INFO 912 --- [doan] [http-nio-6868-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-09-14T14:40:50.623+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-1] org.hibernate.SQL                        : select cd1_0.id,cd1_0.gia_tri,cd1_0.khoa from cai_dat cd1_0
+2024-09-14T14:40:50.649+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-2] org.hibernate.SQL                        : select cd1_0.id,cd1_0.gia_tri,cd1_0.khoa from cai_dat cd1_0
+2024-09-14T14:40:50.841+07:00  WARN 912 --- [doan] [http-nio-6868-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-6868-exec-2][layouts/layout-admin-login.html] Deprecated unwrapped fragment expression "${content}" found in template layouts/layout-admin-login.html, line 16, col 14. Please use the complete syntax of fragment expressions instead ("~{${content}}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-09-14T14:40:53.214+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-3] org.hibernate.SQL                        : select cd1_0.id,cd1_0.gia_tri,cd1_0.khoa from cai_dat cd1_0
+2024-09-14T14:40:53.232+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-3] org.hibernate.SQL                        : select nv1_0.id,nv1_0.anh_dai_dien,nv1_0.dien_thoai,nv1_0.email,nv1_0.mat_khau,nv1_0.mat_khau_moi,nv1_0.mo_ta,nv1_0.ngay_sua,nv1_0.ngay_tao,nv1_0.nhap_lai_mat_khau_moi,nv1_0.ten_dang_nhap,nv1_0.ten_day_du,nv1_0.trang_thai,nv1_0.xac_nhan_mat_khau from nhan_vien nv1_0 where nv1_0.ten_dang_nhap=?
+2024-09-14T14:40:53.485+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-4] org.hibernate.SQL                        : select cd1_0.id,cd1_0.gia_tri,cd1_0.khoa from cai_dat cd1_0
+2024-09-14T14:40:53.489+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-4] org.hibernate.SQL                        : select kh1_0.id,kh1_0.anh_dai_dien,kh1_0.dia_chi,kh1_0.dien_thoai,kh1_0.email,kh1_0.mat_khau,kh1_0.ngay_sua,kh1_0.ngay_tao,kh1_0.ten_dang_nhap,kh1_0.ten_day_du,kh1_0.trang_thai from khach_hang kh1_0
+2024-09-14T14:40:53.495+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-4] org.hibernate.SQL                        : select count(kh1_0.id) from khach_hang kh1_0 where kh1_0.ngay_tao between ? and ?
+2024-09-14T14:40:53.500+07:00 DEBUG 912 --- [doan] [http-nio-6868-exec-4] org.hibernate.SQL                        : select count(kh1_0.id) from khach_hang kh1_0 where kh1_0.ngay_tao between ? and ?
+2024-09-14T14:40:53.540+07:00  WARN 912 --- [doan] [http-nio-6868-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-6868-exec-4][layouts/layout-admin.html] Deprecated unwrapped fragment expression "${content}" found in template layouts/layout-admin.html, line 27, col 26. Please use the complete syntax of fragment expressions instead ("~{${content}}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
