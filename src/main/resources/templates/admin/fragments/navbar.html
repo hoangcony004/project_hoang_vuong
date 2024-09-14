@@ -36,12 +36,25 @@
 
             <li class="side-nav-title side-nav-item">Apps</li>
 
-            <!-- <li class="side-nav-item">
-                <a href="apps-calendar.html" class="side-nav-link">
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarThongKe" aria-expanded="false"
+                    aria-controls="sidebarProjects" class="side-nav-link">
                     <i class="uil-calender"></i>
-                    <span> Calendar </span>
+                    <span> Thống Kê </span>
+                    <span class="menu-arrow"></span>
                 </a>
-            </li> -->
+                <div class="collapse" id="sidebarThongKe">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="/admin/thong-ke-doanh-thu">Thống kê Doanh Thu</a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/thong-ke-san-pham">Thống kê Sản Phẩm</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
@@ -131,7 +144,7 @@
                 </div>
             </li> -->
 
-            <li class="side-nav-item">
+            <!-- <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
                     aria-controls="sidebarMultiLevel" class="side-nav-link">
                     <i class="uil-folder-plus"></i>
@@ -190,7 +203,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
         </ul>
         <!-- End Sidebar -->
 

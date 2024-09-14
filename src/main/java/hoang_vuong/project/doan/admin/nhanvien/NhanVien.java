@@ -41,25 +41,22 @@ public class NhanVien {
 
     @Column(columnDefinition = "LONGTEXT")
     private String moTa;
-    private int thuTu;
 
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayHetHan;
 
     public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 
-    public String getNgayHetHanText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayHetHan);
-    }
-
-    public Boolean KhongHopLe() {
-        var khl = false;
-
-        return khl;
+    public String getNgaySuaText() {
+        if (ngaySua == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
     }
 
 }

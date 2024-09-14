@@ -3,16 +3,41 @@ package hoang_vuong.project.doan.admin.sanpham;
 import java.util.List;
 import java.util.Optional;
 
+// import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class SanPhamService {
     @Autowired
     private SanPhamRepository kdl;
+
+    public Map<String, Long> thongKeSanPhamTheoTrangThai() {
+        Map<String, Long> thongKe = new HashMap<>();
+        long soLuongTrue = kdl.countByTrangThai(true);
+        long soLuongFalse = kdl.countByTrangThai(false);
+        thongKe.put("Đang Bán", soLuongTrue);
+        thongKe.put("Ngừng Bán", soLuongFalse);
+        return thongKe;
+    }
+
+    public Map<String, Long> thongKeSanPhamTheoNhaSanXuat() {
+        List<Object[]> results = kdl.thongKeSanPhamTheoNhaSanXuat();
+        Map<String, Long> thongKe = new HashMap<>();
+
+        for (Object[] result : results) {
+            String nhaSanXuat = (String) result[0];
+            Long soLuong = (Long) result[1];
+            thongKe.put(nhaSanXuat, soLuong);
+        }
+
+        return thongKe;
+    }
 
     public Page<SanPham> locSanPham(Float minPrice, Float maxPrice, Integer maNSX, Boolean banChay, Boolean noiBat,
             Pageable pageable) {
