@@ -45,23 +45,20 @@ public class SanPham {
     
     @Column(columnDefinition = "LONGTEXT")
     private String moTa;
-
-    private Integer thuTu;
     private Boolean banChay;
     private Boolean noiBat;
     private String tag;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayHetHan;
 
-    public String getNgayTaoText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
-    }
 
-    public String getNgayHetHanText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayHetHan);
+    public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 
     public String getFomatGiaBan() {

@@ -1,74 +1,64 @@
 package hoang_vuong.project.doan.admin.caidat;
 
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CaiDatService
-{
-    @Autowired private CaiDatRepository kdl;
+public class CaiDatService {
+    @Autowired
+    private CaiDatRepository kdl;
 
-    public List<CaiDat> dsCaiDat()
-    {
+    // public Page<CaiDat> pageCaiDat(Pageable pageable) {
+    // return kdl.findAll(pageable);
+    // }
+
+    public List<CaiDat> dsCaiDat() {
         return kdl.findAll();
     }
 
-    public List<CaiDat>  duyetCaiDat() 
-    {
+    public List<CaiDat> duyetCaiDat() {
         return kdl.findAll();
     }
 
-    public CaiDat  timCaiDatTheoId(int id)
-    {
+    public CaiDat timCaiDatTheoId(int id) {
         CaiDat dl = null;
 
         Optional<CaiDat> optional = kdl.findById(id);
 
-        if
-        (optional.isPresent())
-        {
+        if (optional.isPresent()) {
             dl = optional.get();
-        } else
-        {
+        } else {
 
         }
         return dl;
 
     }
 
-    public CaiDat xemCaiDat(int id)
-    {
+    public CaiDat xemCaiDat(int id) {
 
         CaiDat dl = null;
 
         Optional<CaiDat> optional = kdl.findById(id);
 
-        if
-        (optional.isPresent())
-        {
+        if (optional.isPresent()) {
             dl = optional.get();
-        } else
-        {
-           
+        } else {
+
         }
         return dl;
     }
 
-    
-    public void luuCaiDat(CaiDat dl)
-    {
+    public void luuCaiDat(CaiDat dl) {
         this.kdl.save(dl);
     }
 
-
-    public void xoaCaiDat(int id)
-    {
+    public void xoaCaiDat(int id) {
         this.kdl.deleteById(id);
     }
 
 }
-

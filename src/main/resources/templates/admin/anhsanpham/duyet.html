@@ -56,7 +56,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa Nhân Viên</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Ảnh Sản Phẩm</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -100,20 +100,6 @@
                                 <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
                                 <button type="button" class="btn btn-light btn-sm me-2">Import</button>
                                 <button type="button" class="btn btn-light btn-sm">Export</button>
-                            </form>
-
-                            <!-- Form tìm kiếm -->
-                            <form action="" method="GET" class="d-flex justify-content-end">
-                                <select name="criteria" class="form-select form-select-sm me-2"
-                                    style="max-width: 150px;">
-                                    <option value="tenDayDu">Họ và Tên</option>
-                                    <option value="Id">ID</option>
-                                    <option value="email">Email</option>
-                                    <option value="dienThoai">Số điện thoại</option>
-                                </select>
-                                <input type="search" name="query" class="form-control form-control-sm me-2"
-                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
-                                <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>
@@ -213,7 +199,8 @@
 
                             <!-- Trang đầu tiên -->
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link" th:href="@{'/admin/anh-san-pham?page=1&pageSize=' + ${pageSize}}">1</a>
+                                <a class="page-link"
+                                    th:href="@{'/admin/anh-san-pham?page=1&pageSize=' + ${pageSize}}">1</a>
                             </li>
 
                             <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->

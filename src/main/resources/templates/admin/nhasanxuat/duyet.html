@@ -34,6 +34,21 @@
     </div>
 </div>
 
+<!-- BS4 MODAL EDIT -->
+<div class="modal" id="modalSua">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                Sử dụng Ajax để tải mã nguồn của Form Edit và đặt nó vào đây
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- BS4 MODAL: DELETE -->
 <div class="modal fade" id="modalXoa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -93,8 +108,8 @@
                                 <th class="all">Tên Nhà Sản Xuất</th>
                                 <th>Ảnh</th>
                                 <th>Link</th>
-                                <th>Thứ Tự</th>
-                                <th>Nổi Bật</th>
+                                <th>Ngày Thêm</th>
+                                <th>Ngày Sửa</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                         </thead>
@@ -115,10 +130,23 @@
                                 <td th:text="${dl.link}">
                                     <a th:href="#"></a>
                                 </td>
-                                <td th:text="${dl.thuTu}"></td>
-                                <td th:text="${dl.noiBat}"></td>
+                                <td th:text="${dl.getNgayTaoText}"></td>
+                                <td th:text="${dl.getNgaySuaText}"></td>
 
                                 <td class="table-action">
+                                    <a type="button" class="action-icon" data-toggle="modal" data-target="#modalSua"
+                                        th:data-id="${dl.id}">
+                                        <i class="mdi mdi-square-edit-outline"></i>
+                                    </a>
+                                    <script>
+                                        $('#modalSua').on('show.bs.modal', function (e) {
+
+                                            var id = $(e.relatedTarget).data('id');
+
+                                            $('#modalSua .modal-body').load("/admin/nha-san-xuat/sua?id=" + id);
+                                        });
+                                    </script>
+
                                     <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
                                         href="#modalXoa" th:data-id="${dl.id}">
                                         <i class="mdi mdi-delete"></i>

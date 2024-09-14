@@ -21,7 +21,6 @@ public class AnhSanPham {
     private Integer Id;
 
     private String hinhAnh;
-    private Integer thuTu;
 
     private Integer maSP;
     @ManyToOne
@@ -32,6 +31,9 @@ public class AnhSanPham {
     private LocalDate ngaySua;
 
     public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 

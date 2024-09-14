@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/admin")
 public class QuangCaoController {
@@ -69,11 +71,48 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+        dl.setNgayTao(LocalDate.now());
         try {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/quang-cao";
+    }
+
+    @GetMapping("/quang-cao/sua")
+    public String getEdit(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            var dl = dvl.xem(id);
+            model.addAttribute("title_btn_add", "Sửa Quảng Cáo");
+            model.addAttribute("title_sm", "Cập nhật");
+            model.addAttribute("dl", dl);
+            model.addAttribute("action", "/admin/quang-cao/sua");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "admin/quangcao/form-bs4-qc.html";
+    }
+
+    @PostMapping("/quang-cao/sua")
+    public String postEdit(@ModelAttribute("QuangCao") QuangCao dl,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        dl.setNgaySua(LocalDate.now());
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/quang-cao";
@@ -86,13 +125,13 @@ public class QuangCaoController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-            try {
-                this.dvl.xoa(id);
-                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-                        "Không thể xóa. Mã lỗi: " + e.getMessage());
-            }
+        try {
+            this.dvl.xoa(id);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa. Mã lỗi: " + e.getMessage());
+        }
 
         return "redirect:/admin/quang-cao";
     }

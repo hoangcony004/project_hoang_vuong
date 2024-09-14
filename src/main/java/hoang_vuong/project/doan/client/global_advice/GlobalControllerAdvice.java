@@ -3,7 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 public class GlobalControllerAdvice {
     @Autowired
     private NhaSanXuatService nsxdv;
+
     @ModelAttribute
     public void addAttributes(HttpSession session, Model model) {
          Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");

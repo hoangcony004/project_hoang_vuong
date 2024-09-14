@@ -65,12 +65,6 @@
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="mb-3">
-                                <h5>Thứ tự:</h5>
-                                <p th:text="${dl.thuTu}"></p>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div class="mb-3">
                                 <h5>Bán chạy:</h5>
                                 <span th:if="${dl.banChay} == true" class="badge bg-success">Có bán chạy</span>
                                 <span th:if="${dl.banChay} == false" class="badge bg-danger">Không bán chạy</span>
@@ -106,13 +100,6 @@
                             <div class="mb-3">
                                 <h5>Ngày sửa</h5>
                                 <p th:text="${dl.getNgaySuaText}"></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md">
-                            <div class="mb-3">
-                                <h5>Ngày hết hạn:</h5>
-                                <p th:text="${dl.getNgayHetHanText}"></p>
                             </div>
                         </div>
                     </div>

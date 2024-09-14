@@ -145,16 +145,9 @@
                             </form>
 
                             <!-- Form tìm kiếm -->
-                            <form action="/admin/nhan-vien/tim-kiem" method="GET" class="d-flex justify-content-end">
-                                <select name="criteria" class="form-select form-select-sm me-2"
-                                    style="max-width: 150px;">
-                                    <option value="tenDayDu">Họ và Tên</option>
-                                    <option value="Id">ID</option>
-                                    <option value="email">Email</option>
-                                    <option value="dienThoai">Số điện thoại</option>
-                                </select>
+                            <form action="/admin/san-pham/tim-kiem" method="GET" class="d-flex justify-content-end">
                                 <input type="search" name="query" class="form-control form-control-sm me-2"
-                                    placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
+                                    placeholder="Nhập tên sản phẩm..." style="max-width: 200px;">
                                 <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
@@ -173,14 +166,14 @@
                                     </div>
                                 </th> -->
                                 <th>STT</th>
-                                <th>Cấu Hình</th>
+                                <!-- <th>Cấu Hình</th> -->
                                 <th class="all">Tên Sản Phẩm</th>
                                 <th>Ảnh</th>
                                 <th>Đơn Giá</th>
                                 <th>Trạng Thái</th>
                                 <th>Nhà Sản Xuất</th>
                                 <th>Ngày Thêm</th>
-                                <th>Ngày Hết Hạn</th>
+                                <th>Ngày Sửa</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                         </thead>
@@ -193,7 +186,7 @@
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td> -->
-                                <td th:text="${dl.model}">Model</td>
+                                <!-- <td th:text="${dl.model}">Model</td> -->
                                 <td th:text="${dl.tenSP}">
                                     <a th:href="#"></a>
                                 </td>
@@ -203,12 +196,12 @@
                                 </td>
                                 <td th:text="${dl.getFomatGiaBan}"></td>
                                 <td>
-                                    <span th:if="${dl.trangThai} == true" class="badge bg-success">Cho phép</span>
+                                    <span th:if="${dl.trangThai} == true" class="badge bg-success">Cho phép bán</span>
                                     <span th:if="${dl.trangThai} == false" class="badge bg-danger">Không cho phép</span>
                                 </td>
                                 <td th:text="${dl.NhaSanXuat.ten}">Nhà Sản Xuất</td>
                                 <td th:text="${dl.getNgayTaoText}"></td>
-                                <td th:text="${dl.getNgayHetHanText}"></td>
+                                <td th:text="${dl.getNgaySuaText}"></td>
 
                                 <td class="table-action">
 

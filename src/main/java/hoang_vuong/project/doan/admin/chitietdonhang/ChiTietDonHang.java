@@ -1,8 +1,9 @@
-package hoang_vuong.project.doan.admin.donhang;
+package hoang_vuong.project.doan.admin.chitietdonhang;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import hoang_vuong.project.doan.admin.donhang.DonHang;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,6 +17,8 @@ public class ChiTietDonHang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    // @Column(unique = true)
+    // private String MaDH;
     // Liên kết với bảng SanPham
     private Integer maSP;
     @ManyToOne

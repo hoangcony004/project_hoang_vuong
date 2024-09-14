@@ -5,6 +5,7 @@ import java.util.List;
 
 // Thư viện web: Java Spring
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ import jakarta.servlet.http.HttpSession;
 import hoang_vuong.project.doan.admin.lienhe.LienHe;
 import hoang_vuong.project.doan.qdl.Qdl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Controller
 @RequestMapping("/admin")
 public class CaiDatController {
@@ -28,6 +32,7 @@ public class CaiDatController {
     @Autowired
     private HttpServletRequest request;
 
+    // v1
     @GetMapping({ "/cai-dat" })
     public String getDuyet(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -40,12 +45,45 @@ public class CaiDatController {
         model.addAttribute("title", "Quản Lý Cài Đặt");
         model.addAttribute("title_duyet", "Cài Đặt");
         model.addAttribute("title_btn_add", "Thêm Cài Đặt");
+        model.addAttribute("title_body", "Thêm Cài Đặt");
         model.addAttribute("action", "/admin/cai-dat/them");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("content", "admin/caidat/duyet.html");
 
         return "layouts/layout-admin.html";
     }
+
+    // v2
+    // @GetMapping({ "/cai-dat" })
+    // public String getDuyet(@RequestParam(defaultValue = "1") int page,
+    // @RequestParam(defaultValue = "5") int size,
+    // Model model) {
+    // if (Qdl.NhanVienChuaDangNhap(request))
+    // return "redirect:/admin/dang-nhap";
+
+    // Pageable pageable = PageRequest.of(page - 1, size);
+    // Page<CaiDat> pageCaiDat = dvl.pageCaiDat(pageable);
+
+    // // Tạo đường link phân trang
+    // String paginationLink = "/admin/cai-dat?page=" + page + "&size=" + size;
+
+    // model.addAttribute("ds", pageCaiDat.getContent());
+    // model.addAttribute("currentPage", page);
+    // model.addAttribute("totalPages", pageCaiDat.getTotalPages());
+    // model.addAttribute("totalItems", pageCaiDat.getTotalElements());
+    // model.addAttribute("paginationLink", paginationLink);
+
+    // model.addAttribute("dl", new CaiDat());
+    // model.addAttribute("title", "Quản Lý Cài Đặt");
+    // model.addAttribute("title_duyet", "Cài Đặt");
+    // model.addAttribute("title_btn_add", "Thêm Cài Đặt");
+    // model.addAttribute("title_body", "Thêm Cài Đặt");
+    // model.addAttribute("action", "/admin/cai-dat/them");
+    // model.addAttribute("title_sm", "Thêm mới");
+    // model.addAttribute("content", "admin/caidat/duyet.html");
+
+    // return "layouts/layout-admin.html";
+    // }
 
     @PostMapping("/cai-dat/them")
     public String postAdd(@ModelAttribute("CaiDat") CaiDat dl,

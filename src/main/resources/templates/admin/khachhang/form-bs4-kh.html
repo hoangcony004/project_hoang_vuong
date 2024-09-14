@@ -32,7 +32,7 @@
                             th:field="*{TenDangNhap}" />
                         <label for="floatingInput">Tên đăng nhập</label>
                     </div>
-                    
+
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" required id="floatingInput" placeholder="Mật khẩu"
                             th:field="*{matKhau}" />
@@ -46,8 +46,8 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" required id="floatingInput" placeholder="Số điện thoại"
-                            th:field="*{dienThoai}" />
+                        <input type="number" class="form-control" required id="floatingInput"
+                            placeholder="Số điện thoại" th:field="*{dienThoai}" />
                         <label for="floatingInput">Số điện thoại</label>
                     </div>
 
@@ -68,14 +68,6 @@
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating  mb-3">
-                                <input type="number" class="form-control" required id="floatingInputGrid" placeholder="Thứ tự"
-                                    th:field="*{thuTu}" />
-                                <label for="floatingInputGrid">Thứ tự</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md">
-                            <div class="form-floating  mb-3">
                                 <select class="form-select" required th:field="*{TrangThai}" id="floatingSelectGrid"
                                     aria-label="Floating label select example">
                                     <option value="1">Cho phép</option>
@@ -86,14 +78,8 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" required id="floatingInput" placeholder="Ngày hết hạn"
-                                th:field="*{ngayHetHan}" />
-                            <label for="floatingInput">Ngày hết hạn</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="hidden" class="form-control" required id="floatingInput" placeholder="Ngày hết hạn"
-                                th:field="*{NgayTao}" />
+                            <input type="hidden" class="form-control" required id="floatingInput"
+                                placeholder="Ngày hết hạn" th:field="*{NgayTao}" />
                         </div>
                     </div>
                 </div>

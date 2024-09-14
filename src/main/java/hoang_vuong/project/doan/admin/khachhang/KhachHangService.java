@@ -55,6 +55,10 @@ public class KhachHangService {
         return kdl.findByDienThoaiContainingIgnoreCase(dienThoai);
     }
 
+    public List<KhachHang> timKhachHangTheoTenDN(String tenDangNhap) {
+        return kdl.findByTenDangNhap(tenDangNhap);
+    }
+
     public List<KhachHang> dsKhachHang() {
         return kdl.findAll();
     }

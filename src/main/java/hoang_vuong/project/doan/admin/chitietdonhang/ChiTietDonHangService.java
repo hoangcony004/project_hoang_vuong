@@ -1,4 +1,4 @@
-package hoang_vuong.project.doan.admin.quangcao;
+package hoang_vuong.project.doan.admin.chitietdonhang;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,31 +8,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@Service
-public class QuangCaoService {
-    @Autowired
-    private QuangCaoRepository kdl;
 
-    public Page<QuangCao> duyetQuangCao(Pageable pageable) {
+@Service
+public class ChiTietDonHangService {
+    @Autowired
+    private ChiTietDonHangRepository kdl;
+
+    public Page<ChiTietDonHang> duyetDonHang(Pageable pageable) {
         return kdl.findAll(pageable);
     }
 
-    public List<QuangCao> dsQuangCao() {
+    public List<ChiTietDonHang> dsChiTietDonHang() {
         return kdl.findAll();
     }
 
-    public List<QuangCao> duyet() {
+    public List<ChiTietDonHang> duyet() {
         return kdl.findAll();
     }
 
-    public List<QuangCao> choPhep() {
-        return kdl.findByTrangThai(true);
-    }
+    public ChiTietDonHang timTheoId(int id) {
+        ChiTietDonHang dl = null;
 
-    public QuangCao timTheoId(int id) {
-        QuangCao dl = null;
-
-        Optional<QuangCao> optional = kdl.findById(id);
+        Optional<ChiTietDonHang> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
@@ -44,11 +41,11 @@ public class QuangCaoService {
 
     }
 
-    public QuangCao xem(int id) {
+    public ChiTietDonHang xem(int id) {
 
-        QuangCao dl = null;
+        ChiTietDonHang dl = null;
 
-        Optional<QuangCao> optional = kdl.findById(id);
+        Optional<ChiTietDonHang> optional = kdl.findById(id);
 
         if (optional.isPresent()) {
             dl = optional.get();
@@ -60,15 +57,15 @@ public class QuangCaoService {
 
     }
 
-    public void luu(QuangCao dl) {
+    public void luu(ChiTietDonHang dl) {
         this.kdl.save(dl);
     }
 
-    public void them(QuangCao dl) {
+    public void them(ChiTietDonHang dl) {
         this.kdl.save(dl);
     }
 
-    public void sua(QuangCao dl) {
+    public void sua(ChiTietDonHang dl) {
         this.kdl.save(dl);
     }
 

@@ -32,9 +32,6 @@ public class AnhSanPhamController {
     private AnhSanPhamService dvl;
 
     @Autowired
-    private AnhSanPhamService anhSanPhamService;
-
-    @Autowired
     private SanPhamService sanPhamService;
 
     @GetMapping("/anh-san-pham")
@@ -51,7 +48,7 @@ public class AnhSanPhamController {
         int pageIndex = page - 1;
 
         // Lấy dữ liệu phân trang từ dịch vụ
-        Page<AnhSanPham> anhSanPhamPage = anhSanPhamService.duyetAnhSanPham(PageRequest.of(pageIndex, pageSize));
+        Page<AnhSanPham> anhSanPhamPage = dvl.duyetAnhSanPham(PageRequest.of(pageIndex, pageSize));
 
         List<SanPham> dsSanPham = sanPhamService.dsSanPham();
 
@@ -63,7 +60,6 @@ public class AnhSanPhamController {
         model.addAttribute("ds", anhSanPhamPage.getContent());
         model.addAttribute("dl", new AnhSanPham());
         model.addAttribute("title", "Quản Lý Ảnh Sản Phẩm");
-        model.addAttribute("phan_trang", "anh-san-pham");
         model.addAttribute("title_duyet", "Ảnh Sản Phẩm");
         model.addAttribute("title_btn_add", "Thêm Ảnh Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");
@@ -87,7 +83,45 @@ public class AnhSanPhamController {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR","Không thể thêm mới. Mã lỗi: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/anh-san-pham";
+    }
+
+    @GetMapping("/anh-san-pham/sua")
+    public String getEdit(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xem(id);
+
+        List<SanPham> dsSanPham = sanPhamService.dsSanPham();
+        model.addAttribute("dsSanPham", dsSanPham);
+
+        model.addAttribute("title_btn_add", "Sửa Ảnh Sản Phẩm");
+        model.addAttribute("title_sm", "Cập nhật");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/anh-san-pham/sua");
+
+        return "admin/anhsanpham/form-bs4-asp.html";
+
+    }
+
+    @PostMapping("/anh-san-pham/sua")
+    public String postEdit(@ModelAttribute("AnhSanPham") AnhSanPham dl,
+            RedirectAttributes redirectAttributes) {
+
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        dl.setNgaySua(LocalDate.now());
+
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/anh-san-pham";

@@ -58,29 +58,28 @@ public class DashboardController {
     public String getDashboard(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
-    
+
         // Lấy danh sách tất cả khách hàng
         List<KhachHang> allKhachHang = dvl.dsKhachHang();
-    
+
         long currentMonthCount = dvl.getNumberOfCustomersThisMonth();
         long lastMonthCount = dvl.getNumberOfCustomersLastMonth();
         double percentageChange = dvl.calculateChangePercentage(currentMonthCount, lastMonthCount);
-    
+
         // Định dạng percentageChange chỉ lấy 1 số sau dấu phẩy
         DecimalFormat df = new DecimalFormat("#.##");
         String formattedPercentageChange = df.format(percentageChange);
-    
+
         model.addAttribute("totalCustomers", currentMonthCount);
         model.addAttribute("percentageChange", formattedPercentageChange);
         model.addAttribute("isIncrease", percentageChange >= 0);
         // Truyền số lượng khách hàng vào mô hình
         model.addAttribute("totalCustomers", allKhachHang.size());
-    
+
         model.addAttribute("title", "Dashboard");
         model.addAttribute("content", "admin/dashboard/dashboard.html");
-    
+
         return "layouts/layout-admin.html";
     }
-    
 
 }

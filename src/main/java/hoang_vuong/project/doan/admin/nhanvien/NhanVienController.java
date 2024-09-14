@@ -163,35 +163,36 @@ public class NhanVienController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        // Kiểm tra trùng lặp tên đăng nhập, email, và số điện thoại
-        if (dvl.timNhanVienTheoTenDangNhap(dl.getTenDangNhap()) != null) {
+        // Kiểm tra trùng lặp tên đăng nhập
+        NhanVien nhanVienByTenDangNhap = dvl.timNhanVienTheoTenDangNhap(dl.getTenDangNhap());
+        if (nhanVienByTenDangNhap != null && nhanVienByTenDangNhap.getId() != dl.getId()) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Tên đăng nhập đã tồn tại!");
             return "redirect:/admin/nhan-vien";
         }
 
-        if (dvl.timNhanVienTheoEmail(dl.getEmail()) != null) {
+        // Kiểm tra trùng lặp email
+        NhanVien nhanVienByEmail = dvl.timNhanVienTheoEmail(dl.getEmail());
+        if (nhanVienByEmail != null && nhanVienByEmail.getId() != dl.getId()) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Email đã tồn tại!");
             return "redirect:/admin/nhan-vien";
         }
 
-        if (dvl.timNhanVienTheoDienThoai(dl.getDienThoai()) != null) {
+        // Kiểm tra trùng lặp số điện thoại
+        NhanVien nhanVienByDienThoai = dvl.timNhanVienTheoDienThoai(dl.getDienThoai());
+        if (nhanVienByDienThoai != null && nhanVienByDienThoai.getId() != dl.getId()) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Số điện thoại đã tồn tại!");
             return "redirect:/admin/nhan-vien";
         }
 
         // Kiểm tra nếu mật khẩu mới không được nhập
         if (dl.getMatKhau() == null || dl.getMatKhau().isEmpty()) {
-
             var inputXNMK = dl.getXacNhanMatKhau();
             var hash = BCrypt.hashpw(inputXNMK, BCrypt.gensalt(12));
-
             dl.setMatKhau(hash);
             dl.setXacNhanMatKhau(inputXNMK);
         } else {
-
             var inputPassword = dl.getMatKhau();
             var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
-
             dl.setMatKhau(hash);
             dl.setXacNhanMatKhau(inputPassword);
         }

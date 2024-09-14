@@ -33,22 +33,28 @@ public class KhachHang {
     @Column(unique = true)
     private String dienThoai;
     @Column(unique = true)
+
     private String email;
     private String anhDaiDien;
     private Boolean trangThai;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayTao;
-    private LocalDate ngayHetHan;
+    private LocalDate ngaySua;
     private String diaChi;
-    private int thuTu;
+    private LocalDate ngayTao;
 
     public String getNgayTaoText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
+        if (this.ngayTao != null) {
+            return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
+        }
+        return "Chưa Cập Nhật";
     }
 
-    public String getNgayHetHanText() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayHetHan);
+    public String getNgaySuaText() {
+        if (ngaySua == null) {
+            return "Chưa cập nhật";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
     }
 
 }

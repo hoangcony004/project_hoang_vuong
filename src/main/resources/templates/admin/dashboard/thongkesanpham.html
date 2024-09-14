@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            max-width: 1000px;
+            max-height: 1000px;
+        }
+
+        @media (max-width: 768px) {
+            canvas {
+                max-width: 95vw;
+                max-height: 90vh;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+</head>
+
+<body>
+    <div class="row">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
+                </div>
+            </div>
+            <!-- Thông báo lỗi -->
+            <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
+        </div>
+        <!-- end page title -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                        <li class="nav-item">
+                            <a href="#thongkeSP_X_NSX" data-bs-toggle="tab" aria-expanded="true"
+                                class="nav-link rounded-0 active">Thống Kê Sản Phẩm Theo Nhà Sản Xuất</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#thongkeSP_X_TrangThai" data-bs-toggle="tab" aria-expanded="false"
+                                class="nav-link rounded-0">Thống Kê Sản Phẩm Theo Trạng Thái Cho Phép Bán Hoặc Không</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#rhongkeSP_X_SoLuongBan" data-bs-toggle="tab" aria-expanded="false"
+                                class="nav-link rounded-0">Thống Kê Sản Phẩm Theo Số Lượng Bán</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="thongkeSP_X_NSX">
+                            <div class="chart-container">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="thongkeSP_X_TrangThai">
+                            <div class="chart-container">
+                                <canvas id="myChartTrangThai"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="rhongkeSP_X_SoLuongBan">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script th:inline="javascript">
+        // Lấy dữ liệu từ backend thông qua Thymeleaf
+        const thongKeData = /*[[${thongKeData}]]*/ {};
+
+        // Kiểm tra dữ liệu
+        if (Object.keys(thongKeData).length === 0) {
+            console.error("Dữ liệu thống kê không hợp lệ hoặc rỗng.");
+        } else {
+            // Tách key và value từ thongKeData để sử dụng trong biểu đồ
+            const xValues = Object.keys(thongKeData);  // Tên nhà sản xuất
+            const yValues = Object.values(thongKeData); // Số lượng sản phẩm
+            console.log("Số lượng thống kê sl:", yValues);
+            // Tính tổng số lượng sản phẩm để tính phần trăm
+            const total = yValues.reduce((acc, val) => acc + val, 0);
+
+            const barColors = [
+                "#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145",
+                "#ff5733", "#33ff57", "#3357ff", "#f1c40f", "#9b59b6",
+                "#e74c3c", "#3498db", "#1abc9c", "#2ecc71", "#e67e22",
+                "#ff5733", "#33ff57", "#3357ff", "#8e44ad", "#f39c12",
+                "#27ae60", "#c0392b", "#2980b9", "#16a085", "#f5b041",
+                "#d35400", "#7f8c8d", "#34495e", "#9c640c", "#1f618d",
+                "#e74c3c", "#3498db", "#1abc9c", "#2ecc71", "#e67e22",
+                "#5dade2", "#d98880", "#f7dc6f", "#af7ac5", "#48c9b0",
+                "#d35400", "#f1948a", "#7dcea0", "#aab7b8", "#f5b041",
+                "#154360", "#922b21", "#76448a", "#7d6608", "#148f77"
+            ];
+
+            new Chart("myChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Thống Kê Sản Phẩm Theo Nhà Sản Xuất",
+                            font: {
+                                size: 24,  // Kích thước chữ
+                                family: "'Arial', sans-serif"  // Phông chữ
+                            },
+                            color: '#333'  // Màu chữ
+                        },
+                        datalabels: {
+                            formatter: (value, context) => {
+                                const percentage = (value / total * 100).toFixed(2) + '%';
+                                return `${value} (${percentage})`;  // Hiển thị số lượng và phần trăm
+                            },
+                            color: '#fff',  // Màu chữ
+                            font: {
+                                weight: 'bold',
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    const dataset = tooltipItem.dataset;
+                                    const currentValue = dataset.data[tooltipItem.dataIndex];
+                                    const percentage = (currentValue / total * 100).toFixed(2) + '%';
+                                    return tooltipItem.label + ': ' + currentValue + ' (' + percentage + ')';  // Hiển thị số lượng và phần trăm
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+
+    <script th:inline="javascript">
+        // Lấy dữ liệu từ backend thông qua Thymeleaf
+        const thongKeTrangThai = /*[[${thongKeDataTrangThai}]]*/ {};
+
+        console.log("Dữ liệu thống kê trạng thái:", thongKeTrangThai);
+
+        // Kiểm tra dữ liệu
+        if (!thongKeTrangThai || typeof thongKeTrangThai !== 'object' || Object.keys(thongKeTrangThai).length === 0) {
+            console.error("Dữ liệu thống kê trạng thái không hợp lệ hoặc rỗng.");
+        } else {
+            const xValuesTrangThai = Object.keys(thongKeTrangThai);  // Trạng thái sản phẩm
+            const yValuesTrangThai = Object.values(thongKeTrangThai); // Số lượng sản phẩm
+            console.log("Số lượng thống kê trạng thái:", yValuesTrangThai);
+            // Tính tổng số lượng sản phẩm
+            const totalTrangThai = yValuesTrangThai.reduce((acc, val) => acc + val, 0);
+
+            const barColorsTrangThai = ["#00aba9", "#e74c3c"];
+
+            new Chart("myChartTrangThai", {
+                type: "pie",
+                data: {
+                    labels: xValuesTrangThai,
+                    datasets: [{
+                        backgroundColor: barColorsTrangThai,
+                        data: yValuesTrangThai
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Thống Kê Sản Phẩm Theo Trạng Thái",
+                            font: {
+                                size: 24,
+                                family: "'Arial', sans-serif"
+                            },
+                            color: '#333'
+                        },
+                        datalabels: {
+                            formatter: (value, context) => {
+                                const percentage = (value / totalTrangThai * 100).toFixed(2) + '%';
+                                return `${value} (${percentage})`;  // Hiển thị số lượng và phần trăm
+                            },
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    const dataset = tooltipItem.dataset;
+                                    const currentValue = dataset.data[tooltipItem.dataIndex];
+                                    const percentage = (currentValue / totalTrangThai * 100).toFixed(2) + '%';
+                                    return tooltipItem.label + ': ' + currentValue + ' (' + percentage + ')'; // Hiển thị số lượng và phần trăm
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -156,18 +156,19 @@
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=1&pageSize=' + ${pageSize}}">Đầu</a>
+                                    th:href="@{${paginationLink} + 'page=1&pageSize=' + ${pageSize}}">Đầu</a>
                             </li>
 
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
+                                    th:href="@{${paginationLink} + 'page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
                                     <i class="dripicons-chevron-left"></i>
                                 </a>
                             </li>
 
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link" th:href="@{'/admin/cai-dat?page=1&pageSize=' + ${pageSize}}">1</a>
+                                <a class="page-link"
+                                    th:href="@{${paginationLink} + 'page=1&pageSize=' + ${pageSize}}">1</a>
                             </li>
 
                             <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
@@ -178,7 +179,7 @@
                                 th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
                                 th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
+                                    th:href="@{${paginationLink} + 'page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
                             </li>
 
                             <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
@@ -188,22 +189,23 @@
                             <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
                                 th:if="${totalPages > 1}">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
+                                    th:href="@{${paginationLink} + 'page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
                             </li>
 
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
+                                    th:href="@{${paginationLink} + 'page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
                                     <i class="dripicons-chevron-right"></i>
                                 </a>
                             </li>
 
                             <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
                                 <a class="page-link"
-                                    th:href="@{'/admin/cai-dat?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
+                                    th:href="@{${paginationLink} + 'page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
                             </li>
                         </ul>
                     </nav> -->
+
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

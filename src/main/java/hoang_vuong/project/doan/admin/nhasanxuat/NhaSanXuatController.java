@@ -1,5 +1,8 @@
 package hoang_vuong.project.doan.admin.nhasanxuat;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
+import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
+import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,11 +76,46 @@ public class NhaSanXuatController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+        dl.setNgayTao(LocalDate.now());
         try {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/nha-san-xuat";
+    }
+
+    @GetMapping("/nha-san-xuat/sua")
+    public String getEdit(Model model, @RequestParam("id") int id) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        var dl = dvl.xem(id);
+
+        model.addAttribute("title_btn_add", "Sửa Nhà Sản Xuất");
+        model.addAttribute("title_sm", "Cập nhật");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/nha-san-xuat/sua");
+
+        return "admin/nhasanxuat/form-bs4-nsx.html";
+
+    }
+
+    @PostMapping("/nha-san-xuat/sua")
+    public String postEdit(@ModelAttribute("NhaSanXuat") NhaSanXuat dl,
+            RedirectAttributes redirectAttributes) {
+
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        dl.setNgaySua(LocalDate.now());
+        try {
+            dvl.sua(dl);
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể sửa. Mã lỗi: " + e.getMessage());
         }
 
         return "redirect:/admin/nha-san-xuat";
