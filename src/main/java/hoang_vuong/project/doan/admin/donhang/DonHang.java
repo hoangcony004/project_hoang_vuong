@@ -23,10 +23,13 @@ public class DonHang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int maKH;
+    private Integer maKH;
     @ManyToOne
     @JoinColumn(name = "maKH", insertable = false, updatable = false)
     private KhachHang khachHang;
+
+    @Column(unique = true)
+    private String MaDH;
 
     @Column(unique = true)
     private String email;
@@ -34,11 +37,15 @@ public class DonHang {
     private String dienThoai;
     
     private String tenDayDu;
-    private String diaChi;
     private String ghiChu;
     private float tongTien;
     private int trangThai;
     private LocalDate ngayTao;
+
+    private String tinhThanh;
+    private String quanHuyen;
+    private String xaPhuong;
+    private String diaChi;
 
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);

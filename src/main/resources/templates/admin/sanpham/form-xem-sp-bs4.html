@@ -39,7 +39,7 @@
                     <div class="col-md">
                         <div class="mb-3">
                             <h5>Trạng thái:</h5>
-                            <span th:if="${dl.trangThai} == true" class="badge bg-success">Cho phép</span>
+                            <span th:if="${dl.trangThai} == true" class="badge bg-success">Cho phép bán</span>
                             <span th:if="${dl.trangThai} == false" class="badge bg-danger">Không cho phép</span>
                         </div>
                     </div>
@@ -55,11 +55,14 @@
                     </div>
                 </div>
                 <div class="col">
-
                     <div class="mb-3">
                         <h5>Ảnh đại diện:</h5>
                         <img th:src="${dl.anhDaiDien}" alt="Chưa có ảnh" title="contact-img" class="rounded me-3"
                             height="68px">
+                    </div>
+                    <div class="mb-3">
+                        <h5>Số Lượng: </h5>
+                        <p th:text="${dl.soLuong}"></p>
                     </div>
 
                     <div class="row g-2">
@@ -85,8 +88,6 @@
                                 <p th:text="${dl.tag}"></p>
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="row g-2">

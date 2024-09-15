@@ -48,6 +48,7 @@ public class SanPham {
     private Boolean banChay;
     private Boolean noiBat;
     private String tag;
+    private int soLuong;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
 
@@ -63,7 +64,7 @@ public class SanPham {
             return null;
         }
         DecimalFormat df = new DecimalFormat("#,###.##");
-        return df.format(donGia) + " vnd";
+        return df.format(donGia) + " vn₫";
     }
 
     public String getNgaySuaText() {

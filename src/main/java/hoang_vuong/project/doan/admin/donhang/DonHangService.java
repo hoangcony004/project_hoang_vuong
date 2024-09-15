@@ -1,5 +1,7 @@
 package hoang_vuong.project.doan.admin.donhang;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +14,31 @@ import org.springframework.stereotype.Service;
 public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
+
+    public Float getTongTien() {
+        return kdl.getTongTien();   
+    }
+
+    public long getCurrentMonthOrderCount() {
+        YearMonth currentMonth = YearMonth.now();
+        LocalDate startDate = currentMonth.atDay(1);
+        LocalDate endDate = currentMonth.atEndOfMonth();
+        return kdl.countByDateRange(startDate, endDate);
+    }
+
+    public long getPreviousMonthOrderCount() {
+        YearMonth previousMonth = YearMonth.now().minusMonths(1);
+        LocalDate startDate = previousMonth.atDay(1);
+        LocalDate endDate = previousMonth.atEndOfMonth();
+        return kdl.countByDateRange(startDate, endDate);
+    }
+
+    public double calculatePercentageChange(long currentMonthCount, long previousMonthCount) {
+        if (previousMonthCount == 0) {
+            return currentMonthCount > 0 ? 100.0 : 0.0;
+        }
+        return ((double) (currentMonthCount - previousMonthCount) / previousMonthCount) * 100;
+    }
 
     public Page<DonHang> duyetDonHang(Pageable pageable) {
         return kdl.findAll(pageable);
@@ -54,9 +81,11 @@ public class DonHangService {
         return dl;
 
     }
+
     public DonHang luuDonHang(DonHang dl) {
-       return this.kdl.save(dl);
+        return this.kdl.save(dl);
     }
+
     public void luu(DonHang dl) {
         this.kdl.save(dl);
     }

@@ -41,7 +41,6 @@ public class SanPhamController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int pageSize,
             HttpServletRequest request) {
-
         // Kiểm tra xem nhân viên đã đăng nhập chưa
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";

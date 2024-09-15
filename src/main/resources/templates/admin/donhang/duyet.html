@@ -157,7 +157,7 @@
                                 <th>Số Điện Thoại</th>
                                 <th>Tổng Tiền</th>
                                 <th>Ghi Chú</th>
-                                <th>Địa Chỉ</th>
+                                <th>Tỉnh <Textarea:cols:rows></Textarea:cols:rows>hành</th>
                                 <th>Trạng Thái</th>
                                 <th>Ngày Tạo</th>
                                 <th style="width: 85px;">Action</th>
@@ -174,7 +174,7 @@
                                 </td>
                                 <td th:text="${startIndex + iterStat.index + 1}">STT </td>
 
-                                <td th:text="${dl.maKH}">
+                                <td th:text="${dl.KhachHang.tenDayDu}">
 
                                 </td>
 
@@ -194,11 +194,11 @@
                                 <td th:text="${dl.tongTien}"></td>
                                 <td th:text="${dl.ghiChu}"></td>
 
-                                <td th:text="${dl.diaChi}"></td>
+                                <td th:text="${dl.tinhThanh}"></td>
 
                                 <td>
-                                    <span th:if="${dl.trangThai} == true" class="badge bg-success">Đã xác nhận</span>
-                                    <span th:if="${dl.trangThai} == false" class="badge bg-danger">Chưa xác nhận</span>
+                                    <span th:if="${dl.trangThai} == 0" class="badge bg-success">Đã đặt hàng</span>
+                                    <span th:if="${dl.trangThai} == 1" class="badge bg-danger">Chưa xác nhận</span>
                                 </td>
 
                                 <td th:text="${dl.getNgayTaoText}"></td>
