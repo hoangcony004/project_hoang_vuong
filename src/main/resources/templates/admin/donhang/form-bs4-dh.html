@@ -41,7 +41,7 @@
                     <!-- Lựa chọn Sản Phẩm -->
                     <div class="col-md">
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelectGrid"
+                            <select class="form-select" name="MaSP" id="floatingSelectGrid"
                                 aria-label="Floating label select example">
                                 <option value="0" selected>Chọn Sản Phẩm</option>
                                 <option th:each="sp : ${dsSanPham}" th:value="${sp.id}" th:text="${sp.tenSP}">
@@ -130,20 +130,24 @@
 
                 <!-- Thông tin chi tiết đơn hàng -->
                 <div class="col">
-                    <!-- <div class="row g-2">
+                    <div class="row g-2">
+                        <!-- Input cho Số Lượng -->
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" th:field="*{chiTietDonHang.soLuong}"
-                                placeholder="Số lượng" required />
+                            <input type="number" class="form-control" name="soLuong"
+                                value="${chiTietDonHangList.soLuong}" placeholder="Số lượng" required />
                             <label for="soLuong">Số Lượng</label>
                         </div>
 
+                        <!-- Input cho Đơn Giá -->
                         <div class="form-floating mb-3">
-                            <input type="number" step="0.01" class="form-control" th:field="*{chiTietDonHang.donGia}"
-                                placeholder="Đơn giá" required />
-                            <label for="donGia">Đơn Giá</label>
+                            <!-- <input type="number" step="0.01" class="form-control" name="dongia" placeholder="Đơn giá"
+                                required />
+                            <label for="donGia">Đơn Giá</label> -->
                         </div>
-                    </div> -->
+                    </div>
                 </div>
+
+
             </div>
             <button th:text="${title_sm}" type="submit" class="btn btn-outline-success">Cập Nhật</button>
         </form>

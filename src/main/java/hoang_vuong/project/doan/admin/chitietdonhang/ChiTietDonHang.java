@@ -38,6 +38,9 @@ public class ChiTietDonHang {
     private LocalDate ngaySua;
 
     public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 

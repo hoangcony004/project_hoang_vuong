@@ -79,7 +79,7 @@
                                 <span th:if="${percentageChangeOrder.startsWith('-')}">Giảm so với tháng trước</span>
                                 <span
                                     th:if="${percentageChangeOrder.startsWith('0') or percentageChangeOrder.startsWith('100')}">Không
-                                    thay đổi so với tháng trước</span>
+                                    thay đổi với tháng trước</span>
                                 <span
                                     th:if="${!percentageChangeOrder.startsWith('-') and !percentageChangeOrder.startsWith('0') and !percentageChangeOrder.startsWith('100')}">Tăng
                                     so với tháng trước</span>
@@ -150,29 +150,40 @@
                 <h4 class="header-title mb-3">Doanh Thu Trong Năm Nay</h4>
 
                 <div dir="ltr">
-                    <!-- <div id="high-performing-product" class="apex-charts" data-colors="#727cf5,#e3eaef"></div> -->
                     <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
                 </div>
 
+                <!-- Nhúng dữ liệu JSON vào một thuộc tính data-* -->
+                <div id="data" data-doanh-thu='${doanhThuTheoThang}'></div>
+
                 <script>
-                    const xValues = ["Italy", "France", "Spain", "USA", "Argentina", "Italy", "France", "Spain", "USA", "Argentina", "vietnam", "china"];
-                    const yValues = [55, 49, 44, 24, 15, 30, 40, 60, 13, 1, 90, 100];
+                    // Lấy dữ liệu JSON từ thuộc tính data-* và phân tích nó
+                    const dataElement = document.getElementById('data');
+                    const yDoanhThu = JSON.parse(dataElement.getAttribute('data-doanh-thu'));
+                    console.log("doanh thu ", yDoanhThu)
+                    const xThang = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
                     const barColors = ["red", "green", "blue", "orange", "brown", "red", "green", "blue", "orange", "brown", "red", "blue"];
 
                     new Chart("myChart", {
                         type: "bar",
                         data: {
-                            labels: xValues,
+                            labels: xThang,
                             datasets: [{
                                 backgroundColor: barColors,
-                                data: yValues
+                                data: yDoanhThu,
+                                label: 'Doanh Thu',
                             }]
                         },
                         options: {
-                            legend: { display: false },
+                            legend: { display: true },
                             title: {
                                 display: true,
-                                text: "World Wine Production 2018"
+                                text: "Thống Kê Doanh Thu Theo Tháng"
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
                             }
                         }
                     });

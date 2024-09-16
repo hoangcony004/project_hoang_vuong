@@ -2,7 +2,10 @@ package hoang_vuong.project.doan.admin.donhang;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,26 @@ public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
 
+    public List<Double> getDoanhThuTheoThang() {
+        List<Double> doanhThuTheoThang = new ArrayList<>();
+        List<Object[]> results = kdl.getDoanhThuTheoThang();
+
+        // Khởi tạo danh sách với giá trị mặc định 0.0 cho từng tháng
+        for (int i = 1; i <= 12; i++) {
+            doanhThuTheoThang.add(0.0);
+        }
+
+        for (Object[] result : results) {
+            int month = ((Number) result[0]).intValue();
+            double total = ((Number) result[1]).doubleValue();
+            doanhThuTheoThang.set(month - 1, total);
+        }
+
+        return doanhThuTheoThang;
+    }
+
     public Float getTongTien() {
-        return kdl.getTongTien();   
+        return kdl.getTongTien();
     }
 
     public long getCurrentMonthOrderCount() {

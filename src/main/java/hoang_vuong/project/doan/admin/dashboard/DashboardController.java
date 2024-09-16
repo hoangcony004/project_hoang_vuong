@@ -1,14 +1,19 @@
 package hoang_vuong.project.doan.admin.dashboard;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hoang_vuong.project.doan.admin.donhang.DonHangService;
+import hoang_vuong.project.doan.admin.donhang.RevenueModel;
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
@@ -108,8 +113,15 @@ public class DashboardController {
         // Thêm tổng tiền định dạng vào model
         model.addAttribute("tongTien", tongTienFormatted);
 
+        // thống kê từng tháng
+        List<Double> doanhThuTheoThang = donHangService.getDoanhThuTheoThang();
+        // Chuyển đổi danh sách thành chuỗi JSON
+        String doanhThuJson = doanhThuTheoThang.stream()
+                .map(d -> String.format("%.2f", d)) // Định dạng số với 2 chữ số thập phân
+                .collect(Collectors.joining(",", "[", "]"));
+        model.addAttribute("doanhThuTheoThang", doanhThuJson);
+        System.out.println("doanh thu là :" + doanhThuTheoThang);
 
-        
         model.addAttribute("title", "Dashboard");
         model.addAttribute("content", "admin/dashboard/dashboard.html");
 
