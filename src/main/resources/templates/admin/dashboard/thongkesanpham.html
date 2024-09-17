@@ -62,7 +62,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#rhongkeSP_X_SoLuongBan" data-bs-toggle="tab" aria-expanded="false"
-                                class="nav-link rounded-0">Thống Kê Sản Phẩm Theo Số Lượng Bán Nhiều Nhất</a>
+                                class="nav-link rounded-0">Thống Kê 10 Sản Phẩm Có Số Lượng Bán Nhiều Nhất</a>
                         </li>
                     </ul>
 
@@ -78,10 +78,59 @@
                                 <canvas id="myChartTrangThai"></canvas>
                             </div>
                         </div>
+                        <tr th:each="sanPhamBanChay : ${top10SanPham}">
+                            <input type="hidden" class="SPBanChay" th:value="${sanPhamBanChay.sanPham.tenSP}">
+                            <input type="hidden" class="SoLuong" th:value="${sanPhamBanChay.soLuongDaBan}">
+                        </tr>
 
                         <div class="tab-pane" id="rhongkeSP_X_SoLuongBan">
-
+                            <canvas id="myChartSoLuongBan" style="width:100%;max-width:1150px"></canvas>
                         </div>
+
+                        <script>
+                            // Lấy tất cả các giá trị từ ô input có class SPBanChay
+                            const xValues = Array.from(document.querySelectorAll('.SPBanChay')).map(input => input.value);
+                            // Lấy tất cả các giá trị từ ô input có class SoLuong
+                            const yValues = Array.from(document.querySelectorAll('.SoLuong')).map(input => parseInt(input.value, 10));
+
+                            // Kiểm tra dữ liệu đã lấy
+                            console.log('Tên sản phẩm:', xValues);
+                            console.log('Số lượng bán:', yValues);
+
+                            // Tạo mảng màu sắc cho các thanh
+                            const barColors = [
+                                "#FF5733", "#33FF57", "#3357FF", "#F733FF", "#FF8C33",
+                                "#33FFF5", "#F5FF33", "#FF33A8", "#8CFF33", "#FF3333"
+                            ];
+                            new Chart("myChartSoLuongBan", {
+                                type: "bar",
+                                data: {
+                                    labels: xValues,
+                                    datasets: [{
+                                        backgroundColor: barColors,
+                                        data: yValues
+                                    }]
+                                },
+                                options: {
+                                    legend: { display: false },
+                                    title: {
+                                        display: true,
+                                        text: "Top 10 Bán Chạy Nhất"
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -229,6 +278,7 @@
             });
         }
     </script>
+
 
 
 

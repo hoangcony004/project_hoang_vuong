@@ -147,23 +147,34 @@
                         <a href="javascript:void(0);" class="dropdown-item">Action</a>
                     </div>
                 </div>
-                <h4 class="header-title mb-3">Doanh Thu Trong Năm Nay</h4>
+                <h4 class="header-title mb-3">Doanh Thu Trong Năm Nay Theo Từng Tháng</h4>
 
                 <div dir="ltr">
                     <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
                 </div>
 
-                <!-- Nhúng dữ liệu JSON vào một thuộc tính data-* -->
-                <div id="data" data-doanh-thu='${doanhThuTheoThang}'></div>
-
                 <script>
-                    // Lấy dữ liệu JSON từ thuộc tính data-* và phân tích nó
-                    const dataElement = document.getElementById('data');
-                    const yDoanhThu = JSON.parse(dataElement.getAttribute('data-doanh-thu'));
-                    console.log("doanh thu ", yDoanhThu)
-                    const xThang = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
-                    const barColors = ["red", "green", "blue", "orange", "brown", "red", "green", "blue", "orange", "brown", "red", "blue"];
+                    // Lấy dữ liệu doanh thu từ Thymeleaf
+                    const yDoanhThu = /*[[${doanhThuTheoThang}]]*/[[${ doanhThuTheoThang }]];
+                    console.log("Doanh thu: ", yDoanhThu);
+                    const xThang = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+                        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+                    const barColors = [
+                        "#FF5733", // Màu cam đậm
+                        "#33FF57", // Màu xanh lá cây sáng
+                        "#3357FF", // Màu xanh dương đậm
+                        "#F3FF33", // Màu vàng sáng
+                        "#FF33A1", // Màu hồng sáng
+                        "#33FFF3", // Màu xanh biển sáng
+                        "#FF8C33", // Màu cam sáng
+                        "#33FF8C", // Màu xanh lá cây nhạt
+                        "#8C33FF", // Màu tím nhạt
+                        "#FF3333", // Màu đỏ sáng
+                        "#33FF57", // Màu xanh lá cây tươi
+                        "#FF33F6"  // Màu hồng đậm
+                    ];
 
+                    // Vẽ biểu đồ với dữ liệu doanh thu đã format
                     new Chart("myChart", {
                         type: "bar",
                         data: {
@@ -171,7 +182,7 @@
                             datasets: [{
                                 backgroundColor: barColors,
                                 data: yDoanhThu,
-                                label: 'Doanh Thu',
+                                label: 'Doanh Thu (vn₫)',
                             }]
                         },
                         options: {
@@ -184,11 +195,19 @@
                                 y: {
                                     beginAtZero: true
                                 }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (tooltipItem) {
+                                            return tooltipItem.raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                                        }
+                                    }
+                                }
                             }
                         }
                     });
                 </script>
-
             </div> <!-- end card-body-->
         </div> <!-- end card-->
 
@@ -216,8 +235,12 @@
                         <a href="javascript:void(0);" class="dropdown-item">Action</a>
                     </div>
                 </div>
-                <h4 class="header-title mb-3">Doanh Thu Theo Tuần</h4>
-
+                <h4 class="header-title mb-3">Doanh Thu Trong Tuần Này</h4>
+                <!-- <tr th:each="donHang : ${weeklyDonHang}">
+                    <td th:text="${donHang.id}"></td>
+                    <td th:text="${donHang.ngayTao}"></td>
+                    <td th:text="${donHang.tongTien}"></td>
+                </tr> -->
                 <div class="chart-content-bg">
                     <div class="row text-center">
                         <div class="col-md-6">
@@ -237,27 +260,21 @@
                     </div>
                 </div>
                 <div dir="ltr">
-                    <!-- <div id="revenue-chart" class="apex-charts mt-3" data-colors="#727cf5,#0acf97"></div> -->
                     <canvas id="myChartTuan" style="width:100%;max-width:100%"></canvas>
                 </div>
                 <script>
-                    const xValuesTuan = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+                    // Lấy dữ liệu từ mô hình
+                    const xValuesTuan = /*[[${xValuesTuan}]]*/[];
+                    const dataSet = /*[[${dataSet}]]*/[];
 
                     new Chart("myChartTuan", {
                         type: "line",
                         data: {
-                            labels: xValuesTuan,
+                            labels: xValuesTuan, // Các nhãn cho trục x
                             datasets: [{
-                                data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+                                label: 'Dữ liệu thống kê', // Tùy chỉnh nhãn cho dữ liệu
+                                data: dataSet.map(value => parseFloat(value)), // Chuyển đổi chuỗi thành số thực
                                 borderColor: "red",
-                                fill: false
-                            }, {
-                                data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
-                                borderColor: "green",
-                                fill: false
-                            }, {
-                                data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
-                                borderColor: "blue",
                                 fill: false
                             }]
                         },
@@ -266,6 +283,66 @@
                         }
                     });
                 </script>
+
+                <!-- <div dir="ltr">
+                    <canvas id="myChartTuan" style="width:100%;max-width:100%"></canvas>
+                </div>
+
+                <script>
+                    // Lấy dữ liệu từ model
+                    const xValuesTuan = /*[[${xValuesTuan}]]*/[];
+                    const dataSet = /*[[${dataSet}]]*/[];
+
+                    // Kiểm tra dữ liệu
+                    console.log("Dữ liệu xValuesTuan:", xValuesTuan);
+                    console.log("Dữ liệu dataSet:", dataSet);
+
+                    // Chuyển đổi chuỗi thành số
+                    const parsedDataSet = dataSet.map(value => parseFloat(value));
+
+                    // Kiểm tra dữ liệu sau khi chuyển đổi
+                    console.log("Dữ liệu parsedDataSet:", parsedDataSet);
+
+                    // Khởi tạo biểu đồ
+                    const ctx = document.getElementById("myChartTuan").getContext("2d");
+                    const myChartTuan = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: xValuesTuan,
+                            datasets: [{
+                                label: 'Thống kê theo tuần',
+                                data: dataSet, // Dữ liệu cho biểu đồ
+                                borderColor: "red",
+                                fill: false,
+                                lineTension: 0 // Đảm bảo đường kẻ không cong
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Ngày Trong Tuần'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Số Tiền (VND)'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true
+                                }
+                            }
+                        }
+                    });
+                </script> -->
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col-->
