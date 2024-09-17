@@ -33,10 +33,21 @@ public class ChiTietDonHang {
     private int soLuong;
     private Float donGia;
     private Float tongTien;
+    private String ten;
     private String model;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-
+    public Integer getDonHangId() {
+        return donHang != null ? donHang.getId() : null; // Assuming DonHang has getId()
+    }
+    
+    // Setter tùy chỉnh cho don_hang_id
+    public void setDonHangId(Integer donHangId) {
+        if (donHang == null) {
+            donHang = new DonHang();
+        }
+        donHang.setId(donHangId);
+    }
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }

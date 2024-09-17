@@ -39,7 +39,7 @@ public class DonHang {
     private float tongTien;
     private int trangThai;
     private LocalDate ngayTao;
-
+    private String thanhtoan;
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }

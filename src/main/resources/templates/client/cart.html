@@ -27,8 +27,9 @@
 										<tr>
 											<th>Ảnh</th>
 											<th>Tên</th>
-											<th>Quantity</th>
-											<th>Total</th>
+											<th>Số lượng</th>
+											<th>Tổng tiền</th>
+											<th></th>
 											<th></th>
 										</tr>
 									</thead>
@@ -57,7 +58,7 @@
                                             </td>
 											<td class="total-col" th:text="${sp.get('thanhTien')}"></td>
 											<td class="remove-col"><button class="btn-remove" th:onclick="cart.remove([[${sp['id']}]], [[${sp['ten']}]] )"><i class="icon-close" ></i></button></td>
-											<td class="remove-col"><button class="btn-remove" th:onclick="cart.update( [[${sp.get('id')}]], $('#soluong_sp_[(${sp.get('id')})]').val(), [[${sp.get('ten')}]] )"><i class="icon-refresh" ></i></button></td>
+											<td class="remove-col"><button class="btn-remove" th:onclick="cart.update( [[${sp.get('id')}]], $('#soluong_sp_[(${sp.get('id')})]').val(), [[${sp.get('ten')}]] )"><i class="icon-refresh" >save</i></button></td>
 											
 										</tr>
 								

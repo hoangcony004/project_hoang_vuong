@@ -61,6 +61,7 @@ public class SanPhamController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("ds", sanPhamPage.getContent());
         model.addAttribute("dl", new SanPham());
+        
         model.addAttribute("title", "Quản Lý Sản Phẩm");
         model.addAttribute("title_duyet", "Sản Phẩm");
         model.addAttribute("title_body", "Thêm Sản Phẩm");

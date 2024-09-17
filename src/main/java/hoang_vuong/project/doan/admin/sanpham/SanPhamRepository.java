@@ -11,7 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface SanPhamRepository extends JpaRepository<SanPham, Integer>
 {
+   Page<SanPham> findByMaNSX(int maNSX, Pageable pageable);
    List<SanPham> findByMaNSX(int maNSX);
+   List<SanPham> findByTrangThai(Boolean trangThai);
    SanPham findOneByMaNSX(int maNSX);
    List<SanPham> findByNoiBat(Boolean noiBat);
    List<SanPham> findByBanChay(Boolean banChay);

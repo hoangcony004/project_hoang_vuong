@@ -28,22 +28,20 @@
                             <div class="product-details-top">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="product-gallery product-gallery-vertical">
-                                            <div class="row">
-                                                <figure class="product-main-image">
-                                                    <img id="product-zoom" th:src="${dl.anhDaiDien}" th:data-zoom-image="${dl.anhDaiDien}" alt="product image">
-        
-                    
-                                                </figure><!-- End .product-main-image -->
-        
-                                                <div id="product-zoom-gallery"  class="product-image-gallery">
-                                                    <a th:each="dls : ${ds}"  class="product-gallery-item" href="#" >
-                                                        <img  th:src="${dls.hinhAnh}" th:data-image="${dls.hinhAnh}" th:data-zoom-image="${dls.hinhAnh}" alt="product side">
-                                                    </a>
-                                                </div><!-- End .product-image-gallery -->
-                                            </div><!-- End .row -->
-                                    
-                                        </div><!-- End .product-gallery -->
+                                        <div class="product-gallery">
+                                            <figure class="product-main-image">
+                                                <span class="product-label label-top">Top</span>
+                                                <img id="product-zoom"   th:src="${dl.anhDaiDien}" alt="product image">
+                                            </figure><!-- End .product-main-image -->
+
+                                            <div id="product-zoom-gallery" class="product-image-gallery">
+                                                <a th:each="dls : ${ds}"  class="product-gallery-item" href="#" >
+                                                    <img  th:src="${dls.hinhAnh}" th:data-image="${dls.hinhAnh}"  alt="product side">
+                                                </a>
+                                            </div><!-- End .product-image-gallery -->
+                                        </div>
+                                   
+                                        <!-- End .product-gallery -->
                                     </div><!-- End .col-md-6 -->
                                     <div class="col-md-6">
                                         <div class="product-details product-details-sidebar">
@@ -57,17 +55,18 @@
                                             </div><!-- End .rating-container -->
 
                                             <div class="product-price"  th:object="${dl}">
-                                                <h2 th:text="${price}"></h2>
+                                                <h2 th:text="${dl.getFomatGiaBan}"></h2>
                                             </div>
                                 
                                             <!-- End .product-price -->
                                          
                                             <div class="product-content">
                                                 <p th:text="${dl.moTa}"></p>
+                                                <p th:text="${dl.model}"></p>
                                             </div><!-- End .product-content -->
 
                                             <div class="details-filter-row details-row-size">
-                                                <div class="product-countdown" data-until="2024, 9, 01"></div>
+                                                <div class="product-countdown" th:data-until="${dl.getNgayHetHan}"></div>
                                             </div><!-- End .details-filter-row -->
 
                                      

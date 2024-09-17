@@ -92,17 +92,26 @@
 
 													</td>
 		                							<td th:text="${sp.get('thanhTien')}"></td>
+													
 		                						</tr>
 
 		                						<tr class="summary-subtotal">
 		                							<td>Tổng:</td>
 		                							<td th:text="${tongGiaTriGioHangVi}"></td>
+													<input type="hidden" class="form-control"  id="amount"  name="amount" th:value="${tongGiaTriGioHang}">
 		                						</tr><!-- End .summary-subtotal -->
 		                						<tr>
 		                							<td>Shipping:</td>
 		                							<td>Free shipping</td>
 		                						</tr>
-		                						
+		                						<tr>
+													<td><input type="radio" name="method" value="banking">Chuyển khoản</td>
+													<td></td>
+												</tr>
+												<tr></tr>
+													<td><input type="radio" name="method" value="monkey">Tiền mặt</td>
+													<td></td>
+												</tr>
 		                					</tbody>
 		                				</table><!-- End .table table-summary -->
 

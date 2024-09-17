@@ -53,7 +53,14 @@ public class SanPham {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayHetHan;
 
-
+    public String getNgayHetHan() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy, MM, dd");
+        // Định dạng chuỗi theo yêu cầu: yyyy,MM,dd
+        if (ngayHetHan == null) {
+            return ngayTao.format(formatter);
+        }
+        return ngayHetHan.format(formatter);
+    }
     public String getNgayTaoText() {
         if (ngayTao == null) {
             return "Chưa cập nhật";
