@@ -1,20 +1,43 @@
 package hoang_vuong.project.doan.admin.sanpham;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 @Service
 public class SanPhamService {
     @Autowired
     private SanPhamRepository kdl;
+
+    public List<List<String>> getTop5SanPhamByDonGia() {
+        // Tạo Pageable để lấy 5 bản ghi
+        Pageable pageable = PageRequest.of(0, 5); // Trang đầu tiên, 5 sản phẩm
+
+        // Gọi phương thức repository với Pageable
+        List<Object[]> results = kdl.findTop5SanPhamByDonGiaDesc(pageable);
+
+        List<List<String>> sanPhamList = new ArrayList<>();
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
+
+        for (Object[] result : results) {
+            List<String> sanPhamData = new ArrayList<>();
+            sanPhamData.add((String) result[0]); // tên sản phẩm (tenSP)
+            sanPhamData.add(currencyFormat.format((Float) result[1])); // định dạng đơn giá (donGia)
+            sanPhamList.add(sanPhamData);
+        }
+        return sanPhamList;
+    }
 
     public Map<String, Long> thongKeSanPhamTheoTrangThai() {
         Map<String, Long> thongKe = new HashMap<>();
@@ -58,10 +81,12 @@ public class SanPhamService {
     public List<SanPham> duyet() {
         return kdl.findAll();
     }
+
     public SanPham timMnsx(int id) {
         return kdl.findOneByMaNSX(id);
 
     }
+
     public SanPham timTheoId(int id) {
         SanPham dl = null;
 
@@ -77,10 +102,10 @@ public class SanPhamService {
 
     }
 
-
     public List<SanPham> timMaNSX(int maNSX) {
         return kdl.findByMaNSX(maNSX);
     }
+
     public SanPham xem(int id) {
 
         SanPham dl = null;
@@ -112,14 +137,13 @@ public class SanPhamService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
-    public List<SanPham> dsSanPhamNoiBat() 
-    {
+
+    public List<SanPham> dsSanPhamNoiBat() {
         return kdl.findByNoiBat(true);
     }
-    public List<SanPham> dsSanPhamBanChay() 
-    {
+
+    public List<SanPham> dsSanPhamBanChay() {
         return kdl.findByBanChay(true);
     }
-
 
 }

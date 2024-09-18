@@ -9,7 +9,18 @@ import org.springframework.data.repository.query.Param;
 
 public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
 
-    List<DonHang> findAllByNgayTaoBetween(LocalDate startDate, LocalDate endDate);
+    @Query("SELECT SUM(d.tongTien) FROM DonHang d WHERE YEAR(d.ngayTao) = :year")
+    Float findTotalRevenueByYear(@Param("year") int year);
+
+    boolean existsByMaDH(String maDH);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByDienThoai(String dienThoai);
+
+    @Query("SELECT EXTRACT(YEAR FROM d.ngayTao) AS year, SUM(d.tongTien) AS totalRevenue " +
+            "FROM DonHang d GROUP BY EXTRACT(YEAR FROM d.ngayTao)")
+    List<Object[]> getRevenueByYear();
 
     @Query("SELECT COUNT(d) FROM DonHang d WHERE d.ngayTao BETWEEN :startDate AND :endDate")
     long countByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
@@ -27,7 +38,11 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
             "ORDER BY month")
     List<Object[]> getDoanhThuTheoThangTheoNam(@Param("year") int year);
 
+    List<DonHang> findAllByNgayTaoBetween(LocalDate startDate, LocalDate endDate);
+
     @Query("SELECT d FROM DonHang d WHERE d.ngayTao BETWEEN :startDate AND :endDate")
     List<DonHang> findAllByWeek(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    @Query("SELECT COALESCE(SUM(d.tongTien), 0) FROM DonHang d WHERE d.ngayTao BETWEEN :startDate AND :endDate")
+    double calculateTotalRevenue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

@@ -29,8 +29,9 @@ public class SanPham {
     private Integer id;
 
     private String model;
-    private String tenSP;
+    
     private String anhDaiDien;
+    private String tenSP;
     private Float donGia;
     private Boolean trangThai;
 

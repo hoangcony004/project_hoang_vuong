@@ -10,9 +10,15 @@
                             <i class="mdi mdi-calendar-range font-13"></i>
                         </span>
                     </div>
-                    <a href="javascript: void(0);" class="btn btn-primary ms-2">
+                    <a href="javascript:void(0);" class="btn btn-primary ms-2" onclick="refreshPage()">
                         <i class="mdi mdi-autorenew"></i>
                     </a>
+                    <script>
+                        function refreshPage() {
+                            // Làm mới trang
+                            window.location.reload();
+                        }
+                    </script>
                     <a href="javascript: void(0);" class="btn btn-primary ms-1">
                         <i class="mdi mdi-filter-variant"></i>
                     </a>
@@ -150,15 +156,20 @@
                 <h4 class="header-title mb-3">Doanh Thu Trong Năm Nay Theo Từng Tháng</h4>
 
                 <div dir="ltr">
-                    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
                 </div>
+                <input type="hidden" class="DoanhThuThang" th:value="${doanhThuTheoThang}">
 
                 <script>
-                    // Lấy dữ liệu doanh thu từ Thymeleaf
-                    const yDoanhThu = /*[[${doanhThuTheoThang}]]*/[[${ doanhThuTheoThang }]];
+                    // Lấy dữ liệu doanh thu từ input ẩn và chuyển đổi thành mảng số
+                    const yDoanhThuString = document.querySelector('.DoanhThuThang').value;
+                    const yDoanhThu = yDoanhThuString.split(',').map(Number); // Chuyển đổi chuỗi thành mảng số
+
                     console.log("Doanh thu: ", yDoanhThu);
+
                     const xThang = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
                         "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+
                     const barColors = [
                         "#FF5733", // Màu cam đậm
                         "#33FF57", // Màu xanh lá cây sáng
@@ -235,7 +246,7 @@
                         <a href="javascript:void(0);" class="dropdown-item">Action</a>
                     </div>
                 </div>
-                <h4 class="header-title mb-3">Doanh Thu Trong Tuần Này</h4>
+                <h4 class="header-title mb-3">Doanh Thu Trong Tuần</h4>
                 <!-- <tr th:each="donHang : ${weeklyDonHang}">
                     <td th:text="${donHang.id}"></td>
                     <td th:text="${donHang.ngayTao}"></td>
@@ -245,35 +256,55 @@
                     <div class="row text-center">
                         <div class="col-md-6">
                             <p class="text-muted mb-0 mt-3">Doanh Thu Tuần Trước</p>
-                            <h2 class="fw-normal mb-3">
+                            <h3 class="fw-normal mb-3">
                                 <small class="mdi mdi-checkbox-blank-circle text-primary align-middle me-1"></small>
-                                <span>$58,254</span>
-                            </h2>
+                                <span th:text="${revenueLastWeek}"> $58,254.00 </span>
+                            </h3>
                         </div>
                         <div class="col-md-6">
                             <p class="text-muted mb-0 mt-3">Doanh Thu Tuần Này</p>
-                            <h2 class="fw-normal mb-3">
+                            <h3 class="fw-normal mb-3">
                                 <small class="mdi mdi-checkbox-blank-circle text-success align-middle me-1"></small>
-                                <span>$69,524</span>
-                            </h2>
+                                <span th:text="${revenueThisWeek}"> $69,524.00 </span>
+                            </h3>
                         </div>
                     </div>
                 </div>
+                <table>
+                    <tr th:each="day, iterStat : ${xValuesTuan}">
+                        <td>
+                            <input type="hidden" th:value="${day}" name="days" />
+                        </td>
+                        <td>
+                            <input type="hidden" th:value="${dataSet[iterStat.index]}" name="values" />
+                        </td>
+                    </tr>
+                </table>
                 <div dir="ltr">
                     <canvas id="myChartTuan" style="width:100%;max-width:100%"></canvas>
                 </div>
-                <script>
-                    // Lấy dữ liệu từ mô hình
-                    const xValuesTuan = /*[[${xValuesTuan}]]*/[];
-                    const dataSet = /*[[${dataSet}]]*/[];
 
+                <script>
+                    // Lấy dữ liệu từ các trường <input> ẩn
+                    const daysInputs = document.querySelectorAll('input[name="days"]');
+                    const valuesInputs = document.querySelectorAll('input[name="values"]');
+
+                    // Chuyển đổi giá trị từ các trường input thành mảng
+                    const xValuesTuan = Array.from(daysInputs).map(input => input.value);
+                    const dataSet = Array.from(valuesInputs).map(input => parseFloat(input.value));
+
+                    // Ghi ra console để kiểm tra
+                    console.log("Ngày:", xValuesTuan);
+                    console.log("Dữ liệu:", dataSet);
+
+                    // Tạo biểu đồ
                     new Chart("myChartTuan", {
                         type: "line",
                         data: {
                             labels: xValuesTuan, // Các nhãn cho trục x
                             datasets: [{
-                                label: 'Dữ liệu thống kê', // Tùy chỉnh nhãn cho dữ liệu
-                                data: dataSet.map(value => parseFloat(value)), // Chuyển đổi chuỗi thành số thực
+                                label: 'Doanh thu Là: ', // Tùy chỉnh nhãn cho dữ liệu
+                                data: dataSet, // Chuyển đổi chuỗi thành số thực không cần thiết vì đã chuyển thành float
                                 borderColor: "red",
                                 fill: false
                             }]
@@ -283,66 +314,6 @@
                         }
                     });
                 </script>
-
-                <!-- <div dir="ltr">
-                    <canvas id="myChartTuan" style="width:100%;max-width:100%"></canvas>
-                </div>
-
-                <script>
-                    // Lấy dữ liệu từ model
-                    const xValuesTuan = /*[[${xValuesTuan}]]*/[];
-                    const dataSet = /*[[${dataSet}]]*/[];
-
-                    // Kiểm tra dữ liệu
-                    console.log("Dữ liệu xValuesTuan:", xValuesTuan);
-                    console.log("Dữ liệu dataSet:", dataSet);
-
-                    // Chuyển đổi chuỗi thành số
-                    const parsedDataSet = dataSet.map(value => parseFloat(value));
-
-                    // Kiểm tra dữ liệu sau khi chuyển đổi
-                    console.log("Dữ liệu parsedDataSet:", parsedDataSet);
-
-                    // Khởi tạo biểu đồ
-                    const ctx = document.getElementById("myChartTuan").getContext("2d");
-                    const myChartTuan = new Chart(ctx, {
-                        type: "line",
-                        data: {
-                            labels: xValuesTuan,
-                            datasets: [{
-                                label: 'Thống kê theo tuần',
-                                data: dataSet, // Dữ liệu cho biểu đồ
-                                borderColor: "red",
-                                fill: false,
-                                lineTension: 0 // Đảm bảo đường kẻ không cong
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Ngày Trong Tuần'
-                                    }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Số Tiền (VND)'
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: true
-                                }
-                            }
-                        }
-                    });
-                </script> -->
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col-->
@@ -362,11 +333,17 @@
                         <a href="javascript:void(0);" class="dropdown-item">Action</a>
                     </div>
                 </div>
-                <h4 class="header-title">Sản Phẩm Được Bán Nhiều Nhất</h4>
-
-                <canvas id="myChartTopSale" style="width:100%; max-width:100%; height: 290px;"></canvas>
-
-
+                <h4 class="header-title">Top 5 Sản Phẩm Có Giá Bán Cao Nhất</h4>
+                <tr th:each="sanPham, iterStat : ${top5SanPham}">
+                    <td>
+                        <input type="hidden" class="tenSP" th:value="${sanPham[0]}" />
+                    </td>
+                    <td>
+                        <input type="hidden" class="donGia" th:value="${sanPham[1]}" />
+                    </td>
+                </tr>
+                <canvas id="myChartTopSale" style="width:100%; max-width:100%; height: 280px;"></canvas>
+                <br>
                 <div class="chart-widget-list" id="chartWidgetList">
                     <!-- Nội dung sẽ được đổ vào đây bởi JavaScript -->
                 </div>
@@ -374,8 +351,21 @@
         </div>
 
         <script>
-            const xValuesTopSale = ["Italy", "France", "Spain", "USA", "Argentina"];
-            const yValuesTopSale = [55, 49, 44, 24, 15];
+            // Lấy dữ liệu từ các ô input ẩn
+            const tenSPElements = document.querySelectorAll('.tenSP');
+            const donGiaElements = document.querySelectorAll('.donGia');
+
+            const top5SanPham = [];
+            tenSPElements.forEach((tenSPElement, index) => {
+                const tenSP = tenSPElement.value;
+                const donGia = parseFloat(donGiaElements[index].value);
+                top5SanPham.push({ tenSP, donGia });
+            });
+
+            // Chuyển đổi dữ liệu cho biểu đồ
+            const xValuesTopSale = top5SanPham.map(sp => sp.tenSP);
+            const yValuesTopSale = top5SanPham.map(sp => sp.donGia);
+
             const barColorsTopSale = [
                 "#b91d47",
                 "#00aba9",
@@ -388,7 +378,7 @@
             new Chart("myChartTopSale", {
                 type: "doughnut",
                 data: {
-                    // labels: xValuesTopSale,
+                    labels: xValuesTopSale,
                     datasets: [{
                         backgroundColor: barColorsTopSale,
                         data: yValuesTopSale
@@ -397,7 +387,20 @@
                 options: {
                     title: {
                         display: true,
-                        text: "World Wide Wine Production 2018"
+                        text: "Top 5 Sản Phẩm Có Đơn Giá Cao Nhất"
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    // Lấy tên sản phẩm từ nhãn và giá trị từ dữ liệu
+                                    const index = context.dataIndex;
+                                    const tenSP = xValuesTopSale[index];
+                                    const value = context.raw;
+                                    return `${tenSP}: ${value.toLocaleString('vi-VN')}tr`;
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -405,15 +408,15 @@
             // Đổ dữ liệu vào div.chart-widget-list
             const chartWidgetList = document.getElementById('chartWidgetList');
 
-            xValuesTopSale.forEach((country, index) => {
+            xValuesTopSale.forEach((tenSP, index) => {
                 const color = barColorsTopSale[index]; // Lấy màu tương ứng
                 const value = yValuesTopSale[index]; // Lấy giá trị tương ứng
 
                 // Tạo phần tử <p>
                 const pElement = document.createElement('p');
                 pElement.innerHTML = `
-                    <i class="mdi mdi-square" style="color: ${color};"></i> ${country}
-                    <span class="float-end">$${value}</span>
+                    <i class="mdi mdi-square" style="color: ${color};"></i> ${tenSP}
+                    <span class="float-end">${value.toLocaleString('vi-VN')}tr</span>
                 `;
 
                 // Thêm phần tử <p> vào div.chart-widget-list
@@ -422,6 +425,7 @@
 
             console.log('Danh sách đã được đổ vào thành công!');
         </script>
+
 
     </div> <!-- end card-->
 </div> <!-- end col-->
@@ -436,9 +440,10 @@
                 <a href="" class="btn btn-sm btn-link float-end">Export
                     <i class="mdi mdi-download ms-1"></i>
                 </a>
-                <h4 class="header-title mt-2 mb-3">Top Selling Products</h4>
+                <h4 class="header-title mt-2 mb-3">Top Sản Phẩm Được Bán Nhiều Nhất</h4>
 
                 <div class="table-responsive">
+
                     <table class="table table-centered table-nowrap table-hover mb-0">
                         <tbody>
                             <tr>
@@ -557,11 +562,11 @@
                         <a href="javascript:void(0);" class="dropdown-item">Action</a>
                     </div>
                 </div>
-                <h4 class="header-title">Total Sales</h4>
+                <h4 class="header-title">Top 10 Nhà Sản Xuất Có Tỉ Lệ Cao Nhất</h4>
 
                 <script src="https://www.gstatic.com/charts/loader.js"></script>
                 <!-- <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00"> -->
-                <div id="myChart3D" style="width:100%; max-width:600px; height:430px;">
+                <div id="myChart3D" style="width:100%; max-width:610px; height:430px;">
                 </div>
             </div>
 

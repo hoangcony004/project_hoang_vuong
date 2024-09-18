@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,12 +120,9 @@ public class DashboardController {
         model.addAttribute("tongTien", tongTienFormatted);
 
         // thống kê từng tháng
-        // List<Double> doanhThuTheoThang = donHangService.getDoanhThuTheoThang();
-        // model.addAttribute("doanhThuTheoThang", doanhThuTheoThang);
-        // System.out.println("doanh thu là :" + doanhThuTheoThang);
         int year = LocalDate.now().getYear(); // Lấy năm hiện tại
-        // int year = 2024; // Thay đổi giá trị này để thử nghiệm
-        List<Double> doanhThuTheoThang = donHangService.getDoanhThuTheoThang(year);
+        // int year = 2025; // Thay đổi giá trị này để thử nghiệm
+        List<String> doanhThuTheoThang = donHangService.getDoanhThuTheoThang(year);
         model.addAttribute("doanhThuTheoThang", doanhThuTheoThang);
         System.out.println("Doanh thu là: " + doanhThuTheoThang);
 
@@ -133,23 +132,57 @@ public class DashboardController {
         LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
         Map<DayOfWeek, String> weeklyStats = donHangService.getWeeklyStatistics();
+        System.out.println("Weekly Stats: " + weeklyStats);
 
         // Tạo danh sách ngày trong tuần với giá trị mặc định 0.0 nếu không có dữ liệu
         List<DayOfWeek> daysOfWeek = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
                 DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+
         List<String> values = daysOfWeek.stream()
                 .map(day -> weeklyStats.getOrDefault(day, "0.0"))
                 .collect(Collectors.toList());
 
-        model.addAttribute("xValuesTuan", daysOfWeek.stream().map(DayOfWeek::toString).collect(Collectors.toList()));
+        // Chuyển đổi ngày trong tuần sang tiếng Việt
+        List<String> vietnameseDaysOfWeek = daysOfWeek.stream()
+                .map(day -> dayOfWeekTranslations.get(day))
+                .collect(Collectors.toList());
+
+        model.addAttribute("xValuesTuan", vietnameseDaysOfWeek);
         model.addAttribute("dataSet", values);
 
-        System.out.println("thống kê tuần" + values);
+        // doanh thu tuàn này và tuàn trước
+        Map<String, Double> revenueMap = donHangService.getWeeklyRevenue();
+
+        NumberFormat formatter = new DecimalFormat("#,###" + " vn₫");
+        String revenueThisWeek = formatter.format(revenueMap.get("thisWeek"));
+        String revenueLastWeek = formatter.format(revenueMap.get("lastWeek"));
+
+        model.addAttribute("revenueThisWeek", revenueThisWeek);
+        model.addAttribute("revenueLastWeek", revenueLastWeek);
+
+        System.out.println("xValuesTuan: " + daysOfWeek);
+        System.out.println("dataSet: " + values);
+        System.out.println("doanh thu tuan: " + revenueMap);
+
+        // top 5 sản phẩm có đơn giá cao nhất
+        List<List<String>> top5SanPham = sanPhamService.getTop5SanPhamByDonGia();
+        model.addAttribute("top5SanPham", top5SanPham);
+
+        System.out.println("top 5 sản Phẩm " + top5SanPham);
 
         model.addAttribute("title", "Dashboard");
         model.addAttribute("content", "admin/dashboard/dashboard.html");
 
         return "layouts/layout-admin.html";
     }
+
+    private static final Map<DayOfWeek, String> dayOfWeekTranslations = Map.of(
+            DayOfWeek.MONDAY, "Thứ Hai",
+            DayOfWeek.TUESDAY, "Thứ Ba",
+            DayOfWeek.WEDNESDAY, "Thứ Tư",
+            DayOfWeek.THURSDAY, "Thứ Năm",
+            DayOfWeek.FRIDAY, "Thứ Sáu",
+            DayOfWeek.SATURDAY, "Thứ Bảy",
+            DayOfWeek.SUNDAY, "Chủ Nhật");
 
 }

@@ -35,7 +35,7 @@ public class DonHang {
     private KhachHang khachHang;
 
     @Column(unique = true)
-    private String MaDH;
+    private String maDH;
 
     @Column(unique = true)
     private String email;
@@ -44,7 +44,7 @@ public class DonHang {
 
     private String tenDayDu;
     private String ghiChu;
-    
+
     private int trangThai;
     private Float tongTien;
     private LocalDate ngayTao;

@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
 import hoang_vuong.project.doan.admin.chitietdonhang.SanPhamBanChayDTO;
+import hoang_vuong.project.doan.admin.donhang.DonHangService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,6 +38,9 @@ public class ThongKeController {
 
     @Autowired
     private ChiTietDonHangService chiTietDonHangService;
+
+    @Autowired
+    private DonHangService donHangService;
 
     @GetMapping("/thong-ke-san-pham")
     public String getThongKeSanPham(Model model, RedirectAttributes redirectAttributes) {
@@ -58,19 +64,59 @@ public class ThongKeController {
             model.addAttribute("top10SanPham", top10SanPham);
             System.out.println("Array là: " + top10SanPham);
 
-            // List<SanPhamBanChayDTO> top10SanPham =
-            // chiTietDonHangService.layTop10SanPhamBanChay();
-
-            // // Chuyển đổi danh sách thành chuỗi JSON
-            // ObjectMapper objectMapper = new ObjectMapper();
-            // String top10SanPhamJson = objectMapper.writeValueAsString(top10SanPham);
-
-            // // Truyền chuỗi JSON vào mô hình
-            // model.addAttribute("top10SanPhamJson", top10SanPhamJson);
-            // System.out.println("Array là: " + top10SanPhamJson);
-
+            model.addAttribute("title", "Thống Kê Sản Phẩm");
             model.addAttribute("content", "admin/dashboard/thongkesanpham.html");
             model.addAttribute("title_duyet", "Thống Kê Sản Phẩm");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
+        }
+
+        return "layouts/layout-admin.html";
+    }
+
+    @GetMapping("/thong-ke-doanh-thu")
+    public String getThongKeDoanhThu(Model model, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            // Lấy dữ liệu doanh thu theo năm từ service
+            Map<Integer, String> revenueByYear = donHangService.getRevenueByYear();
+            // Đưa dữ liệu vào mô hình
+            model.addAttribute("revenueByYear", revenueByYear);
+            System.out.println("thống kê theo năm" + revenueByYear);
+
+            model.addAttribute("title", "Thống Kê Doanh Thu");
+            model.addAttribute("content", "admin/dashboard/thongkedoanhthu.html");
+            model.addAttribute("title_duyet", "Thống Kê Doanh Thu");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
+        }
+        return "layouts/layout-admin.html";
+    }
+
+    @GetMapping("/thong-ke-chi-tiet-tung-nam")
+    public String thongKeChiTietTungNam(@RequestParam("year") int year, Model model,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            // tổng doanh thu
+            String totalRevenue = donHangService.getTotalRevenueByYear(year);
+            model.addAttribute("tongDoanhThu", totalRevenue);
+            System.out.println("Tổng doanh Thu " + totalRevenue);
+
+            // doanh thu 1 năm hiển thị theo 12 tháng
+            List<String> doanhThuTheoThang = donHangService.getDoanhThuTheoThang(year);
+            model.addAttribute("doanhThuTheoThang", doanhThuTheoThang);
+            System.out.println("Doanh thu là: " + doanhThuTheoThang);
+
+            model.addAttribute("title", "Thống Kê Doanh Thu Chi Tiết Theo Năm");
+            model.addAttribute("content", "admin/dashboard/thongkechitiettungnam.html");
+            model.addAttribute("title_duyet", "Thống Kê Doanh Thu 1 Năm Cụ Thể");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
                     "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
