@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
-
-
-<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
-<head th:replace="client/fragments/head :: head"></head>
-<body>
-    <div class="page-wrapper">
-        <header th:replace="client/fragments/header :: header"></header>
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
@@ -35,9 +26,7 @@
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
 								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
-								    </li>
+								  
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
 								    </li>
@@ -45,7 +34,7 @@
 								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
 								    </li>
 								    <li class="nav-item">
-								        <a class="nav-link" href="#">Sign Out</a>
+								        <a class="nav-link" th:href="@{/apps/dang-xuat}">Đăng xuất</a>
 								    </li>
 								</ul>
 	                		</aside><!-- End .col-lg-3 -->
@@ -63,11 +52,6 @@
 								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
 								    </div><!-- .End .tab-pane -->
 
-								    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
-								    	<p>No downloads available yet.</p>
-								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
-								    </div><!-- .End .tab-pane -->
-
 								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
 								    	<p>The following addresses will be used on the checkout page by default.</p>
 
@@ -75,15 +59,17 @@
 								    		<div class="col-lg-6">
 								    			<div class="card card-dashboard">
 								    				<div class="card-body">
-								    					<h3 class="card-title">Billing Address</h3><!-- End .card-title -->
-
-														<p>User Name<br>
-														User Company<br>
-														John str<br>
-														New York, NY 10001<br>
-														1-234-987-6543<br>
-														yourmail@mail.com<br>
-														<a href="#">Edit <i class="icon-edit"></i></a></p>
+								    					<h3 class="card-title">Địa chỉ thanh toán</h3><!-- End .card-title -->
+														
+														<p>
+															<ul>
+																
+																<li th:text="${formKH.tenDayDu}"></li>
+																<li th:text="${formKH.tenDangNhap}"></li>
+																<li th:text="${formKH.dienThoai}"></li>
+																<li th:text="${formKH.email}"></li>
+															</ul>
+														<a class="tab-trigger-link"  href="#tab-account">Edit <i class="icon-edit"></i></a></p>
 								    				</div><!-- End .card-body -->
 								    			</div><!-- End .card-dashboard -->
 								    		</div><!-- End .col-lg-6 -->
@@ -91,9 +77,9 @@
 								    		<div class="col-lg-6">
 								    			<div class="card card-dashboard">
 								    				<div class="card-body">
-								    					<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
+								    					<h3 class="card-title">Địa chỉ giao hàng</h3><!-- End .card-title -->
 
-														<p>You have not set up this type of address yet.<br>
+														<p th:text="${formKH.diaChi}"><br>
 														<a href="#">Edit <i class="icon-edit"></i></a></p>
 								    				</div><!-- End .card-body -->
 								    			</div><!-- End .card-dashboard -->
@@ -102,37 +88,24 @@
 								    </div><!-- .End .tab-pane -->
 
 								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-								    	<form action="#">
-			                				<div class="row">
-			                					<div class="col-sm-6">
-			                						<label>First Name *</label>
-			                						<input type="text" class="form-control" required>
-			                					</div><!-- End .col-sm-6 -->
+								    	<form id="accountForm" action="/apps/account" th:object="${formKH}" method="post">
+											<input type="hidden" th:field="*{Id}" />
+											<label>Tên đăng nhập   *</label>
+		        							<input type="text" th:field="*{tenDangNhap}" class="form-control" required>
+											<small class="form-text">Đây sẽ cách tên của bạn được hiển thị ở tài khoản và đánh giá</small>
+											<label>Tên đầy đủ</label>
+		            						<input type="text" class="form-control" th:field="*{tenDayDu}" required>
+		                					<label>Email  *</label>
+		        							<input type="email" th:field="*{email}" class="form-control" required>
 
-			                					<div class="col-sm-6">
-			                						<label>Last Name *</label>
-			                						<input type="text" class="form-control" required>
-			                					</div><!-- End .col-sm-6 -->
-			                				</div><!-- End .row -->
+		            						<label>Số điện thoại</label>
+		            						<input type="text" th:field="*{dienThoai}" class="form-control">
 
-		            						<label>Display Name *</label>
-		            						<input type="text" class="form-control" required>
-		            						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+		            						<label>Địa chỉ</label>
+		            						<input type="text" th:field="*{diaChi}" class="form-control">
 
-		                					<label>Email address *</label>
-		        							<input type="email" class="form-control" required>
-
-		            						<label>Current password (leave blank to leave unchanged)</label>
-		            						<input type="password" class="form-control">
-
-		            						<label>New password (leave blank to leave unchanged)</label>
-		            						<input type="password" class="form-control">
-
-		            						<label>Confirm new password</label>
-		            						<input type="password" class="form-control mb-2">
-
-		                					<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>SAVE CHANGES</span>
+		                					<button type="submit"  class="btn btn-outline-primary-2">
+			                					<span>Lưu thay đổi</span>
 			            						<i class="icon-long-arrow-right"></i>
 			                				</button>
 			                			</form>
@@ -143,22 +116,47 @@
 	                </div><!-- End .container -->
                 </div><!-- End .dashboard -->
             </div><!-- End .page-content -->
+			<div id="statusMessage"></div>
         </main><!-- End .main -->
-        <footer  th:replace="client/fragments/footer :: footer" ></footer>
-    </div><!-- End .page-wrapper -->
-    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+<script>
+	document.getElementById("accountForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Ngăn không cho form tải lại trang
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+    // Lấy dữ liệu từ form
+    var formData = new FormData(this);
 
-    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
-    <!-- Sign in / Register Modal -->
-    <div th:replace="client/fragments/register_modal :: register_modal"></div><!-- End .modal -->
+    // Gửi yêu cầu AJAX đến server
+    fetch("/apps/account", {
+        method: "POST",
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())  // Định dạng phản hồi là JSON
+    .then(data => {
+        // Xử lý phản hồi từ server (thông báo thành công hoặc lỗi)
+		var statusMessage = document.getElementById("statusMessage");
+        statusMessage.innerHTML = data.message;
+        statusMessage.classList.add("alert-success");
+        statusMessage.style.display = "block";
 
-    <!-- Plugins JS File -->
-    <div th:replace="client/fragments/script :: script"></div>
-</body>
+        // Tự động ẩn thông báo sau 3 giây
+        setTimeout(function() {
+            statusMessage.style.display = "none";
+        }, 3000); // 3000ms = 3 giây
+    })
+    .catch(error => {
+        var statusMessage = document.getElementById("statusMessage");
+        statusMessage.innerHTML = "Lỗi: " + error;
+        statusMessage.classList.add("alert-danger");
+        statusMessage.style.display = "block";
 
+        // Tự động ẩn thông báo sau 3 giây
+        setTimeout(function() {
+            statusMessage.style.display = "none";
+        }, 3000);
+    });
+});
 
-<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
-</html>
+</script>

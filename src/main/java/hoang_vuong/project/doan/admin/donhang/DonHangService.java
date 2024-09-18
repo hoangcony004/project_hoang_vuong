@@ -20,6 +20,9 @@ public class DonHangService {
     public List<DonHang> dsDonHang() {
         return kdl.findAll();
     }
+    public List<DonHang> dsDonhangEmail(String email) {
+        return kdl.findByEmail(email);
+    }
 
     public List<DonHang> duyet() {
         return kdl.findAll();

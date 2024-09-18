@@ -142,5 +142,6 @@ public String formatPrice(float price) {
         model.addAttribute("content", "client/category.html");
         return "layouts/layout-client";
     }
+   
     
 }
