@@ -142,15 +142,6 @@ public class DonHangController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        boolean emailExists = dvl.isEmailExists(dl.getEmail());
-        boolean dienThoaiExists = dvl.isDienThoaiExists(dl.getDienThoai());
-        if (emailExists || dienThoaiExists) {
-            // Nếu email hoặc số điện thoại đã tồn tại, thêm thông báo vào
-            // redirectAttributes
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Email hoặc số điện thoại đã tồn tại.");
-            // Quay lại trang đơn hàng
-            return "redirect:/admin/don-hang";
-        }
 
         String maDonHang = dvl.generateOrderCode();
         System.out.println("Mã đơn hàng " + maDonHang);

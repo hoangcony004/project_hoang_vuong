@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
 import hoang_vuong.project.doan.admin.chitietdonhang.SanPhamBanChayDTO;
+import hoang_vuong.project.doan.admin.donhang.DoanhThuThang;
 import hoang_vuong.project.doan.admin.donhang.DonHangService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -116,13 +120,66 @@ public class ThongKeController {
 
             model.addAttribute("title", "Thống Kê Doanh Thu Chi Tiết Theo Năm");
             model.addAttribute("content", "admin/dashboard/thongkechitiettungnam.html");
-            model.addAttribute("title_duyet", "Thống Kê Doanh Thu 1 Năm Cụ Thể");
+            model.addAttribute("title_duyet", "Thống Kê Doanh Thu Năm");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
                     "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
         }
 
         return "layouts/layout-admin.html";
+    }
+
+    @GetMapping("/thong-ke-chi-tiet-tung-thang")
+    public String thongKeChiTietTungThang(@RequestParam("year") int year,
+            @RequestParam("month") int month, Model model,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            // Lấy danh sách doanh thu từ service
+            List<DoanhThuThang> doanhThu = donHangService.thongKeDoanhThuTheoThang(year, month);
+
+            // Nhóm dữ liệu theo tuần
+            List<List<DoanhThuThang>> weeks = groupByWeeks(doanhThu);
+
+            // Thêm danh sách doanh thu vào model
+            model.addAttribute("weeks", weeks);
+            model.addAttribute("year", year);
+            model.addAttribute("month", month);
+
+            System.out.println("Doanh thu tháng " + doanhThu);
+            System.out.println("Năm: " + year);
+            System.out.println("Tháng: " + month);
+
+            model.addAttribute("title", "Thống Kê Doanh Thu Chi Tiết Theo Năm");
+            model.addAttribute("content", "admin/dashboard/thongkechitiettungthang.html");
+            model.addAttribute("title_duyet", "Thống Kê Doanh Thu Tháng");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
+        }
+
+        return "layouts/layout-admin.html";
+    }
+
+    private List<List<DoanhThuThang>> groupByWeeks(List<DoanhThuThang> doanhThuList) {
+        List<List<DoanhThuThang>> weeks = new ArrayList<>();
+        List<DoanhThuThang> currentWeek = new ArrayList<>();
+
+        for (DoanhThuThang item : doanhThuList) {
+            currentWeek.add(item);
+            if (currentWeek.size() == 7) {
+                weeks.add(currentWeek);
+                currentWeek = new ArrayList<>();
+            }
+        }
+
+        if (!currentWeek.isEmpty()) {
+            weeks.add(currentWeek);
+        }
+
+        return weeks;
     }
 
 }

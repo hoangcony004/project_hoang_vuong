@@ -37,9 +37,9 @@ public class DonHang {
     @Column(unique = true)
     private String maDH;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String email;
-    @Column(unique = true)
+    @Column(unique = false)
     private String dienThoai;
 
     private String tenDayDu;

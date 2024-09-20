@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
+import hoang_vuong.project.doan.admin.chitietdonhang.ThongKeSanPhamDTO;
 import hoang_vuong.project.doan.admin.donhang.DonHang;
 import hoang_vuong.project.doan.admin.donhang.DonHangService;
 import hoang_vuong.project.doan.admin.donhang.RevenueModel;
@@ -42,6 +44,9 @@ public class DashboardController {
 
     @Autowired
     private DonHangService donHangService;
+
+    @Autowired
+    private ChiTietDonHangService chiTietDonHangService;
 
     // v1
     // @GetMapping("/dashboard")
@@ -95,20 +100,27 @@ public class DashboardController {
         long donthangnay = donHangService.getCurrentMonthOrderCount();
         long donthangtruoc = donHangService.getPreviousMonthOrderCount();
         double phantramthaydoi;
-
-        if (donthangtruoc != 0) {
-            phantramthaydoi = donHangService.calculatePercentageChange(donthangnay, donthangtruoc);
+        double maxPercentageChange = 1000.0; // Giới hạn tỷ lệ phần trăm tối đa
+        
+        if (donthangtruoc > 0) {
+            // Tính tỷ lệ phần trăm thay đổi
+            phantramthaydoi = ((double) (donthangnay - donthangtruoc) / donthangtruoc) * 100;
+            // Áp dụng giới hạn tối đa cho tỷ lệ phần trăm
+            if (phantramthaydoi > maxPercentageChange) {
+                phantramthaydoi = maxPercentageChange;
+            }
         } else {
-            phantramthaydoi = (donthangnay > 0) ? 100.0 : 0.0; // Nếu donthangtruoc là 0 và donthangnay > 0 thì tỷ lệ
-                                                               // thay đổi là 100%
+            // Khi donthangtruoc là 0, chỉ hiển thị 100% nếu donthangnay > 0
+            phantramthaydoi = (donthangnay > 0) ? 100.0 : 0.0;
         }
-
-        // Định dạng tỷ lệ phần trăm
+        
+        // Định dạng tỷ lệ phần trăm với tối đa hai chữ số thập phân
         DecimalFormat order = new DecimalFormat("#.##");
         String formattedPercentageChangeOrder = order.format(phantramthaydoi);
-
+        
         model.addAttribute("currentMonthCountOrder", donthangnay);
         model.addAttribute("percentageChangeOrder", formattedPercentageChangeOrder);
+        
 
         // Lấy tổng tiền từ service
         Float tongTienFloat = donHangService.getTongTien();
@@ -169,6 +181,28 @@ public class DashboardController {
         model.addAttribute("top5SanPham", top5SanPham);
 
         System.out.println("top 5 sản Phẩm " + top5SanPham);
+
+        // thống kê 10 sản phẩm bán chạy nhất
+        // Gọi service để lấy danh sách 10 sản phẩm bán chạy nhất
+        List<ThongKeSanPhamDTO> danhSachSanPham = chiTietDonHangService.thongKeTop10SanPham();
+
+        // In thông tin chi tiết ra console
+        System.out.println("Top 10 sản phẩm: ");
+        for (ThongKeSanPhamDTO dto : danhSachSanPham) {
+            System.out.println("Tên Sản Phẩm: " + dto.getTenSP());
+            System.out.println("Đơn Giá: " + dto.getFormattedDonGia()); // Sử dụng phương thức định dạng
+            System.out.println("Số Lượng Bán: " + dto.getSoLuongBan());
+            System.out.println("Tổng Tiền: " + dto.getFormattedTongTien()); // Sử dụng phương thức định dạng
+        }
+
+        // Đưa danh sách sản phẩm vào model
+        model.addAttribute("danhSachSanPham", danhSachSanPham);
+        System.out.println("danh sách sản phẩm" + danhSachSanPham);
+
+        // thống kê nhà sản xuất
+        Map<String, Long> thongKe = sanPhamService.thongKeSanPhamTheoNhaSanXuat();
+        model.addAttribute("thongKeData", thongKe);
+        System.out.println("Data" + thongKe);
 
         model.addAttribute("title", "Dashboard");
         model.addAttribute("content", "admin/dashboard/dashboard.html");

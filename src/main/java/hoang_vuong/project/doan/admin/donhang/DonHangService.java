@@ -26,6 +26,25 @@ public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
 
+    public List<DoanhThuThang> thongKeDoanhThuTheoThang(int year, int month) {
+        // Lấy danh sách doanh thu từ database
+        List<DoanhThuThang> doanhThuList = kdl.findDoanhThuTheoThang(year, month);
+        
+        // Tạo danh sách 31 phần tử, mặc định là 0 cho mỗi ngày trong tháng
+        List<DoanhThuThang> doanhThuTheoNgay = new ArrayList<>();
+        for (int i = 0; i < 31; i++) {
+            doanhThuTheoNgay.add(new DoanhThuThang(0.0, i + 1, month, year));  // Thay Float bằng Double
+        }
+    
+        // Duyệt qua danh sách doanh thu và cập nhật vào danh sách theo ngày
+        for (DoanhThuThang dt : doanhThuList) {
+            int day = dt.getDay();
+            doanhThuTheoNgay.set(day - 1, new DoanhThuThang(dt.getTongTien(), day, month, year));
+        }
+    
+        return doanhThuTheoNgay;  // Trả về danh sách doanh thu theo ngày
+    }
+
     public String getTotalRevenueByYear(int year) {
         // Lấy tổng doanh thu từ repository
         Float totalRevenue = kdl.findTotalRevenueByYear(year);
@@ -51,15 +70,6 @@ public class DonHangService {
             revenueMap.put(year, formattedRevenue);
         }
         return revenueMap;
-    }
-
-    // kiểm tra số điện thaoij và email
-    public boolean isEmailExists(String email) {
-        return kdl.existsByEmail(email);
-    }
-
-    public boolean isDienThoaiExists(String dienThoai) {
-        return kdl.existsByDienThoai(dienThoai);
     }
 
     // Hàm tạo mã đơn hàng không trùng
