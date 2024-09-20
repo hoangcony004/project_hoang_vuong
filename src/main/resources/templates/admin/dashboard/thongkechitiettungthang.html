@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th,
+        .calendar td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .total-cell {
+            background-color: #f8f9fa;
+        }
+
+        .total-amount {
+            padding: 5px;
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="row">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/thong-ke-doanh-thu">Thống Kê Doanh Thu</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:history.back()">Thống Kê Doanh Thu Năm</a>
+                            </li>
+                            <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
+                </div>
+            </div>
+            <!-- Thông báo lỗi -->
+            <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
+        </div>
+        <!-- end page title -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Standard modal -->
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Quay lại
+                    </a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#standard-modal">
+                        Xem Chi Tiết
+                    </button>
+                    <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Chọn năm muốn xem</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-hidden="true"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Bắt đầu biểu mẫu -->
+                                    <form id="year-form" action="/admin/thong-ke-chi-tiet-tung-nam" method="get">
+                                        <div class="mb-3">
+                                            <label for="year-select" class="form-label">Chọn năm:</label>
+                                            <select id="year-select" class="form-select" name="year">
+                                                <!-- Tạo danh sách năm từ 2023 đến 2030 -->
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                                <option value="2030">2030</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <!-- Kết thúc biểu mẫu -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" form="year-form">Xem Ngay</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#standard-modal-thang">
+                        Xem Chi Tiết Từng Tháng
+                    </button>
+
+                    <div id="standard-modal-thang" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Chọn tháng muốn xem</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-hidden="true"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Bắt đầu biểu mẫu -->
+                                    <form id="month-form" action="/admin/thong-ke-chi-tiet-tung-thang" method="get">
+                                        <div class="mb-3">
+                                            <label for="year-select" class="form-label">Chọn năm:</label>
+                                            <input type="text" name="year-display" class="form-control" id="year-input"
+                                                disabled>
+                                            <input type="hidden" name="year" id="year-hidden">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="month-select" class="form-label">Chọn tháng:</label>
+                                            <select id="month-select" class="form-select" name="month">
+                                                <option value="1">Tháng 1</option>
+                                                <option value="2">Tháng 2</option>
+                                                <option value="3">Tháng 3</option>
+                                                <option value="4">Tháng 4</option>
+                                                <option value="5">Tháng 5</option>
+                                                <option value="6">Tháng 6</option>
+                                                <option value="7">Tháng 7</option>
+                                                <option value="8">Tháng 8</option>
+                                                <option value="9">Tháng 9</option>
+                                                <option value="10">Tháng 10</option>
+                                                <option value="11">Tháng 11</option>
+                                                <option value="12">Tháng 12</option>
+                                                <!-- Thêm các tháng khác -->
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <!-- Kết thúc biểu mẫu -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" form="month-form">Xem Ngay</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                    <script>
+                        // Hàm lấy tham số từ URL
+                        function getParameterByName(name, url = window.location.href) {
+                            name = name.replace(/[\[\]]/g, '\\$&');
+                            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+                            const results = regex.exec(url);
+                            if (!results) return null;
+                            if (!results[2]) return '';
+                            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                        }
+
+                        // Lấy giá trị năm từ URL
+                        const nam = getParameterByName('year');
+
+                        // Đặt giá trị vào ô input và ô input ẩn
+                        document.getElementById('year-input').value = nam;
+                        document.getElementById('year-hidden').value = nam;
+
+                        // Cập nhật giá trị của ô input ẩn trước khi gửi biểu mẫu
+                        document.getElementById('month-form').addEventListener('submit', function () {
+                            document.getElementById('year-hidden').value = document.getElementById('year-input').value;
+                        });
+                    </script>
+                </div>
+                <div class="table-responsive">
+                    <h2 class="text-center" th:text="'Xem Doanh Thu Tháng ' + ${month} + ' Năm ' + ${year}"></h2>
+                    <table class="table table-centered w-100 dt-responsive nowrap table-hover">
+                        <thead>
+                            <tr>
+                                <th>CN</th>
+                                <th>T2</th>
+                                <th>T3</th>
+                                <th>T4</th>
+                                <th>T5</th>
+                                <th>T6</th>
+                                <th>T7</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lặp qua từng tuần -->
+                            <tr th:each="week : ${weeks}">
+                                <!-- Lặp qua từng ngày trong tuần -->
+                                <td th:each="item, iterStat : ${week}">
+                                    <span th:text="${item.day}"></span><br>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="popover"
+                                        data-bs-trigger="focus"
+                                        th:data-bs-content="'Tổng tiền cho ngày ' + ${item.day} + ': ' + ${item.formattedTongTien} + ' vn₫'"
+                                        title="Tổng tiền">
+                                        <span th:text="${item.formattedTongTien}"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

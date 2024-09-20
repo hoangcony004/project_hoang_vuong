@@ -23,7 +23,6 @@ public class QuangCao {
 
     private String link;
     private String anh;
-    private int thuTu;
     private String tuaDe;
     private String tuaDePhu;
     private String moTa;

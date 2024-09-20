@@ -49,6 +49,9 @@ public class ChiTietDonHang {
         donHang.setId(donHangId);
     }
     public String getNgayTaoText() {
+        if (ngayTao == null) {
+            return "Chưa cập nhật";
+        }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
 

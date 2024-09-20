@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            max-width: 1000px;
+            max-height: 1000px;
+        }
+
+        @media (max-width: 768px) {
+            canvas {
+                max-width: 95vw;
+                max-height: 90vh;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+</head>
+
+<body>
+    <div class="row">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title" th:text="${title_duyet}">Cài Đặt</h4>
+                </div>
+            </div>
+            <!-- Thông báo lỗi -->
+            <div th:insert="~{admin/pages/thongbao :: thongbao}"></div>
+        </div>
+        <!-- end page title -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Standard modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#standard-modal">Xem Chi Tiết</button>
+
+                    <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Chọn năm muốn xem</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-hidden="true"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Bắt đầu biểu mẫu -->
+                                    <form id="year-form" action="/admin/thong-ke-chi-tiet-tung-nam" method="get">
+                                        <div class="mb-3">
+                                            <label for="year-select" class="form-label">Chọn năm:</label>
+                                            <select id="year-select" class="form-select" name="year">
+                                                <!-- Tạo danh sách năm từ 2023 đến 2030 -->
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                                <option value="2030">2030</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <!-- Kết thúc biểu mẫu -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" form="year-form">Xem Ngay</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                </div>
+                <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
+                <tr th:each="entry : ${revenueByYear}">
+                    <!-- Các ô input ẩn để lưu dữ liệu -->
+                    <td><input type="hidden" th:value="${entry.key}" class="year-input" /></td>
+                    <td><input type="hidden" th:value="${entry.value}" class="revenue-input" /></td>
+                </tr>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Lấy dữ liệu từ tất cả các ô input ẩn
+                        const yearInputs = document.querySelectorAll('.year-input');
+                        const revenueInputs = document.querySelectorAll('.revenue-input');
+
+                        // Chuyển dữ liệu từ các ô input thành mảng
+                        const xValues = Array.from(yearInputs).map(input => input.value);
+                        const yValues = Array.from(revenueInputs).map(input => {
+                            // Loại bỏ dấu phân cách hàng nghìn và chuyển đổi thành số thực
+                            return parseFloat(input.value.replace(/\./g, '').replace(/,/g, '.'));
+                        });
+
+                        console.log('Years:', xValues);
+                        console.log('Revenues:', yValues);
+
+                        const barColors = [
+                            "#FF5733",  // Đỏ cam
+                            "#33FF57",  // Xanh lá cây sáng
+                            "#3357FF",  // Xanh dương sáng
+                            "#FF33A1",  // Hồng
+                            "#F5D300",  // Vàng
+                            "#6A0D91",  // Tím đậm
+                            "#00BFFF",  // Xanh lam sáng
+                            "#FF4500",  // Cam đỏ
+                            "#2E8B57",  // Xanh lục đậm
+                            "#FFD700"   // Vàng kim
+                        ];
+
+                        // Tạo biểu đồ bằng Chart.js
+                        new Chart("myChart", {
+                            type: "bar",
+                            data: {
+                                labels: xValues,
+                                datasets: [{
+                                    backgroundColor: barColors,
+                                    data: yValues
+                                }]
+                            },
+                            options: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: "Thống Kê Doanh Thu Qua Các Năm",
+                                    fontSize: 18, 
+                                    fontFamily: "'Arial', sans-serif", 
+                                    fontStyle: 'bold' 
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true // Đặt trục y bắt đầu từ 0
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- <script>
+                    const xValues = ["2024", "2025", "2026", "2027", "2028"];
+                    const yValues = [55, 49, 44, 24, 15];
+                    const barColors = ["red", "green", "blue", "orange", "brown"];
+
+                    new Chart("myChart", {
+                        type: "bar",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                            }]
+                        },
+                        options: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: "Thống Kê Doanh Thu Qua Các Năm"
+                            }
+                        }
+                    });
+                </script> -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

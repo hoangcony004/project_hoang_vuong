@@ -41,7 +41,6 @@ public class SanPhamController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int pageSize,
             HttpServletRequest request) {
-
         // Kiểm tra xem nhân viên đã đăng nhập chưa
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
@@ -54,8 +53,8 @@ public class SanPhamController {
 
         // Cập nhật mô hình với dữ liệu phân trang
         List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
-
         model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
+        
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", sanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);

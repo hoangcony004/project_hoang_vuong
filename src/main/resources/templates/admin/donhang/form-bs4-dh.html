@@ -6,10 +6,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                        <li class="breadcrumb-item active" th:text="${title_body}">Sửa Nhân Viên</li>
+                        <li class="breadcrumb-item active" th:text="${title_btn_add}">Sửa Nhân Viên</li>
                     </ol>
                 </div>
-                <h4 class="page-title" th:text="${title_body}">Sửa Nhân Viên</h4>
+                <h4 class="page-title" th:text="${title_btn_add}">Sửa Nhân Viên</h4>
             </div>
         </div>
     </div>
@@ -27,17 +27,21 @@
                             <select class="form-select" th:field="*{maKH}" id="floatingSelectGrid"
                                 aria-label="Floating label select example">
                                 <option value="0" selected>Chưa có tài khoản</option>
-                                <option th:each="kh : ${dsKhachHang}" th:value="${kh.id}" th:text="${kh.tenDayDu}">
+                                <option th:each="kh : ${dsKhachHang}" th:value="${kh.id}" th:text="${kh.tenDangNhap}">
                                 </option>
                             </select>
                             <label for="floatingSelectGrid">Khách Hàng</label>
                         </div>
                     </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" th:field="*{tenDayDu}" placeholder="ten day du" />
+                        <label for="floatingInput">Họ và Tên(chỉ nhập khi chưa có tài khoản hoặc khách vãn lai)</label>
+                    </div>
 
                     <!-- Lựa chọn Sản Phẩm -->
                     <div class="col-md">
                         <div class="form-floating mb-3">
-                            <select class="form-select" th:field="*{chiTietDonHang.maSP}" id="floatingSelectGrid"
+                            <select class="form-select" name="MaSP" id="floatingSelectGrid"
                                 aria-label="Floating label select example">
                                 <option value="0" selected>Chọn Sản Phẩm</option>
                                 <option th:each="sp : ${dsSanPham}" th:value="${sp.id}" th:text="${sp.tenSP}">
@@ -55,15 +59,14 @@
 
                     <!-- Số điện thoại của khách hàng -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" th:field="*{dienThoai}" placeholder="Số điện thoại"
+                        <input type="number" class="form-control" th:field="*{dienThoai}" placeholder="Số điện thoại"
                             required />
                         <label for="floatingInput">Số điện thoại</label>
                     </div>
 
                     <!-- Tổng tiền của đơn hàng -->
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" th:field="*{tongTien}" placeholder="Tổng tiền"
-                            readonly />
+                        <input type="number" class="form-control" th:field="*{tongTien}" placeholder="Tổng tiền" />
                         <label for="floatingInput">Tổng tiền</label>
                     </div>
 
@@ -72,40 +75,146 @@
                         <div class="form-floating  mb-3">
                             <select class="form-select" th:field="*{trangThai}" id="floatingSelectGrid"
                                 aria-label="Floating label select example">
-                                <option value="1">Cho phép</option>
-                                <option value="0">Không cho phép</option>
+                                <option value="0">Đã đặt hàng</option>
+                                <option value="1">Xác nhận đơn hàng</option>
+                                <option value="2">Đang giao hàng</option>
+                                <option value="3">Giao hàng thành công</option>
+                                <option value="4">Hàng trả về </option>
+                                <option value="5">Đã hủy đơn</option>
                             </select>
                             <label for="floatingSelectGrid">Trạng thái</label>
                         </div>
                     </div>
 
+                    <div class="col-md">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="province" th:field="*{tinhThanh}"
+                                aria-label="Chọn Tỉnh Thành">
+                                <option value="">Loading...</option>
+                            </select>
+                            <label for="province">Tỉnh Thành *</label>
+                        </div>
+                    </div>
+
+                    <!-- Select Quận Huyện -->
+                    <div class="col-md">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="district" th:field="*{quanHuyen}"
+                                aria-label="Chọn Quận Huyện">
+                                <option value="">Chọn Tỉnh/Thành phố trước</option>
+                            </select>
+                            <label for="district">Quận Huyện *</label>
+                        </div>
+                    </div>
+
+                    <!-- Select Xã Phường -->
+                    <div class="col-md">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="ward" th:field="*{xaPhuong}" aria-label="Chọn Xã Phường">
+                                <option value="">Chọn Quận/Huyện trước</option>
+                            </select>
+                            <label for="ward">Xã Phường *</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" th:field="*{diaChi}" placeholder="Email" required />
+                        <label for="floatingInput">Địa chỉ(số nhà, ngõ, thôn, đường,...)</label>
+                    </div>
+
                     <!-- Địa chỉ của khách hàng -->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" th:field="*{diaChi}" placeholder="Địa chỉ" id="floatingTextarea"
+                        <textarea class="form-control" th:field="*{ghiChu}" placeholder="Địa chỉ" id="floatingTextarea"
                             style="height: 100px;"></textarea>
-                        <label for="floatingTextarea">Địa chỉ</label>
+                        <label for="floatingTextarea">Ghi chú</label>
                     </div>
                 </div>
 
                 <!-- Thông tin chi tiết đơn hàng -->
                 <div class="col">
-                    <!-- <div class="row g-2">
+                    <div class="row g-2">
+                        <!-- Input cho Số Lượng -->
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" th:field="*{chiTietDonHang.soLuong}"
-                                placeholder="Số lượng" required />
+                            <input type="number" class="form-control" name="soLuong"
+                                value="${chiTietDonHangList.soLuong}" placeholder="Số lượng" required />
                             <label for="soLuong">Số Lượng</label>
                         </div>
 
+                        <!-- Input cho Đơn Giá -->
                         <div class="form-floating mb-3">
-                            <input type="number" step="0.01" class="form-control" th:field="*{chiTietDonHang.donGia}"
-                                placeholder="Đơn giá" required />
-                            <label for="donGia">Đơn Giá</label>
+                            <!-- <input type="number" step="0.01" class="form-control" name="dongia" placeholder="Đơn giá"
+                                required />
+                            <label for="donGia">Đơn Giá</label> -->
                         </div>
-                    </div> -->
+                    </div>
                 </div>
+
+
             </div>
             <button th:text="${title_sm}" type="submit" class="btn btn-outline-success">Cập Nhật</button>
         </form>
 
+        <script>
+            // Hàm để lấy danh sách tỉnh/thành phố
+            async function getProvinces() {
+                const response = await fetch('https://provinces.open-api.vn/api/p/');
+                const provinces = await response.json();
+                const provinceSelect = document.getElementById('province');
+                provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
+                provinces.forEach(province => {
+                    // Gán cả tên vào value và mã vào data-code
+                    provinceSelect.innerHTML += `<option value="${province.name}" data-code="${province.code}">${province.name}</option>`;
+                });
+            }
+
+            // Hàm để lấy danh sách quận/huyện dựa trên mã tỉnh/thành phố
+            async function getDistricts(provinceCode) {
+                const response = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+                const province = await response.json();
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+                province.districts.forEach(district => {
+                    // Gán cả tên vào value và mã vào data-code
+                    districtSelect.innerHTML += `<option value="${district.name}" data-code="${district.code}">${district.name}</option>`;
+                });
+            }
+
+            // Hàm để lấy danh sách xã/phường dựa trên mã quận/huyện
+            async function getWards(districtCode) {
+                const response = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+                const district = await response.json();
+                const wardSelect = document.getElementById('ward');
+                wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+                district.wards.forEach(ward => {
+                    // Gán cả tên vào value
+                    wardSelect.innerHTML += `<option value="${ward.name}">${ward.name}</option>`;
+                });
+            }
+
+            // Khi trang load, thực hiện lấy danh sách tỉnh/thành phố
+            document.addEventListener('DOMContentLoaded', function () {
+                getProvinces();
+
+                // Khi người dùng chọn Tỉnh/Thành phố
+                document.getElementById('province').addEventListener('change', function () {
+                    const provinceCode = this.selectedOptions[0].getAttribute("data-code");
+                    if (provinceCode) {
+                        getDistricts(provinceCode);
+                    } else {
+                        document.getElementById('district').innerHTML = '<option value="">Chọn Tỉnh/Thành phố trước</option>';
+                        document.getElementById('ward').innerHTML = '<option value="">Chọn Quận/Huyện trước</option>';
+                    }
+                });
+
+                // Khi người dùng chọn Quận/Huyện
+                document.getElementById('district').addEventListener('change', function () {
+                    const districtCode = this.selectedOptions[0].getAttribute("data-code");
+                    if (districtCode) {
+                        getWards(districtCode);
+                    } else {
+                        document.getElementById('ward').innerHTML = '<option value="">Chọn Quận/Huyện trước</option>';
+                    }
+                });
+            });
+        </script>
     </div>
 </div>

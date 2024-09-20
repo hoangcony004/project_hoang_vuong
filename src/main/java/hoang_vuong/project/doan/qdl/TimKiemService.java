@@ -50,6 +50,12 @@ public class TimKiemService {
         if (keyword.toLowerCase().contains("đổi mật khẩu")) {
             chucNangs.add(new TimKiem("Đổi Mật Khẩu", "/admin/doi-mat-khau"));
         }
+        if (keyword.toLowerCase().contains("thống kê sản phẩm")) {
+            chucNangs.add(new TimKiem("Thống Kê Sản Phẩm", "/admin/thong-ke-san-pham"));
+        }
+        if (keyword.toLowerCase().contains("thống kê doanh thu")) {
+            chucNangs.add(new TimKiem("Thống Kê Doanh Thu", "/admin/thong-ke-doanh-thu"));
+        }
 
         return chucNangs;
     }

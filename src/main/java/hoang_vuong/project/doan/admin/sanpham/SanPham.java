@@ -1,6 +1,5 @@
 package hoang_vuong.project.doan.admin.sanpham;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
@@ -30,8 +29,9 @@ public class SanPham {
     private Integer id;
 
     private String model;
-    private String tenSP;
+    
     private String anhDaiDien;
+    private String tenSP;
     private Float donGia;
     private Boolean trangThai;
 
@@ -40,27 +40,18 @@ public class SanPham {
     @JoinColumn(name = "maNSX", insertable = false, updatable = false)
     private NhaSanXuat nhaSanXuat;
 
- @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
     private List<AnhSanPham> anhSanPham;
-    
+
     @Column(columnDefinition = "LONGTEXT")
     private String moTa;
     private Boolean banChay;
     private Boolean noiBat;
     private String tag;
+    private int soLuong;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayHetHan;
 
-    public String getNgayHetHan() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy, MM, dd");
-        // Định dạng chuỗi theo yêu cầu: yyyy,MM,dd
-        if (ngayHetHan == null) {
-            return ngayTao.format(formatter);
-        }
-        return ngayHetHan.format(formatter);
-    }
     public String getNgayTaoText() {
         if (ngayTao == null) {
             return "Chưa cập nhật";
@@ -73,7 +64,7 @@ public class SanPham {
             return null;
         }
         DecimalFormat df = new DecimalFormat("#,###.##");
-        return df.format(donGia) + " vnd";
+        return df.format(donGia) + " vn₫";
     }
 
     public String getNgaySuaText() {

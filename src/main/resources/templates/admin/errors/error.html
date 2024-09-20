@@ -3,31 +3,73 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lỗi Hệ Thống</title>
-    <!-- Link đến Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, 
+				initial-scale=1.0">
+    <title>
+        Đã Sảy ra Lỗi
+    </title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #D3D3D3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ff5733;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: #ff5733;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e6482e;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <p class="alert alert-danger">Ối trời ơi, có gì đó sai sai xảy ra</p>
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-                        Có thể bạn đang gõ sai đường dẫn
-                    </li>
-                </ul>
-                <a class="btn btn-info mt-3" href="javascript:history.back()"><i class="mdi mdi-reply"></i> Quay Lại</a>
-            </div>
-        </div>
+    <div class="error-container">
+        <h1> Có 1 Lỗi Gì Đó Đã Sảy Ra Ở Đây </h1>
+        <p>
+            Có Thể Bạn Đang Gõ Sai Đường Dẫn Hoặc 1 Vấn Đề Gì Đó Đã Sảy Ra.
+        </p>
+        <a href="javascript:history.back()">
+            Quay Lại
+        </a>
     </div>
-
-    <!-- Link đến Bootstrap JS và jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

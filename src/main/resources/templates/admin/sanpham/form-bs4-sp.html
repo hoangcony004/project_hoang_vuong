@@ -66,11 +66,17 @@
 
                 <div class="col">
                     <div class="row g-2">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Số Lượng"
+                                th:field="*{soLuong}" />
+                            <label for="floatingInput">Số lượng</label>
+                        </div>
+
                         <div class="col-md">
                             <div class="form-floating  mb-3">
                                 <select class="form-select" th:field="*{trangThai}" id="floatingSelectGrid"
                                     aria-label="Floating label select example">
-                                    <option value="true" th:text="'Cho phép'"></option>
+                                    <option value="true" th:text="'Cho phép bán'"></option>
                                     <option value="false" th:text="'Không cho phép'"></option>
                                 </select>
 
