@@ -17,6 +17,11 @@ public class ChiTietDonHangService {
     @Autowired
     private ChiTietDonHangRepository kdl;
 
+    public List<ThongKeSanPhamDTO> thongKeTop10SanPham() {
+        Pageable top10 = PageRequest.of(0, 10);
+        return kdl.thongKeTop10SanPhamBanChay(top10);
+    }
+
     public List<SanPhamBanChayDTO> layTop10SanPhamBanChay() {
         Pageable topTen = PageRequest.of(0, 10); // Lấy 10 sản phẩm bán chạy nhất
         List<Object[]> result = kdl.findTop10SanPhamBySoLuongBan(topTen);
