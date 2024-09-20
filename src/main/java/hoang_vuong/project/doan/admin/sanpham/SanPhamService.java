@@ -77,6 +77,9 @@ public class SanPhamService {
     public List<SanPham> dsSanPham() {
         return kdl.findAll();
     }
+    public Page<SanPham> duyetSanPhamTheoId(int id, Pageable pageable) {
+        return kdl.findByMaNSX(id, pageable);
+    }
 
     public List<SanPham> duyet() {
         return kdl.findAll();
@@ -85,6 +88,13 @@ public class SanPhamService {
     public SanPham timMnsx(int id) {
         return kdl.findOneByMaNSX(id);
 
+    }
+
+    public List<SanPham> trangthai() {
+        return kdl.findByTrangThai(true);
+    }
+    public List<SanPham> timMaNhnuat(int maNSX) {
+        return kdl.findByMaNSX(maNSX);
     }
 
     public SanPham timTheoId(int id) {

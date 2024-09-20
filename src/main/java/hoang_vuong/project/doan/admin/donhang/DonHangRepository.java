@@ -18,7 +18,7 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
 
         @Query("SELECT SUM(d.tongTien) FROM DonHang d WHERE YEAR(d.ngayTao) = :year")
         Float findTotalRevenueByYear(@Param("year") int year);
-
+        List<DonHang> findByEmail(String email);
         boolean existsByMaDH(String maDH);
 
         @Query("SELECT EXTRACT(YEAR FROM d.ngayTao) AS year, SUM(d.tongTien) AS totalRevenue " +
@@ -48,4 +48,5 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
 
         @Query("SELECT COALESCE(SUM(d.tongTien), 0) FROM DonHang d WHERE d.ngayTao BETWEEN :startDate AND :endDate")
         double calculateTotalRevenue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 }

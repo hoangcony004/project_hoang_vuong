@@ -13,10 +13,12 @@ import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.text.DecimalFormat;
 
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHang;
+
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,12 +36,12 @@ public class DonHang {
     @JoinColumn(name = "maKH", insertable = false, updatable = false)
     private KhachHang khachHang;
 
+
     @Column(unique = true)
     private String maDH;
 
-    @Column(unique = false)
+
     private String email;
-    @Column(unique = false)
     private String dienThoai;
 
     private String tenDayDu;
@@ -53,7 +55,7 @@ public class DonHang {
     private String quanHuyen;
     private String xaPhuong;
     private String diaChi;
-
+private String thanhtoan;
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
@@ -77,5 +79,6 @@ public class DonHang {
     public void setChiTietDonHangList(List<ChiTietDonHang> chiTietDonHangList) {
         this.chiTietDonHangList = chiTietDonHangList;
     }
+
 
 }

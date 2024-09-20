@@ -1,0 +1,139 @@
+
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">Checkout<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="checkout">
+	                <div class="container">
+            			<div class="checkout-discount">
+            				<form action="#">
+        						<input type="text" class="form-control" required id="checkout-discount-input">
+            					<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
+            				</form>
+            			</div><!-- End .checkout-discount -->
+
+            			<form th:action="${action}" method="post" th:object="${alldatakh}">
+		                	<div class="row">
+		                		<div class="col-lg-9">
+		                			<h2 class="checkout-title" >Billing Details</h2><!-- End .checkout-title -->
+		                				<div class="row">
+		                					<div class="col-sm-6">
+		                						<label>Họ và tên *</label>
+		                						<input th:field="${alldatakh.tenDayDu}"  type="text" class="form-control" required>
+
+		                					</div><!-- End .col-sm-6 -->
+
+		                					<div class="col-sm-6">
+		                						<label>Số điện thoại</label>
+
+		                						<input type="text" th:field="${alldatakh.dienThoai}"  class="form-control" required>
+
+		                					</div><!-- End .col-sm-6 -->
+		                				</div><!-- End .row -->
+
+	            						<label>Tỉnh/Thành phố  *</label>
+
+										<select  class="form-control" required name="city" id='city' >
+											<option value=''>Tỉnh/Thành phố</option>
+										  </select>
+										  <label>Quận huyện  *</label>
+										  <select  class="form-control" required name="district" id='district' >
+											<option value=''>Quận/huyện</option>
+										  </select>
+										  <label>Phường xã  *</label>
+										  <select  class="form-control" required name="ward" id='ward'>
+
+											<option value=''>Phường/xã</option>
+										  </select>
+
+										  <label>Số nhà số ngõ địa chỉ chi tiết *</label>
+
+										  <input type="" name="fullAdress"  class="form-control" required>
+  
+	            					
+	                					<label>Email address *</label>
+	        							<input type="email" th:field="${alldatakh.email}"  class="form-control" required>
+
+	                					<label>Ghi chú </label>
+	        							<textarea class="form-control" name="note" cols="30" rows="4" placeholder="ghi chú điều cần chú ý." ></textarea>
+
+		                		</div><!-- End .col-lg-9 -->
+		                		<aside class="col-lg-3">
+		                			<div class="summary">
+		                				<h3 class="summary-title">Đơn hàng của bạn</h3><!-- End .summary-title -->
+
+		                				<table class="table table-summary" >
+		                					<thead>
+		                						<tr>
+		                							<th>Sản phẩm</th>
+		                							<th>Tổng</th>
+		                						</tr>
+		                					</thead>
+
+		                					<tbody >
+		                						<tr  th:each="sp:${cartData}">
+		                							<td>
+														<span th:text="${sp.get('ten')}" ></span> 
+
+														(Số lượng:<span th:text="${sp.get('soluong')}"  ></span>)
+
+													</td>
+		                							<td th:text="${sp.get('thanhTien')}"></td>
+													
+		                						</tr>
+
+		                						<tr class="summary-subtotal">
+		                							<td>Tổng:</td>
+		                							<td th:text="${tongGiaTriGioHangVi}"></td>
+													<input type="hidden" class="form-control"  id="amount"  name="amount" th:value="${tongGiaTriGioHang}">
+		                						</tr><!-- End .summary-subtotal -->
+		                						<tr>
+		                							<td>Shipping:</td>
+		                							<td>Free shipping</td>
+		                						</tr>
+		                						<tr>
+													<td><input type="radio" name="method" value="banking">Chuyển khoản</td>
+													<td></td>
+												</tr>
+												<tr></tr>
+													<td><input type="radio" name="method" value="monkey">Tiền mặt</td>
+													<td></td>
+												</tr>
+		                					</tbody>
+		                				</table><!-- End .table table-summary -->
+
+
+		                				<!-- nếu làm banking lấy lại ở đây -->
+										<!-- End .accordion -->
+
+		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+		                					<span class="btn-text">Đặt hàng</span>
+		                					<span class="btn-hover-text">Tiến hành đặt hàng</span>
+
+		                		
+		                			</div><!-- End .summary -->
+		                		</aside><!-- End .col-lg-3 -->
+		                	</div><!-- End .row -->
+            			</form>
+	                </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->	
+
+	  <!-- api adress -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	  <script src="/client/assets/js/apiprovince.js"></script>
