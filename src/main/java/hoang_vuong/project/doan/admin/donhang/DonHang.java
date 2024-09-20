@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.text.DecimalFormat;
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,5 +39,11 @@ public class DonHang {
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
-
+    public String getFomatTongtien() {
+        if (tongTien == 0) {
+            return null;
+        }
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        return df.format(tongTien) + " vnd";
+    }
 }
