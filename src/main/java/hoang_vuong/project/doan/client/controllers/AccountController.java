@@ -43,6 +43,7 @@ public class AccountController {
     KhachHang formkhachhang = khSV.timEmmail(khachhang_Email);
 
     List<DonHang> donhang = dhSV.dsDonhangEmail(khachhang_Email);
+    System.out.println(donhang+"alosoalo");
     // Thêm thông tin khách hàng vào model
     model.addAttribute("donhang", donhang);
     model.addAttribute("formKH", formkhachhang);
@@ -55,7 +56,7 @@ public class AccountController {
 @ResponseBody
 public ResponseEntity<Map<String, String>> postEdit(@ModelAttribute("formKH") KhachHang dl) {
     Map<String, String> response = new HashMap<>();
-
+   
     dl.setNgaySua(LocalDate.now());
 
     try {
