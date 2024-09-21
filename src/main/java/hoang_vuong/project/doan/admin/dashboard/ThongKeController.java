@@ -23,6 +23,7 @@ import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.time.LocalDate;
@@ -155,6 +156,62 @@ public class ThongKeController {
             model.addAttribute("title", "Thống Kê Doanh Thu Chi Tiết Theo Năm");
             model.addAttribute("content", "admin/dashboard/thongkechitiettungthang.html");
             model.addAttribute("title_duyet", "Thống Kê Doanh Thu Tháng");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
+        }
+
+        return "layouts/layout-admin.html";
+    }
+
+    @GetMapping("/thong-ke-don-hang")
+    public String getThongKeDonHang(RedirectAttributes redirectAttributes, Model model) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+
+            model.addAttribute("title", "Thống Kê Đơn Hàng");
+            model.addAttribute("content", "admin/dashboard/thongkedonhang.html");
+            model.addAttribute("title_duyet", "Thống Kê Đơn Hàng");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
+        }
+
+        return "layouts/layout-admin.html";
+    }
+
+    @GetMapping("/thong-ke-don-hang-chi-tiet-tung-nam")
+    public String getThongKeDonHangChiTietTungNam(@RequestParam("year") int year, RedirectAttributes redirectAttributes,
+            Model model) {
+        if (Qdl.NhanVienChuaDangNhap(request)) {
+            return "redirect:/admin/dang-nhap";
+        }
+
+        try {
+            // Lấy thống kê từ service
+            Map<Integer, Integer> thongKe = donHangService.getThongKeDonHang(year);
+
+            // Khởi tạo mảng doanh thu với 12 tháng
+            List<Integer> donHang = new ArrayList<>(Collections.nCopies(12, 0));
+
+            // Cập nhật mảng doanh thu từ thống kê
+            for (Map.Entry<Integer, Integer> entry : thongKe.entrySet()) {
+                int month = entry.getKey();
+                int count = entry.getValue();
+                donHang.set(month - 1, count); // Giả sử tháng bắt đầu từ 1
+            }
+
+            // In ra console
+            System.out.println("đơn hàng là: " + donHang);
+
+            // Thêm vào model
+            model.addAttribute("title", "Thống Kê Đơn Hàng Theo Từng Năm");
+            model.addAttribute("content", "admin/dashboard/thongkedonhangtheothang.html");
+            model.addAttribute("title_duyet", "Thống Kê Đơn Hàng Theo Tháng");
+            model.addAttribute("thongKe", donHang);
+            model.addAttribute("year", year); // Năm được chọn
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
                     "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());

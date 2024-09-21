@@ -10,6 +10,16 @@ import hoang_vuong.project.doan.admin.donhang.DoanhThuThang;
 
 public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
 
+        @Query("SELECT MONTH(d.ngayTao) AS month, COUNT(d.id) AS count " +
+                        "FROM DonHang d " +
+                        "WHERE YEAR(d.ngayTao) = :year " +
+                        "GROUP BY MONTH(d.ngayTao) " +
+                        "ORDER BY MONTH(d.ngayTao)")
+        List<Object[]> countDonHangByMonth(@Param("year") int year);
+
+        @Query("SELECT YEAR(d.ngayTao), COUNT(d) FROM DonHang d GROUP BY YEAR(d.ngayTao)")
+        List<Object[]> countOrdersByYear();
+
         @Query("SELECT new hoang_vuong.project.doan.admin.donhang.DoanhThuThang(SUM(d.tongTien), DAY(d.ngayTao), MONTH(d.ngayTao), YEAR(d.ngayTao)) "
                         +
                         "FROM DonHang d WHERE YEAR(d.ngayTao) = :year AND MONTH(d.ngayTao) = :month " +
@@ -18,7 +28,9 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
 
         @Query("SELECT SUM(d.tongTien) FROM DonHang d WHERE YEAR(d.ngayTao) = :year")
         Float findTotalRevenueByYear(@Param("year") int year);
+
         List<DonHang> findByEmail(String email);
+
         boolean existsByMaDH(String maDH);
 
         @Query("SELECT EXTRACT(YEAR FROM d.ngayTao) AS year, SUM(d.tongTien) AS totalRevenue " +
@@ -31,9 +43,6 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
         @Query("SELECT SUM(d.tongTien) FROM DonHang d")
         Float getTongTien();
 
-        // @Query("SELECT EXTRACT(MONTH FROM d.ngayTao) AS month, SUM(d.tongTien) AS
-        // total FROM DonHang d GROUP BY EXTRACT(MONTH FROM d.ngayTao) ORDER BY month")
-        // List<Object[]> getDoanhThuTheoThang();
         @Query("SELECT EXTRACT(MONTH FROM d.ngayTao) AS month, SUM(d.tongTien) AS total " +
                         "FROM DonHang d " +
                         "WHERE EXTRACT(YEAR FROM d.ngayTao) = :year " +
@@ -49,4 +58,9 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
         @Query("SELECT COALESCE(SUM(d.tongTien), 0) FROM DonHang d WHERE d.ngayTao BETWEEN :startDate AND :endDate")
         double calculateTotalRevenue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+        @Query("SELECT COUNT(o) FROM DonHang o")
+        Long countTotalOrders();
+
+        @Query("SELECT o FROM DonHang o WHERE o.maDH LIKE %:query%")
+        List<DonHang> searchOrdersByMaDH(@Param("query") String query);
 }

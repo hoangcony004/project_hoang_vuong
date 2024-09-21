@@ -56,6 +56,9 @@ public class TimKiemService {
         if (keyword.toLowerCase().contains("thống kê doanh thu")) {
             chucNangs.add(new TimKiem("Thống Kê Doanh Thu", "/admin/thong-ke-doanh-thu"));
         }
+        if (keyword.toLowerCase().contains("thống kê dơn hàng")) {
+            chucNangs.add(new TimKiem("Thống Kê Đơn Hàng", "/admin/thong-ke-don-hang"));
+        }
 
         return chucNangs;
     }

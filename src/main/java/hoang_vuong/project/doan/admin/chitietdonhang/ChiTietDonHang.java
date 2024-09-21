@@ -1,5 +1,6 @@
 package hoang_vuong.project.doan.admin.chitietdonhang;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -30,17 +31,18 @@ public class ChiTietDonHang {
     @JoinColumn(name = "don_hang_id", nullable = false)
     private DonHang donHang;
 
-    private int soLuong;
+    private Integer soLuong;
     private Float donGia;
     private Float tongTien;
     private String ten;
     private String model;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
+
     public Integer getDonHangId() {
         return donHang != null ? donHang.getId() : null; // Assuming DonHang has getId()
     }
-    
+
     // Setter tùy chỉnh cho don_hang_id
     public void setDonHangId(Integer donHangId) {
         if (donHang == null) {
@@ -48,6 +50,7 @@ public class ChiTietDonHang {
         }
         donHang.setId(donHangId);
     }
+
     public String getNgayTaoText() {
         if (ngayTao == null) {
             return "Chưa cập nhật";
@@ -60,6 +63,22 @@ public class ChiTietDonHang {
             return "Chưa cập nhật";
         }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
+    }
+
+    public String getFomatDonGia() {
+        if (donGia == null) {
+            return "Đang để trống!";
+        }
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        return df.format(donGia) + " vn₫";
+    }
+
+    public String getFomatTongTien() {
+        if (tongTien == null) {
+            return "Đang để trống!";
+        }
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        return df.format(tongTien) + " vn₫";
     }
 
 }

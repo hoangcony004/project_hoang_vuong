@@ -60,6 +60,10 @@ public class DonHangController {
         // Tính toán chỉ số trang (pageIndex)
         int pageIndex = page - 1;
 
+        // lấy tổng tất cả đơn hàng
+        Long totalOrders = dvl.getTotalOrders();
+        model.addAttribute("totalOrders", totalOrders);
+
         // Lấy dữ liệu phân trang từ dịch vụ
         Page<DonHang> donHangPage = dvl.duyetDonHang(PageRequest.of(pageIndex, pageSize));
         List<DonHang> dsDonHang = dvl.dsDonHang();
@@ -99,36 +103,6 @@ public class DonHangController {
         return "layouts/layout-admin.html";
     }
 
-    // v1 thêm đơn hàng
-    // @PostMapping("/don-hang/them")
-    // public String postAdd(@ModelAttribute("DonHang") DonHang dl,
-    // RedirectAttributes redirectAttributes,
-    // @RequestParam("soLuong") int soLuong,
-    // @RequestParam("MaSP") int MaSP,
-    // Model model) {
-
-    // System.out.println("so Luong la:" + soLuong);
-    // System.out.println("Ma sp la:" + MaSP);
-
-    // if (Qdl.NhanVienChuaDangNhap(request))
-    // return "redirect:/admin/dang-nhap";
-    // dl.setNgayTao(LocalDate.now());
-    // // dl.setMaKH(null);
-
-    // try {
-    // dvl.them(dl);
-    // model.addAttribute("soLuong", soLuong);
-    // redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành
-    // công!");
-    // } catch (Exception e) {
-    // redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
-    // "Không thể thêm mới. Mã lỗi: " + e.getMessage());
-    // }
-
-    // return "redirect:/admin/don-hang";
-    // }
-
-    // v2 thêm đơn hàng và chi tiết đơn hàng
     @PostMapping("/don-hang/them")
     public String postAdd(@ModelAttribute("DonHang") DonHang dl,
             RedirectAttributes redirectAttributes,
@@ -141,7 +115,6 @@ public class DonHangController {
 
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
-
 
         String maDonHang = dvl.generateOrderCode();
         System.out.println("Mã đơn hàng " + maDonHang);
@@ -188,22 +161,85 @@ public class DonHangController {
             return "redirect:/admin/don-hang";
         }
 
-        List<KhachHang> dsKhachHang = dvl_KhSV.dsKhachHang();
-        model.addAttribute("dsKhachHang", dsKhachHang);
+        // List<KhachHang> dsKhachHang = dvl_KhSV.dsKhachHang();
+        // model.addAttribute("dsKhachHang", dsKhachHang);
 
-        List<SanPham> dsSanPham = dvl_SPSV.dsSanPham();
-        model.addAttribute("dsSanPham", dsSanPham);
-        // Lấy danh sách chi tiết đơn hàng liên kết với đơn hàng
-        List<ChiTietDonHang> chiTietDonHangList = dl.getChiTietDonHangList();
+        // List<SanPham> dsSanPham = dvl_SPSV.dsSanPham();
+        // model.addAttribute("dsSanPham", dsSanPham);
 
-        // Truyền các thông tin cần thiết vào model để hiển thị trên giao diện
+        List<ChiTietDonHang> chiTietDonHangs = chiTietDonHangService.getChiTietDonHangByDonHangId(id);
+        model.addAttribute("chiTietDonHangs", chiTietDonHangs);
+
         model.addAttribute("title_btn_add", "Sửa Đơn Hàng");
         model.addAttribute("title_sm", "Cập nhật");
-        model.addAttribute("dl", dl); // Đơn hàng
-        model.addAttribute("chiTietDonHangList", chiTietDonHangList); // Danh sách chi tiết đơn hàng
+        model.addAttribute("dl", dl);
+
         model.addAttribute("action", "/admin/don-hang/sua");
 
-        return "admin/donhang/form-bs4-dh.html";
+        return "admin/donhang/form-sua-dh-bs4.html";
+    }
+
+    // @GetMapping("/don-hang/tim-kiem")
+    // public String getTimKiemDonHang(@RequestParam("query") String query, Model
+    // model) {
+    // if (Qdl.NhanVienChuaDangNhap(request))
+    // return "redirect:/admin/dang-nhap";
+
+    // // Tìm kiếm đơn hàng theo maDH
+    // List<DonHang> orders = dvl.searchOrdersByMaDH(query);
+
+    // // Truyền kết quả tìm kiếm vào model để hiển thị trong view
+    // model.addAttribute("ds", orders);
+
+    // DonHang donHang = new DonHang();// Gán danh sách chi tiết đơn hàng vào đơn
+    // hàng
+    // model.addAttribute("dl", donHang);
+    // model.addAttribute("content", "admin/donhang/duyet.html");
+    // model.addAttribute("title", "Tìm Kiếm Đơn Hàng");
+
+    // return "layouts/layout-admin.html";
+    // }
+
+    @GetMapping("/don-hang/xem")
+    public String getXemDonHang(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        try {
+            List<ChiTietDonHang> chiTietDonHangs = chiTietDonHangService.getChiTietDonHangByDonHangId(id);
+
+            model.addAttribute("chiTietDonHangs", chiTietDonHangs);
+            model.addAttribute("title_body", "Xem Đơn Hàng");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thêm xem. Mã lỗi: " + e.getMessage());
+        }
+
+        return "admin/donhang/form-xem-dh-bs4.html";
+    }
+
+    @PostMapping("/don-hang/duyet")
+    public String postDuyetdonHang(@RequestParam("id") int id, @RequestParam("trangThai") int trangThai,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+
+        System.out.println("ID nhận được trong controller là: " + id);
+
+        try {
+            // Sử dụng phương thức timTheoId để tìm đơn hàng
+            DonHang donHang = dvl.timTheoId(id);
+
+            // Cập nhật trạng thái
+            donHang.setTrangThai(trangThai);
+            dvl.luu(donHang); // Gọi hàm lưu
+
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã duyệt đơn hàng thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể duyệt. Mã lỗi: " + e.getMessage());
+        }
+
+        return "redirect:/admin/don-hang";
     }
 
 }

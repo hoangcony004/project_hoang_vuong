@@ -367,7 +367,7 @@ public class NhanVienController {
         model.addAttribute("action", "/admin/nhan-vien/them");
         model.addAttribute("title_body", "Thêm Nhân Viên");
         model.addAttribute("title_sm", "Thêm mới");
-        model.addAttribute("title", "Quản Lý Nhân Viên");
+        model.addAttribute("title", "Tìm Kiếm Nhân Viên");
         model.addAttribute("content", "admin/nhanvien/duyet.html");
 
         return "layouts/layout-admin.html";

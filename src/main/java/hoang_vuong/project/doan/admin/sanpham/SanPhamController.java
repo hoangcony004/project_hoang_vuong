@@ -51,16 +51,21 @@ public class SanPhamController {
         // Lấy dữ liệu phân trang từ dịch vụ
         Page<SanPham> sanPhamPage = dvl.duyetSanPham(PageRequest.of(pageIndex, pageSize));
 
+        // lấy số lượng sản phẩm đan có
+        Long totalProducts = dvl.getTotalProducts();
+        model.addAttribute("totalProducts", totalProducts);
+        model.addAttribute("role", "1");
+
         // Cập nhật mô hình với dữ liệu phân trang
         List<NhaSanXuat> dsNhaSanXuat = nhaSanXuatService.dsNhaSanXuat();
         model.addAttribute("dsNhaSanXuat", dsNhaSanXuat);
-        
+
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", sanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("ds", sanPhamPage.getContent());
         model.addAttribute("dl", new SanPham());
-        
+
         model.addAttribute("title", "Quản Lý Sản Phẩm");
         model.addAttribute("title_duyet", "Sản Phẩm");
         model.addAttribute("title_body", "Thêm Sản Phẩm");
@@ -238,6 +243,10 @@ public class SanPhamController {
             return "redirect:/admin/san-pham";
         }
 
+        // lấy số lượng sản phẩm đan có
+        Long totalProducts = dvl.getTotalProducts();
+        model.addAttribute("totalProducts", totalProducts);
+
         // Tìm kiếm sản phẩm dựa trên từ khóa
         List<SanPham> list = dvl.timSanPhamTheoTen(query);
         int total = list.size();
@@ -267,6 +276,7 @@ public class SanPhamController {
         model.addAttribute("totalPages", sanPhamPage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
 
+        redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Tìn kiếm thành công !");
         model.addAttribute("action", "/admin/san-pham/them");
         model.addAttribute("title_body", "Thêm Sản Phẩm");
         model.addAttribute("title_sm", "Thêm mới");

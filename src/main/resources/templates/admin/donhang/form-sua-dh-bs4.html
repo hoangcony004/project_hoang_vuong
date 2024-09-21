@@ -1,0 +1,131 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_body}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_body}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <div class="row">
+            <div th:each="chiTiet : ${chiTietDonHangs}">
+                <div class="col">
+                    <div class="mb-3">
+                        <h5>Tên Khách Hàng: </h5>
+                        <input type="text" th:value="${chiTiet.donHang.khachHang.tenDayDu}" readonly
+                            name="tenKhachHang" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tên Khách Hàng Vãn Lai: </h5>
+                        <input type="text" th:value="${chiTiet.donHang.tenDayDu}" readonly name="tenKhachHangVanLai" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Email:</h5>
+                        <input type="email" th:value="${chiTiet.donHang.email}" readonly name="email" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Số điện thoại:</h5>
+                        <input type="tel" th:value="${chiTiet.donHang.dienThoai}" readonly name="dienThoai" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tổng Tiền: </h5>
+                        <input type="text" th:value="${chiTiet.donHang.getFomatTongTien()}" readonly name="tongTien" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tỉnh Thành:</h5>
+                        <input type="text" th:value="${chiTiet.donHang.tinhThanh}" readonly name="tinhThanh" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Quận Huyện:</h5>
+                        <input type="text" th:value="${chiTiet.donHang.quanHuyen}" readonly name="quanHuyen" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Xã Phường:</h5>
+                        <input type="text" th:value="${chiTiet.donHang.xaPhuong}" readonly name="xaPhuong" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Địa Chỉ:</h5>
+                        <input type="text" th:value="${chiTiet.donHang.diaChi}" readonly name="diaChi" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Ghi Chú: </h5>
+                        <input type="text" th:value="${chiTiet.donHang.ghiChu}" readonly name="ghiChu" />
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <h5>Ảnh đại diện:</h5>
+                        <img th:src="${chiTiet.sanPham.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
+                            class="rounded me-3" height="68px">
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Số Lượng: </h5>
+                        <input type="number" th:value="${chiTiet.soLuong}" readonly name="soLuong" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Đơn giá: </h5>
+                        <input type="text" th:value="${chiTiet.getFomatDonGia()}" readonly name="donGia" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tổng tiền: </h5>
+                        <input type="text" th:value="${chiTiet.getFomatTongTien()}" readonly name="tongTienChiTiet" />
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" th:field="*{chiTiet.donHang.trangThai}"
+                                    id="floatingSelectGrid" aria-label="Floating label select example">
+                                    <option value="0">Đã đặt hàng</option>
+                                    <option value="1">Xác nhận đơn hàng</option>
+                                    <option value="2">Đang giao hàng</option>
+                                    <option value="3">Giao hàng thành công</option>
+                                    <option value="4">Hàng trả về </option>
+                                    <option value="5">Đã hủy đơn</option>
+                                </select>
+                                <label for="floatingSelectGrid">Trạng thái</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày tạo:</h5>
+                                <input type="text" th:value="${chiTiet.getNgayTaoText()}" readonly name="ngayTao" />
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày sửa:</h5>
+                                <input type="text" th:value="${chiTiet.getNgaySuaText()}" readonly name="ngaySua" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

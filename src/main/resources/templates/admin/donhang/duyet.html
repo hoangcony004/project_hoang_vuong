@@ -77,22 +77,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa Đơn Hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Duyệt Đơn Hàng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formXoa" action="/admin/don-hang/xoa" method="post">
+                <form id="formXoa" action="/admin/don-hang/duyet" method="post">
                     <input type="hidden" name="id" id="idInput" value="" />
-                    <p>
-                        Bạn có chắc muốn xóa?
-                    </p>
+                    <div class="mb-3">
+                        <select class="form-select" id="floatingSelectGrid" name="trangThai"
+                            aria-label="Floating label select example">
+                            <option value="1">Xác nhận đơn hàng</option>
+                            <option value="5">Đã hủy đơn</option>
+                        </select>
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         <i class="bi-x"></i> Hủy
                     </button>
-                    <button type="submit" class="btn btn-danger">
-                        <i class="bi-trash"></i> Xóa
+                    <button type="submit" class="btn btn-success">
+                        <i class="dripicons-checkmark"></i> Duyệt
                     </button>
                 </form>
             </div>
@@ -121,14 +125,7 @@
                             </form>
 
                             <!-- Form tìm kiếm -->
-                            <!-- <form action="/admin/khach-hang/tim-kiem" method="GET" class="d-flex justify-content-end">
-                                <select name="criteria" class="form-select form-select-sm me-2"
-                                    style="max-width: 150px;">
-                                    <option value="tenDayDu">Họ và Tên</option>
-                                    <option value="Id">ID</option>
-                                    <option value="email">Email</option>
-                                    <option value="dienThoai">Số điện thoại</option>
-                                </select>
+                            <!-- <form action="/admin/don-hang/tim-kiem" method="GET" class="d-flex justify-content-end">
                                 <input type="search" name="query" class="form-control form-control-sm me-2"
                                     placeholder="Tìm kiếm nhân viên..." style="max-width: 200px;">
                                 <button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
@@ -197,8 +194,15 @@
                                 <td th:text="${dl.tinhThanh}"></td>
 
                                 <td>
-                                    <span th:if="${dl.trangThai} == 0" class="badge bg-success">Đã đặt hàng</span>
+                                    <span th:if="${dl.trangThai} == 0" class="badge bg-primary">Đã đặt hàng</span>
+                                    <span th:if="${dl.trangThai} == 1" class="badge bg-warning">Xác nhận đơn hàng</span>
+                                    <span th:if="${dl.trangThai} == 2" class="badge bg-info">Đang giao hàng</span>
+                                    <span th:if="${dl.trangThai} == 3" class="badge bg-success">Giao hàng thành
+                                        công</span>
+                                    <span th:if="${dl.trangThai} == 4" class="badge bg-secondary">Hàng trả về</span>
+                                    <span th:if="${dl.trangThai} == 5" class="badge bg-danger">Đã hủy đơn</span>
                                 </td>
+
 
                                 <td th:text="${dl.getNgayTaoText}"></td>
 
@@ -211,7 +215,7 @@
                                         $('#modalXem').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
 
-                                            $('#modalXem .modal-body').load("/admin/khach-hang/xem?id=" + id);
+                                            $('#modalXem .modal-body').load("/admin/don-hang/xem?id=" + id);
                                         });
                                     </script>
 
@@ -227,23 +231,31 @@
                                         });
                                     </script>
 
-                                    <!-- <a type="button" class="action-icon" data-toggle="modal" data-target="#modalXoa"
-                                        href="#modalXoa" th:data-id="${dl.id}">
-                                        <i class="mdi mdi-delete"></i>
+                                    <a type="button" th:if="${dl.trangThai} != 1 and ${dl.trangThai} != 5"
+                                        class="action-icon" data-toggle="modal" data-target="#modalXoa"
+                                        th:data-id="${dl.id}">
+                                        <i class="dripicons-checkmark"></i>
                                     </a>
+                                    <span th:if="${dl.trangThai} == 1 and ${dl.trangThai} == 5" class="text-muted">
+                                        <i class="dripicons-checkmark"></i>
+                                        <!-- Biểu tượng không có chức năng -->
+                                    </span>
+
 
                                     <script>
                                         $('#modalXoa').on('show.bs.modal', function (e) {
                                             var id = $(e.relatedTarget).data('id');
-                                            // console.log("ID nhận được: ", id);
                                             $(e.currentTarget).find('input[name="id"]').val(id);
+                                            // $('#modalSua .modal-body').load("/admin/don-hang/duyet?id=" + id);
                                         });
-                                    </script> -->
+                                    </script>
 
                                 </td>
 
                             </tr>
                         </tbody>
+                        <h4>Tổng số đơn hàng đã được đặt là: <span style="color: red;"
+                                th:text="${totalOrders} + ' Đơn'"></span></h4>
                     </table>
                     <!-- Hiển thị phân trang -->
                     <!-- <div th:insert="/admin/pages/pageable.html"></div> -->

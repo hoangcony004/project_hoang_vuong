@@ -1,0 +1,136 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_body}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_body}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <div class="row">
+            <tr th:each="chiTiet : ${chiTietDonHangs}">
+                <div class="col">
+                    <!-- <input disabled type="hidden" th:field="*{chiTiet.donHang.id}" /> -->
+
+                    <div class="mb-3">
+                        <h5>Tên Khách Hàng: </h5>
+                        <p th:text="${chiTiet.donHang.khachHang.tenDayDu}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tên Khách Hàng Vãn Lai: </h5>
+                        <p th:text="${chiTiet.donHang.tenDayDu}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Email:</h5>
+                        <p th:text="${chiTiet.donHang.email}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Số điện thoại:</h5>
+                        <p th:text="${chiTiet.donHang.dienThoai}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tổng Tiền: </h5>
+                        <p th:text="${chiTiet.donHang.getFomatTongTien}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Tỉnh Thành:</h5>
+                        <p th:text="${chiTiet.donHang.tinhThanh}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Quận Huyện:</h5>
+                        <p th:text="${chiTiet.donHang.quanHuyen}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Xã Phường:</h5>
+                        <p th:text="${chiTiet.donHang.xaPhuong}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Địa Chỉ:</h5>
+                        <p th:text="${chiTiet.donHang.diaChi}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Ghi Chú: </h5>
+                        <p th:text="${chiTiet.donHang.ghiChu}"></p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <h5>Ảnh đại diện:</h5>
+                        <img th:src="${chiTiet.sanPham.anhDaiDien}" alt="Chưa có ảnh" title="contact-img"
+                            class="rounded me-3" height="68px">
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Số Lượng: </h5>
+                        <p th:text="${chiTiet.soLuong}"></p>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Đơn giá: </h5>
+                        <p th:text="${chiTiet.getFomatDonGia}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Tổng tiền: </h5>
+                        <p th:text="${chiTiet.getFomatTongTien}"></p>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Trạng thái:</h5>
+                                <span th:if="${chiTiet.donHang.trangThai} == 0" class="badge bg-primary">Đã đặt
+                                    hàng</span>
+                                <span th:if="${chiTiet.donHang.trangThai} == 1" class="badge bg-warning">Xác nhận đơn
+                                    hàng</span>
+                                <span th:if="${chiTiet.donHang.trangThai} == 2" class="badge bg-info">Đang giao
+                                    hàng</span>
+                                <span th:if="${chiTiet.donHang.trangThai} == 3" class="badge bg-success">Giao hàng thành
+                                    công</span>
+                                <span th:if="${chiTiet.donHang.trangThai} == 4" class="badge bg-secondary">Hàng trả
+                                    về</span>
+                                <span th:if="${chiTiet.donHang.trangThai} == 5" class="badge bg-danger">Đã hủy
+                                    đơn</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày tạo:</h5>
+                                <p th:text="${chiTiet.getNgayTaoText}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <h5>Ngày sửa:</h5>
+                                <p th:text="${chiTiet.getNgaySuaText}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </tr>
+
+        </div>
+    </div>
+</div>

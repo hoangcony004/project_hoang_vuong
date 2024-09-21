@@ -72,6 +72,11 @@ public class KhachHangController {
         model.addAttribute("direction", direction);
         model.addAttribute("sortDirection", direction.equals("asc") ? "asc" : "desc");
 
+        // lấy số lượng sản phẩm đan có
+        Long totalUsers = dvl.getTotalUsers();
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("role", "1");
+
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
         model.addAttribute("phan_trang", "khach-hang");
@@ -303,6 +308,8 @@ public class KhachHangController {
 
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
+        model.addAttribute("title_btn_add", "Thêm khách Hàng");
+        model.addAttribute("title_duyet", "Khách Hàng");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("title", "Quản Lý Khách Hàng");
         model.addAttribute("content", "admin/khachhang/duyet.html");

@@ -3,28 +3,30 @@
 
 <head>
     <style>
-        .calendar {
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
             width: 100%;
-            border-collapse: collapse;
+            height: auto;
+            max-width: 1000px;
+            max-height: 1000px;
         }
 
-        .calendar th,
-        .calendar td {
-            border: 1px solid #dee2e6;
-            padding: 8px;
-            text-align: center;
-        }
-
-        .total-cell {
-            background-color: #f8f9fa;
-        }
-
-        .total-amount {
-            padding: 5px;
-            margin-top: 5px;
+        @media (max-width: 768px) {
+            canvas {
+                max-width: 95vw;
+                max-height: 90vh;
+            }
         }
     </style>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
 </head>
 
 <body>
@@ -36,9 +38,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                            <li class="breadcrumb-item"><a href="/admin/thong-ke-doanh-thu">Thống Kê Doanh Thu</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:history.back()">Thống Kê Doanh Thu Năm</a>
-                            </li>
+                            <li class="breadcrumb-item"><a href="/admin/thong-ke-don-hang">Thống Kê Đơn Hàng</a></li>
                             <li class="breadcrumb-item active" th:text="${title_duyet}">Cài Đặt</li>
                         </ol>
                     </div>
@@ -58,7 +58,7 @@
                     </a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#standard-modal">
-                        Xem Chi Tiết
+                        Chọn Năm
                     </button>
                     <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
                         aria-labelledby="standard-modalLabel" aria-hidden="true">
@@ -71,7 +71,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Bắt đầu biểu mẫu -->
-                                    <form id="year-form" action="/admin/thong-ke-chi-tiet-tung-nam" method="get">
+                                    <form id="year-form" action="/admin/thong-ke-don-hang-chi-tiet-tung-nam"
+                                        method="get">
                                         <div class="mb-3">
                                             <label for="year-select" class="form-label">Chọn năm:</label>
                                             <select id="year-select" class="form-select" name="year">
@@ -97,7 +98,7 @@
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#standard-modal-thang">
                         Xem Chi Tiết Từng Tháng
                     </button>
@@ -112,7 +113,6 @@
                                         aria-hidden="true"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Bắt đầu biểu mẫu -->
                                     <form id="month-form" action="/admin/thong-ke-chi-tiet-tung-thang" method="get">
                                         <div class="mb-3">
                                             <label for="year-select" class="form-label">Chọn năm:</label>
@@ -136,20 +136,18 @@
                                                 <option value="10">Tháng 10</option>
                                                 <option value="11">Tháng 11</option>
                                                 <option value="12">Tháng 12</option>
-                                                <!-- Thêm các tháng khác -->
                                             </select>
                                         </div>
                                     </form>
-                                    <!-- Kết thúc biểu mẫu -->
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
                                     <button type="submit" class="btn btn-primary" form="month-form">Xem Ngay</button>
                                 </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- 
                     <script>
                         // Hàm lấy tham số từ URL
                         function getParameterByName(name, url = window.location.href) {
@@ -172,42 +170,94 @@
                         document.getElementById('month-form').addEventListener('submit', function () {
                             document.getElementById('year-hidden').value = document.getElementById('year-input').value;
                         });
-                    </script>
+                    </script> -->
+
+                    <!-- <div class="text-end">
+                        <h4 id="doanh-thu">Tổng Doanh Thu Năm ... là</h4>
+                        <input type="hidden" id="doanh-thu-hidden" class="doanh-thu-value" th:value="${tongDoanhThu}">
+                    </div>
+                    <script>
+                        // Lấy tham số năm từ URL
+                        const getUrl = new URLSearchParams(window.location.search);
+                        const currentYear = getUrl.get('year'); // Đổi tên biến nếu cần
+
+                        // Lấy giá trị tổng doanh thu từ thẻ input
+                        const totalRevenue = document.getElementById('doanh-thu-hidden').value;
+
+                        // Kiểm tra nếu năm và tổng doanh thu tồn tại
+                        if (currentYear && totalRevenue) {
+                            // Tìm phần tử h5 bằng id và thay thế nội dung
+                            const doanhThuElement = document.getElementById('doanh-thu');
+                            if (doanhThuElement) {
+                                doanhThuElement.innerHTML = `Tổng Doanh Thu Năm ${currentYear} là: ${totalRevenue} vn₫`;
+                            }
+                        }
+                    </script> -->
+
                 </div>
-                <div class="table-responsive">
-                    <h2 class="text-center" th:text="'Xem Doanh Thu Tháng ' + ${month} + ' Năm ' + ${year}"></h2>
-                    <table class="table table-centered w-100 dt-responsive nowrap table-hover">
-                        <thead>
-                            <tr>
-                                <th>CN</th>
-                                <th>T2</th>
-                                <th>T3</th>
-                                <th>T4</th>
-                                <th>T5</th>
-                                <th>T6</th>
-                                <th>T7</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Lặp qua từng tuần -->
-                            <tr th:each="week : ${weeks}">
-                                <!-- Lặp qua từng ngày trong tuần -->
-                                <td th:each="item, iterStat : ${week}">
-                                    <span th:text="${item.day}"></span><br>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="popover"
-                                        data-bs-trigger="focus"
-                                        th:data-bs-content="'Tổng tiền cho ngày ' + ${item.day} + ': ' + ${item.formattedTongTien}"
-                                        title="Tổng tiền">
-                                        <span th:text="${item.formattedTongTien}"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div dir="ltr">
+                    <canvas id="myChart" style="width:100%;max-width:100%;"></canvas>
                 </div>
+                <input type="hidden" class="thongKe" th:value="${thongKe}">
+
+                <script>
+                    // Lấy dữ liệu thống kê từ ô input
+                    const thongKeInput = document.querySelector('.thongKe');
+                    const thongKeValue = thongKeInput.value; // Lấy giá trị từ ô input
+
+                    // Kiểm tra xem giá trị có phải là chuỗi JSON hợp lệ hay không
+                    let thongKe;
+                    try {
+                        thongKe = JSON.parse(thongKeValue); // Chuyển đổi thành đối tượng JSON
+                    } catch (error) {
+                        console.error("Lỗi khi parse JSON:", error);
+                        thongKe = {}; // Nếu có lỗi, khởi tạo thongKe là một đối tượng rỗng
+                    }
+
+                    console.log(thongKe); // Kiểm tra dữ liệu
+
+                    const xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+                        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+                    const yValues = [];
+
+                    // Đổ dữ liệu vào yValues từ thongKe
+                    for (let month = 1; month <= 12; month++) {
+                        yValues.push(thongKe[month] || 0); // Nếu không có thì để là 0
+                    }
+
+                    const barColors = ["red", "green", "blue", "orange", "brown", "purple",
+                        "cyan", "magenta", "lime", "yellow", "gray", "pink"];
+
+                    new Chart("myChart", {
+                        type: "bar",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                            }]
+                        },
+                        options: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: "Thống Kê Số Lượng Đơn Hàng Theo Tháng",
+                                font: {
+                                    size: 18,
+                                    family: "'Arial', sans-serif",
+                                    style: 'bold'
+                                }
+                            }
+                        }
+                    });
+                </script>
+
             </div>
+
         </div>
+
     </div>
+
 
 </body>
 

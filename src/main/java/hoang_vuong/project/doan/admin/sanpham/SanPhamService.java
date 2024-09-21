@@ -20,6 +20,10 @@ public class SanPhamService {
     @Autowired
     private SanPhamRepository kdl;
 
+    public Long getTotalProducts() {
+        return kdl.countTotalProducts();
+    }
+
     public List<List<String>> getTop5SanPhamByDonGia() {
         // Tạo Pageable để lấy 5 bản ghi
         Pageable pageable = PageRequest.of(0, 5); // Trang đầu tiên, 5 sản phẩm

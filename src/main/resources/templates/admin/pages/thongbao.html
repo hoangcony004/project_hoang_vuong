@@ -1,5 +1,5 @@
 <div th:fragment="thongbao">
-    <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO_SUCCESS}">
+    <!-- <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO_SUCCESS}">
         <div th:text="${THONG_BAO_SUCCESS}">
             Thông báo đẩy ra ở đây
         </div>
@@ -10,5 +10,21 @@
             Thông báo đẩy ra ở đây
         </div>
         <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
+    </div> -->
+    <!-- Success Alert -->
+    <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show"
+        th:if="${THONG_BAO_SUCCESS}" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Thành công - </strong>
+        <span th:text="${THONG_BAO_SUCCESS}">Thông báo thành công</span>
     </div>
+
+    <!-- Error Alert -->
+    <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" th:if="${THONG_BAO_ERROR}"
+        role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Lỗi - </strong>
+        <span th:text="${THONG_BAO_ERROR}">Thông báo lỗi</span>
+    </div>
+
 </div>
