@@ -2,6 +2,89 @@
       <!-- Plugins JS File -->
    
       <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+      <script>
+     $(document).ready(function() {
+    $('.mnsx_shop').on('click', function(e) {
+        e.preventDefault();
+
+        var nsxId = $(this).data('id'); // Lấy id từ thuộc tính data-id
+
+        // Gửi AJAX POST request để lấy danh sách sản phẩm theo nhà sản xuất
+        $.ajax({
+            url: '/post/mnsx',
+            type: 'POST',
+            data: {
+                id: nsxId  // Truyền ID của nhà sản xuất
+            },
+            success: function(response) {
+                // Lấy tab-pane tương ứng để hiển thị sản phẩm
+                var tabContent = $('#id_categories_' + nsxId);
+                
+                // Xóa sản phẩm cũ
+                 tabContent.find('.show_product_now').empty();
+                
+                // Thêm sản phẩm mới từ phản hồi của server
+                response.forEach(function(product) {
+                    var productHtml = `
+                        <div class="product product-2 ">
+                            <figure class="product-media">
+                                <a href="/apps/product?id=${product.id}">
+                                    <img src="${product.anhDaiDien}" style="min-height:250px" alt="Product image" class="product-image">
+                                </a>
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                        <span>add to wishlist</span>
+                                    </a>
+                                </div>
+                                <div class="product-action product-action-dark">
+                                    <button style="background-color: #000000; color: white;" onclick="cart.add(${product.id}, 1)" class="btn-product btn-cart" title="Add to cart">
+                                        <span>Thêm giỏ hàng</span>
+                                    </button>
+                                </div>
+                            </figure>
+                            <div class="product-body">
+                               
+                                <h3 class="product-title"><a href="/apps/product?id=${product.id}">${product.tenSP}</a></h3>
+                                <div class="product-price">${product.donGia}</div>
+                            </div>
+                        </div>
+                    `;  
+                    tabContent.find('.show_product_now').append(productHtml);
+                    tabContent.find('.show_product_now').owlCarousel('destroy'); // Xóa carousel hiện tại
+tabContent.find('.show_product_now').owlCarousel({
+    nav: true,
+    dots: false,
+    margin: 20,
+    loop: false,
+    responsive: {
+        0: {
+            items: 2
+        },
+        480: {
+            items: 2
+        },
+        768: {
+            items: 3
+        },
+        992: {
+            items: 4
+        },
+        1200: {
+            items: 5
+        }
+    }
+});
+                    // console.log(response);
+                });
+            },
+            error: function(xhr, status, error) {
+                alert('Không thể lấy danh sách sản phẩm.');
+            }
+        });
+    });
+});
+
+    </script>
       <script>// Get references to the elements
             const productMainImage = document.querySelector('#product-zoom');
             const productGalleryItems = document.querySelectorAll('.product-gallery-item');

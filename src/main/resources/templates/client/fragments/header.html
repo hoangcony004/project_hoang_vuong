@@ -27,19 +27,19 @@
                         <ul>
                             <li>
                                 <div class="header-dropdown">
-                                    <p th:if="${khachhang_Id == null}"><i class="fa-solid fa-user"></i>Tài Khoản</p>
-                                    <a href="#" th:if="${khachhang_Id != null}" th:text="${khachhang_Email}">Tài
+                                    <p th:if="${khachhang_Email == null}"><i class="fa-solid fa-user"></i>Tài Khoản</p>
+                                    <a href="#" th:if="${khachhang_Email != null}" th:text="${khachhang_Email}">Tài
                                         Khoản</a>
                                     <div class="header-menu">
                                         <ul>
                                             <li>
-                                                <a th:href="@{/apps/auth}" th:if="${khachhang_Id == null}">Đăng Nhập</a>
+                                                <a th:href="@{/apps/auth}" th:if="${khachhang_Email == null}">Đăng Nhập</a>
                                             </li>
                                             <li>
-                                                <a th:if="${khachhang_Id != null}" th:href="@{/apps/doi-mat-khau}">Đổi
+                                                <a th:if="${khachhang_Email != null}" th:href="@{/apps/doi-mat-khau}">Đổi
                                                     mật khẩu</a>
                                             </li>
-                                            <li><a th:if="${khachhang_Id != null}" th:href="@{/apps/dang-xuat}">Đăng
+                                            <li><a th:if="${khachhang_Email != null}" th:href="@{/apps/dang-xuat}">Đăng
                                                     xuất</a></li>
                                         </ul>
                                     </div>

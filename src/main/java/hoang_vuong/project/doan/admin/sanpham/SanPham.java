@@ -51,7 +51,7 @@ public class SanPham {
     private int soLuong;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
-
+private LocalDate ngayHetHan;
     public String getNgayTaoText() {
         if (ngayTao == null) {
             return "Chưa cập nhật";
@@ -72,5 +72,13 @@ public class SanPham {
             return "Chưa cập nhật";
         }
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngaySua);
+    }
+    public String getNgayHetHan() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy, MM, dd");
+        // Định dạng chuỗi theo yêu cầu: yyyy, MM, dd
+        if (ngayHetHan == null) {
+        return ngayTao.format(formatter);
+        }
+        return ngayHetHan.format(formatter);
     }
 }

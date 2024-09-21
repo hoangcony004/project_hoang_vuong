@@ -17,9 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.StreamWriteConstraints;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
@@ -29,10 +35,10 @@ import hoang_vuong.project.doan.admin.quangcao.QuangCao;
 import hoang_vuong.project.doan.admin.quangcao.QuangCaoService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
+import hoang_vuong.project.doan.client.DTO.sanphamDTOlist;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class TrangchuController {
   @Autowired
@@ -52,6 +58,15 @@ public class TrangchuController {
 public String formatPrice(float price) {
     DecimalFormat formatter = new DecimalFormat("#,###.00");  // Định dạng: phân cách hàng nghìn và 2 chữ số thập phân
     return formatter.format(price);
+}
+@PostMapping("/post/mnsx")
+@ResponseBody
+public List<sanphamDTOlist> getProductsByNsx(@RequestParam("id") int nsxId) {
+  // Lấy danh sách sản phẩm theo mã nhà sản xuất
+  List<SanPham> sanPhamList = dvl.timMaNSX(nsxId);
+  return sanPhamList.stream()
+      .map(sp -> new sanphamDTOlist(sp.getId(), sp.getTenSP(),sp.getAnhDaiDien(),sp.getDonGia()))
+      .collect(Collectors.toList());
 }
  
     @GetMapping({
