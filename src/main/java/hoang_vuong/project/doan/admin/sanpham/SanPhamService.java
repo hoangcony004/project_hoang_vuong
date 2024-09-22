@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,9 +82,7 @@ public class SanPhamService {
         return kdl.findByTenSPContaining(tenSanPham);
     }
 
-    public List<SanPham> dsSanPham() {
-        return kdl.findAll();
-    }
+ 
     public Page<SanPham> duyetSanPhamTheoId(int id, Pageable pageable) {
         return kdl.findByMaNSX(id, pageable);
     }
@@ -162,6 +161,9 @@ public class SanPhamService {
     public List<SanPham> dsSanPhamBanChay() {
         return getSanPhamByCondition(kdl::findByBanChay);
     }
+    public List<SanPham> dsSanPham() {
+        return  getSanPhamByConditionall(this::duyet);
+    }
     
     private List<SanPham> getSanPhamByCondition(Function<Boolean, List<SanPham>> fetchFunction) {
         List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
@@ -170,5 +172,11 @@ public class SanPhamService {
                 .limit(16)       
                 .collect(Collectors.toList());
     }
-
+    private List<SanPham> getSanPhamByConditionall(Supplier<List<SanPham>> fetchFunction) {
+        List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
+        return sanPhams.stream()               // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
+                .filter(sp -> fetchFunction.get().contains(sp)) // Sử dụng get() của Supplier
+                .limit(16)       
+                .collect(Collectors.toList());
+    }
 }

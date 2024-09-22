@@ -79,6 +79,8 @@ public List<sanphamDTOlist> getProductsByNsx(@RequestParam("id") int nsxId) {
       List<SanPham> noibat = dvl.dsSanPhamNoiBat();
         List<SanPham> banchay = dvl.dsSanPhamBanChay();  
         List<QuangCao> dsquangcao = quangcao.choPhep();
+        List<SanPham> dsall= dvl.dsSanPham();
+        model.addAttribute("spAll", dsall);
       // Format giá cho từng sản phẩm trong danh sách banchay
       model.addAttribute("dsquangcao", dsquangcao);
                   model.addAttribute("ds_noibat", noibat);

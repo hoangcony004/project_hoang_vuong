@@ -212,6 +212,8 @@ public class Controller {
         dh.setNgayTao(LocalDate.now());
         dh.setTongTien(tongGiaTriGioHang());
         dh.setThanhtoan(method);
+        String maDonHang = dvlDonHang.generateOrderCode();
+        dh.setMaDH(maDonHang);
         Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
         if(khachhang_Id==null){
             khachhang_Id =1010101010;
@@ -240,8 +242,6 @@ public class Controller {
             ctdh.setSoLuong(soLuong);
             ctdh.setTongTien(soLuong * sp.getDonGia());
             ctdh.setNgayTao(LocalDate.now());
-            ctdh.setNgaySua(LocalDate.now());
-
             this.dvlChiTietDonHang.luu(ctdh);
 
         } 
