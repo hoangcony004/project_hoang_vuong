@@ -9,11 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.StreamWriteConstraints;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
