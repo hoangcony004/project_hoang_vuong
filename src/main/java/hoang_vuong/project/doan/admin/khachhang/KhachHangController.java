@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 import hoang_vuong.project.doan.qdl.Qdl;
 
 @Controller
@@ -203,8 +204,14 @@ public class KhachHangController {
             return "redirect:/admin/dang-nhap";
 
         // System.out.println("ID nhận được trong controller là: " + id);
-
+        KhachHang khachhang = dvl.timKhachHangTheoId(id);
+        if (khachhang != null && "admin".equals(khachhang.getTenDangNhap())) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa tài khoản này vì đây là tài khoản mặc định.");
+            return "redirect:/admin/khach-hang";
+        }
         try {
+
             this.dvl.xoaKhachHang(id);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {

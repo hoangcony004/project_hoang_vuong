@@ -145,7 +145,7 @@
                                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                     </div>
                                 </th>
-                                <th>STT</th>
+                                <!-- <th>STT</th> -->
                                 <th>Mã Đơn Hàng</th>
                                 <th>Tên Khách Hàng</th>
                                 <th class="all">
@@ -170,9 +170,8 @@
                                         <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td th:text="${startIndex + iterStat.index + 1}">STT </td>
+                                <!-- <td th:text="${startIndex + iterStat.index + 1}">STT </td> -->
                                 <td th:text="${dl.maDH}"></td>
-
                                 <td th:text="${dl.KhachHang.tenDayDu}">
 
                                 </td>
@@ -256,72 +255,10 @@
 
                             </tr>
                         </tbody>
-                        <h4>Tổng số đơn hàng đã được đặt là: <span style="color: red;"
-                                th:text="${totalOrders} + ' Đơn'"></span></h4>
+                        <!-- <h4>Tổng số đơn hàng đã được đặt là: <span style="color: red;"
+                                th:text="${totalOrders} + ' Đơn'"></span></h4> -->
                     </table>
-                    <!-- Hiển thị phân trang -->
-                    <!-- <div th:insert="/admin/pages/pageable.html"></div> -->
-                    <nav class="pagination-container">
-                        <ul class="pagination justify-content-center">
-                            <!-- Trang đầu -->
-                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=1&pageSize=' + ${pageSize}}">Đầu</a>
-                            </li>
 
-                            <!-- Trang trước -->
-                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=' + (${currentPage > 1 ? currentPage - 1 : 1}) + '&pageSize=' + ${pageSize}}">
-                                    <i class="dripicons-chevron-left"></i>
-                                </a>
-                            </li>
-
-                            <!-- Trang đầu tiên -->
-                            <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
-                                <a class="page-link" th:href="@{'/admin/don-hang?page=1&pageSize=' + ${pageSize}}">1</a>
-                            </li>
-
-                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
-                                <span class="page-link">...</span>
-                            </li>
-
-                            <!-- Các trang giữa -->
-                            <li class="page-item"
-                                th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
-                                th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=' + ${i} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
-                            </li>
-
-                            <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
-                            <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
-                                <span class="page-link">...</span>
-                            </li>
-
-                            <!-- Trang cuối -->
-                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
-                                th:if="${totalPages > 1}">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">[[${totalPages}]]</a>
-                            </li>
-
-                            <!-- Trang tiếp theo -->
-                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=' + (${currentPage < totalPages ? currentPage + 1 : totalPages}) + '&pageSize=' + ${pageSize}}">
-                                    <i class="dripicons-chevron-right"></i>
-                                </a>
-                            </li>
-
-                            <!-- Trang cuối -->
-                            <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link"
-                                    th:href="@{'/admin/don-hang?page=' + ${totalPages} + '&pageSize=' + ${pageSize}}">Cuối</a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

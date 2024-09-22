@@ -199,11 +199,15 @@
                     <canvas id="myChart" style="width:100%;max-width:100%;"></canvas>
                 </div>
                 <input type="hidden" class="thongKe" th:value="${thongKe}">
+                <input type="hidden" id="year" th:value="${year}">
 
                 <script>
                     // Lấy dữ liệu thống kê từ ô input
                     const thongKeInput = document.querySelector('.thongKe');
                     const thongKeValue = thongKeInput.value; // Lấy giá trị từ ô input
+
+                    // Lấy năm từ input ẩn
+                    const year = document.querySelector('#year').value;
 
                     // Kiểm tra xem giá trị có phải là chuỗi JSON hợp lệ hay không
                     let thongKe;
@@ -221,8 +225,8 @@
                     const yValues = [];
 
                     // Đổ dữ liệu vào yValues từ thongKe
-                    for (let month = 1; month <= 12; month++) {
-                        yValues.push(thongKe[month] || 0); // Nếu không có thì để là 0
+                    for (let i = 1; i <= 12; i++) {
+                        yValues.push(thongKe[i] || 0); // Nếu không có thì để là 0
                     }
 
                     const barColors = ["red", "green", "blue", "orange", "brown", "purple",
@@ -241,7 +245,7 @@
                             legend: { display: false },
                             title: {
                                 display: true,
-                                text: "Thống Kê Số Lượng Đơn Hàng Theo Tháng",
+                                text: `Thống Kê Số Lượng Đơn Hàng Trong Năm ${year}`,
                                 font: {
                                     size: 18,
                                     family: "'Arial', sans-serif",

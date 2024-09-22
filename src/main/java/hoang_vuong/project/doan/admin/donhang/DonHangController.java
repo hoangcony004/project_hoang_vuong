@@ -81,8 +81,8 @@ public class DonHangController {
 
         // Tạo đối tượng DonHang và thiết lập danh sách ChiTietDonHang
         DonHang donHang = new DonHang();
-        donHang.setChiTietDonHangList(dsChiTietDonHang); // Gán danh sách chi tiết đơn hàng vào đơn hàng
-        model.addAttribute("dl", donHang); // Truyền đối tượng DonHang vào model
+        donHang.setChiTietDonHangList(dsChiTietDonHang);
+        model.addAttribute("dl", donHang);
 
         // Cập nhật mô hình với dữ liệu phân trang
         model.addAttribute("currentPage", page);
@@ -90,7 +90,6 @@ public class DonHangController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("ds", donHangPage.getContent());
         model.addAttribute("title", "Quản Lý Đơn Hàng");
-        model.addAttribute("phan_trang", "don-hang");
         model.addAttribute("title_duyet", "Đơn Hàng");
         model.addAttribute("title_btn_add", "Thêm Đơn Hàng");
         model.addAttribute("title_sm", "Thêm mới");
@@ -118,6 +117,7 @@ public class DonHangController {
 
         String maDonHang = dvl.generateOrderCode();
         System.out.println("Mã đơn hàng " + maDonHang);
+        Float donGia = dl.getTongTien();
         dl.setNgayTao(LocalDate.now());
         dl.setMaDH(maDonHang);
 
@@ -128,6 +128,8 @@ public class DonHangController {
             chiTiet.setMaSP(MaSP);
             chiTiet.setDonHang(dl);
             chiTiet.setNgayTao(LocalDate.now());
+            chiTiet.setDonGia(donGia);
+            chiTiet.setTongTien(donGia * soLuong);
 
             // Thêm ChiTietDonHang vào danh sách chiTietDonHangList của DonHang
             if (dl.getChiTietDonHangList() == null) {
@@ -179,26 +181,45 @@ public class DonHangController {
         return "admin/donhang/form-sua-dh-bs4.html";
     }
 
-    // @GetMapping("/don-hang/tim-kiem")
-    // public String getTimKiemDonHang(@RequestParam("query") String query, Model
-    // model) {
-    // if (Qdl.NhanVienChuaDangNhap(request))
-    // return "redirect:/admin/dang-nhap";
+    @GetMapping("/don-hang/tim-kiem")
+    public String getTimKiemDonHang(@RequestParam("query") String query, Model model,
+            RedirectAttributes redirectAttributes) {
+        if (Qdl.NhanVienChuaDangNhap(request))
+            return "redirect:/admin/dang-nhap";
+        try {
+            // Tìm kiếm đơn hàng theo maDH
+            List<DonHang> orders = dvl.searchOrdersByMaDH(query);
 
-    // // Tìm kiếm đơn hàng theo maDH
-    // List<DonHang> orders = dvl.searchOrdersByMaDH(query);
+            if (orders != null && !orders.isEmpty()) {
 
-    // // Truyền kết quả tìm kiếm vào model để hiển thị trong view
-    // model.addAttribute("ds", orders);
+                // Truyền kết quả tìm kiếm vào model để hiển thị trong view
+                model.addAttribute("ds", orders);
+                // Lấy danh sách chi tiết đơn hàng từ service
+                List<ChiTietDonHang> dsChiTietDonHang = chiTietDonHangService.dsChiTietDonHang();
+                model.addAttribute("chiTietDonHangList", dsChiTietDonHang);
 
-    // DonHang donHang = new DonHang();// Gán danh sách chi tiết đơn hàng vào đơn
-    // hàng
-    // model.addAttribute("dl", donHang);
-    // model.addAttribute("content", "admin/donhang/duyet.html");
-    // model.addAttribute("title", "Tìm Kiếm Đơn Hàng");
+                // Tạo đối tượng DonHang và thiết lập danh sách ChiTietDonHang
+                DonHang donHang = new DonHang();
+                donHang.setChiTietDonHangList(dsChiTietDonHang);
+                model.addAttribute("dl", donHang);
+                model.addAttribute("content", "admin/donhang/duyet_search.html");
+                model.addAttribute("title", "Tìm Kiếm Đơn Hàng");
+                model.addAttribute("title_duyet", "Tìm Kiếm Đơn Hàng");
+                model.addAttribute("title_btn_add", "Thêm Đơn Hàng");
+                model.addAttribute("title_sm", "Thêm mới");
+                model.addAttribute("action", "/admin/don-hang/them");
+                model.addAttribute("THONG_BAO_SUCCESS", "Tìm kiếm đơn hàng thành công!");
+            } else {
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không có đơn hàng nào hoặc sai mã đơn hàng!");
+                return "redirect:/admin/don-hang";
+            }
 
-    // return "layouts/layout-admin.html";
-    // }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể thêm xem. Mã lỗi: " + e.getMessage());
+        }
+        return "layouts/layout-admin.html";
+    }
 
     @GetMapping("/don-hang/xem")
     public String getXemDonHang(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
