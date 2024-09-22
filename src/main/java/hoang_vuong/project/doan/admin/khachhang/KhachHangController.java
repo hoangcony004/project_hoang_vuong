@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 import hoang_vuong.project.doan.qdl.Qdl;
 
 @Controller
@@ -71,6 +72,11 @@ public class KhachHangController {
         model.addAttribute("sort", sort);
         model.addAttribute("direction", direction);
         model.addAttribute("sortDirection", direction.equals("asc") ? "asc" : "desc");
+
+        // lấy số lượng sản phẩm đan có
+        Long totalUsers = dvl.getTotalUsers();
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("role", "1");
 
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
@@ -198,8 +204,14 @@ public class KhachHangController {
             return "redirect:/admin/dang-nhap";
 
         // System.out.println("ID nhận được trong controller là: " + id);
-
+        KhachHang khachhang = dvl.timKhachHangTheoId(id);
+        if (khachhang != null && "admin".equals(khachhang.getTenDangNhap())) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không thể xóa tài khoản này vì đây là tài khoản mặc định.");
+            return "redirect:/admin/khach-hang";
+        }
         try {
+
             this.dvl.xoaKhachHang(id);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã xóa thành công !");
         } catch (Exception e) {
@@ -303,6 +315,8 @@ public class KhachHangController {
 
         model.addAttribute("action", "/admin/khach-hang/them");
         model.addAttribute("title_body", "Thêm Khách Hàng");
+        model.addAttribute("title_btn_add", "Thêm khách Hàng");
+        model.addAttribute("title_duyet", "Khách Hàng");
         model.addAttribute("title_sm", "Thêm mới");
         model.addAttribute("title", "Quản Lý Khách Hàng");
         model.addAttribute("content", "admin/khachhang/duyet.html");

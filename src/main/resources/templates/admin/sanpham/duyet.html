@@ -245,10 +245,12 @@
                                     </script>
 
                                 </td>
-                                
+
                             </tr>
 
                         </tbody>
+                        <h4 th:if="${role} == 1">Tổng số sản phẩm là: <span style="color: red;"
+                                th:text="${totalProducts} + ' Sản Phẩm'"></span></h4>
                     </table>
                     <!-- Hiển thị phân trang -->
                     <!-- <div th:insert="/admin/pages/pageable.html"></div> -->

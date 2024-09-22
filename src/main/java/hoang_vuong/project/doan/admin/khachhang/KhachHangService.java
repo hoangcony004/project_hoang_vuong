@@ -14,6 +14,10 @@ public class KhachHangService {
     @Autowired
     private KhachHangRepository kdl;
 
+    public Long getTotalUsers() {
+        return kdl.countTotalUsers();
+    }
+
     @Autowired
     private KhachHangRepository KhachHangRepository;
 

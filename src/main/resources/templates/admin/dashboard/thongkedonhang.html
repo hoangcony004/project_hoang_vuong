@@ -66,7 +66,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Bắt đầu biểu mẫu -->
-                                    <form id="year-form" action="/admin/thong-ke-chi-tiet-tung-nam" method="get">
+                                    <form id="year-form" action="/admin/thong-ke-don-hang-chi-tiet-tung-nam"
+                                        method="get">
                                         <div class="mb-3">
                                             <label for="year-select" class="form-label">Chọn năm:</label>
                                             <select id="year-select" class="form-select" name="year">
@@ -92,44 +93,14 @@
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
-                </div>
-                <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
-                <tr th:each="entry : ${revenueByYear}">
-                    <!-- Các ô input ẩn để lưu dữ liệu -->
-                    <td><input type="hidden" th:value="${entry.key}" class="year-input" /></td>
-                    <td><input type="hidden" th:value="${entry.value}" class="revenue-input" /></td>
-                </tr>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        // Lấy dữ liệu từ tất cả các ô input ẩn
-                        const yearInputs = document.querySelectorAll('.year-input');
-                        const revenueInputs = document.querySelectorAll('.revenue-input');
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-                        // Chuyển dữ liệu từ các ô input thành mảng
-                        const xValues = Array.from(yearInputs).map(input => input.value);
-                        const yValues = Array.from(revenueInputs).map(input => {
-                            // Loại bỏ dấu phân cách hàng nghìn và chuyển đổi thành số thực
-                            return parseFloat(input.value.replace(/\./g, '').replace(/,/g, '.'));
-                        });
+                    <!-- <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
+                    <script>
+                        const xValues = ["2024", "2025", "2026", "2027", "2028"];
+                        const yValues = [55, 49, 44, 24, 15];
+                        const barColors = ["red", "green", "blue", "orange", "brown"];
 
-                        console.log('Years:', xValues);
-                        console.log('Revenues:', yValues);
-
-                        const barColors = [
-                            "#FF5733",  // Đỏ cam
-                            "#33FF57",  // Xanh lá cây sáng
-                            "#3357FF",  // Xanh dương sáng
-                            "#FF33A1",  // Hồng
-                            "#F5D300",  // Vàng
-                            "#6A0D91",  // Tím đậm
-                            "#00BFFF",  // Xanh lam sáng
-                            "#FF4500",  // Cam đỏ
-                            "#2E8B57",  // Xanh lục đậm
-                            "#FFD700"   // Vàng kim
-                        ];
-
-                        // Tạo biểu đồ bằng Chart.js
                         new Chart("myChart", {
                             type: "bar",
                             data: {
@@ -143,53 +114,75 @@
                                 legend: { display: false },
                                 title: {
                                     display: true,
-                                    text: "Thống Kê Doanh Thu Qua Các Năm",
-                                    font: {
-                                        size: 18,
-                                        family: "'Arial', sans-serif",
-                                        style: 'bold'
-                                    }
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true // Đặt trục y bắt đầu từ 0
-                                        }
-                                    }]
+                                    text: "Thống Kê Doanh Thu Qua Các Năm"
                                 }
                             }
                         });
-                    });
-                </script>
+                    </script> -->
+                    <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
+                    <script>
+                        // Khai báo các mảng để lưu trữ giá trị
+                        let xValues = [];
+                        let yValues = [];
+                        const barColors = ["red", "green", "blue", "orange", "brown"]; // Màu cho các cột
 
-                <!-- <script>
-                    const xValues = ["2024", "2025", "2026", "2027", "2028"];
-                    const yValues = [55, 49, 44, 24, 15];
-                    const barColors = ["red", "green", "blue", "orange", "brown"];
+                        // Gọi API để lấy dữ liệu
+                        fetch('/api/don-hang/count')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Lặp qua dữ liệu và cập nhật xValues và yValues
+                                for (const [year, count] of Object.entries(data)) {
+                                    xValues.push(year);
+                                    yValues.push(count);
+                                }
+                                console.log("nam la", xValues)
+                                console.log("soluong", yValues)
 
-                    new Chart("myChart", {
-                        type: "bar",
-                        data: {
-                            labels: xValues,
-                            datasets: [{
-                                backgroundColor: barColors,
-                                data: yValues
-                            }]
-                        },
-                        options: {
-                            legend: { display: false },
-                            title: {
-                                display: true,
-                                text: "Thống Kê Doanh Thu Qua Các Năm"
-                            }
-                        }
-                    });
-                </script> -->
+                                // Tạo biểu đồ sau khi đã có dữ liệu
+                                new Chart("myChart", {
+                                    type: "bar",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors.slice(0, yValues.length), // Cắt màu theo số lượng cột
+                                            data: yValues
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: "Thống Kê Số Lượng Đơn Hàng Qua Các Năm",
+                                                font: {
+                                                    size: 18,
+                                                    family: "'Arial', sans-serif",
+                                                    style: 'bold'
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+                    </script>
+
+                </div>
             </div>
-
         </div>
-
     </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+
+
 
 
 </body>

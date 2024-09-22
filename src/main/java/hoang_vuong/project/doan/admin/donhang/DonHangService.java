@@ -26,6 +26,7 @@ public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
 
+<<<<<<< HEAD
     public List<DoanhThuThang> thongKeDoanhThuTheoThang(int year, int month) {
         // Lấy danh sách doanh thu từ database
         List<DoanhThuThang> doanhThuList = kdl.findDoanhThuTheoThang(year, month);
@@ -36,13 +37,68 @@ public class DonHangService {
             doanhThuTheoNgay.add(new DoanhThuThang(0.0, i + 1, month, year));  // Thay Float bằng Double
         }
     
+=======
+    public Map<Integer, Integer> getThongKeDonHang(int year) {
+        List<Object[]> results = kdl.countDonHangByMonth(year);
+        Map<Integer, Integer> statistics = new HashMap<>();
+
+        // Khởi tạo các tháng với giá trị 0
+        for (int month = 1; month <= 12; month++) {
+            statistics.put(month, 0);
+        }
+
+        // Cập nhật số lượng từ kết quả
+        for (Object[] result : results) {
+            int month = Integer.parseInt(result[0].toString());
+            int count = Integer.parseInt(result[1].toString());
+            statistics.put(month, count);
+        }
+
+        return statistics;
+    }
+
+    public Map<Integer, Long> getOrderCountByYear() {
+        List<Object[]> results = kdl.countOrdersByYear();
+        Map<Integer, Long> orderCountByYear = new HashMap<>();
+        for (Object[] result : results) {
+            orderCountByYear.put((Integer) result[0], (Long) result[1]);
+        }
+        return orderCountByYear;
+    }
+
+    // tìm kiếm đơn hàng
+    public List<DonHang> searchOrdersByMaDH(String query) {
+        return kdl.searchOrdersByMaDH(query);
+    }
+
+    // lấy tổng đơn hàng đang có
+    public Long getTotalOrders() {
+        return kdl.countTotalOrders();
+    }
+
+    public List<DoanhThuThang> thongKeDoanhThuTheoThang(int year, int month) {
+        // Lấy danh sách doanh thu từ database
+        List<DoanhThuThang> doanhThuList = kdl.findDoanhThuTheoThang(year, month);
+
+        // Tạo danh sách 31 phần tử, mặc định là 0 cho mỗi ngày trong tháng
+        List<DoanhThuThang> doanhThuTheoNgay = new ArrayList<>();
+        for (int i = 0; i < 31; i++) {
+            doanhThuTheoNgay.add(new DoanhThuThang(0.0, i + 1, month, year)); // Thay Float bằng Double
+        }
+
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
         // Duyệt qua danh sách doanh thu và cập nhật vào danh sách theo ngày
         for (DoanhThuThang dt : doanhThuList) {
             int day = dt.getDay();
             doanhThuTheoNgay.set(day - 1, new DoanhThuThang(dt.getTongTien(), day, month, year));
         }
+<<<<<<< HEAD
     
         return doanhThuTheoNgay;  // Trả về danh sách doanh thu theo ngày
+=======
+
+        return doanhThuTheoNgay; // Trả về danh sách doanh thu theo ngày
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
     }
 
     public String getTotalRevenueByYear(int year) {
@@ -83,20 +139,41 @@ public class DonHangService {
         return orderCode;
     }
 
-    public Map<String, Double> getWeeklyRevenue() {
+    // thống kê tuần
+    public double calculateTotalRevenue(LocalDate startDate, LocalDate endDate) {
+        return kdl.calculateTotalRevenue(startDate, endDate);
+    }
+
+    public Map<String, List<String>> getWeeklyRevenue() {
         LocalDate now = LocalDate.now();
+
+        // Tuần hiện tại
         LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
+        // Tuần trước
         LocalDate startOfLastWeek = startOfWeek.minusWeeks(1);
         LocalDate endOfLastWeek = endOfWeek.minusWeeks(1);
 
+        // Lấy doanh thu từng tuần
         double revenueThisWeek = kdl.calculateTotalRevenue(startOfWeek, endOfWeek);
         double revenueLastWeek = kdl.calculateTotalRevenue(startOfLastWeek, endOfLastWeek);
 
+        // Định dạng số
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        List<String> dataSetThisWeek = new ArrayList<>();
+        List<String> dataSetLastWeek = new ArrayList<>();
+
+        // Giả sử bạn có danh sách doanh thu cho từng ngày trong tuần
+        for (int i = 0; i < 7; i++) {
+            dataSetThisWeek.add(df.format(revenueThisWeek)); // Lấy doanh thu từng ngày
+            dataSetLastWeek.add(df.format(0.0)); // Giả sử không có doanh thu tuần trước
+        }
+
         return Map.of(
-                "thisWeek", revenueThisWeek,
-                "lastWeek", revenueLastWeek);
+                "thisWeek", dataSetThisWeek,
+                "lastWeek", dataSetLastWeek);
     }
 
     public List<DonHang> findAllByWeek(LocalDate startDate, LocalDate endDate) {
@@ -171,6 +248,7 @@ public class DonHangService {
     public List<DonHang> dsDonHang() {
         return kdl.findAll();
     }
+
     public List<DonHang> dsDonhangEmail(String email) {
         return kdl.findByEmail(email);
     }

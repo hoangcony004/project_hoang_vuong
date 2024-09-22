@@ -51,7 +51,11 @@ public class SanPham {
     private int soLuong;
     private LocalDate ngayTao;
     private LocalDate ngaySua;
+<<<<<<< HEAD
 private LocalDate ngayHetHan;
+=======
+
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
     public String getNgayTaoText() {
         if (ngayTao == null) {
             return "Chưa cập nhật";

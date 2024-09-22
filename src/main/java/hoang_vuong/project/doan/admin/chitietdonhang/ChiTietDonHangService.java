@@ -14,9 +14,14 @@ import hoang_vuong.project.doan.admin.sanpham.SanPham;
 
 @Service
 public class ChiTietDonHangService {
+
     @Autowired
     private ChiTietDonHangRepository kdl;
 
+
+    public List<ChiTietDonHang> getChiTietDonHangByDonHangId(int id) {
+        return kdl.findByDonHangId(id);
+    }
     public List<ThongKeSanPhamDTO> thongKeTop10SanPham() {
         Pageable top10 = PageRequest.of(0, 10);
         return kdl.thongKeTop10SanPhamBanChay(top10);

@@ -1,5 +1,6 @@
 package hoang_vuong.project.doan.admin.dashboard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
 import hoang_vuong.project.doan.admin.chitietdonhang.ThongKeSanPhamDTO;
 import hoang_vuong.project.doan.admin.donhang.DonHang;
 import hoang_vuong.project.doan.admin.donhang.DonHangService;
-import hoang_vuong.project.doan.admin.donhang.RevenueModel;
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
@@ -47,33 +47,6 @@ public class DashboardController {
 
     @Autowired
     private ChiTietDonHangService chiTietDonHangService;
-
-    // v1
-    // @GetMapping("/dashboard")
-    // public String getDashboard(Model model) {
-    // if (Qdl.NhanVienChuaDangNhap(request))
-    // return "redirect:/admin/dang-nhap";
-
-    // // Lấy danh sách tất cả khách hàng
-    // List<KhachHang> allKhachHang = dvl.dsKhachHang();
-
-    // long currentMonthCount = dvl.getNumberOfCustomersThisMonth();
-    // long lastMonthCount = dvl.getNumberOfCustomersLastMonth();
-    // double percentageChange = dvl.calculateChangePercentage(currentMonthCount,
-    // lastMonthCount);
-    // model.addAttribute("totalCustomers", currentMonthCount);
-    // model.addAttribute("percentageChange", percentageChange);
-    // model.addAttribute("isIncrease", percentageChange >= 0);
-    // // Truyền số lượng khách hàng vào mô hình
-    // model.addAttribute("totalCustomers", allKhachHang.size());
-
-    // model.addAttribute("title", "Dashboard");
-    // model.addAttribute("content", "admin/dashboard/dashboard.html");
-
-    // return "layouts/layout-admin.html";
-    // }
-
-    // v2
     @GetMapping("/dashboard")
     public String getDashboard(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -101,7 +74,6 @@ public class DashboardController {
         long donthangtruoc = donHangService.getPreviousMonthOrderCount();
         double phantramthaydoi;
         double maxPercentageChange = 1000.0; // Giới hạn tỷ lệ phần trăm tối đa
-        
         if (donthangtruoc > 0) {
             // Tính tỷ lệ phần trăm thay đổi
             phantramthaydoi = ((double) (donthangnay - donthangtruoc) / donthangtruoc) * 100;
@@ -113,7 +85,6 @@ public class DashboardController {
             // Khi donthangtruoc là 0, chỉ hiển thị 100% nếu donthangnay > 0
             phantramthaydoi = (donthangnay > 0) ? 100.0 : 0.0;
         }
-        
         // Định dạng tỷ lệ phần trăm với tối đa hai chữ số thập phân
         DecimalFormat order = new DecimalFormat("#.##");
         String formattedPercentageChangeOrder = order.format(phantramthaydoi);
@@ -138,43 +109,67 @@ public class DashboardController {
         model.addAttribute("doanhThuTheoThang", doanhThuTheoThang);
         System.out.println("Doanh thu là: " + doanhThuTheoThang);
 
-        // thống kê tuần
+        // Thống kê tuần
         LocalDate now = LocalDate.now();
         LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
-        Map<DayOfWeek, String> weeklyStats = donHangService.getWeeklyStatistics();
-        System.out.println("Weekly Stats: " + weeklyStats);
+        // Doanh thu tuần này
+        List<Double> currentWeekRevenue = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = startOfWeek.plusDays(i);
+            double revenue = donHangService.calculateTotalRevenue(date, date); // Lấy doanh thu cho từng ngày
+            currentWeekRevenue.add(revenue);
+        }
 
-        // Tạo danh sách ngày trong tuần với giá trị mặc định 0.0 nếu không có dữ liệu
-        List<DayOfWeek> daysOfWeek = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
-                DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+        // Doanh thu tuần trước
+        List<Double> lastWeekRevenue = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = startOfWeek.minusWeeks(1).plusDays(i);
+            double revenue = donHangService.calculateTotalRevenue(date, date); // Lấy doanh thu cho từng ngày
+            lastWeekRevenue.add(revenue);
+        }
 
-        List<String> values = daysOfWeek.stream()
-                .map(day -> weeklyStats.getOrDefault(day, "0.0"))
+        // Chuyển đổi giá trị doanh thu thành chuỗi bình thường
+        List<String> currentWeekValues = currentWeekRevenue.stream()
+                .map(revenue -> String.format("%.2f", revenue)) // Định dạng số
+                .collect(Collectors.toList());
+
+        List<String> lastWeekValues = lastWeekRevenue.stream()
+                .map(revenue -> String.format("%.2f", revenue)) // Định dạng số
                 .collect(Collectors.toList());
 
         // Chuyển đổi ngày trong tuần sang tiếng Việt
+        List<DayOfWeek> daysOfWeek = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+                DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+
         List<String> vietnameseDaysOfWeek = daysOfWeek.stream()
                 .map(day -> dayOfWeekTranslations.get(day))
                 .collect(Collectors.toList());
 
+        // Thêm vào mô hình
         model.addAttribute("xValuesTuan", vietnameseDaysOfWeek);
-        model.addAttribute("dataSet", values);
+        model.addAttribute("dataSetCurrentWeek", currentWeekValues);
+        model.addAttribute("dataSetLastWeek", lastWeekValues);
 
-        // doanh thu tuàn này và tuàn trước
-        Map<String, Double> revenueMap = donHangService.getWeeklyRevenue();
+        // Định dạng doanh thu
+        double revenueThisWeekTotal = currentWeekRevenue.stream().mapToDouble(Double::doubleValue).sum();
+        double revenueLastWeekTotal = lastWeekRevenue.stream().mapToDouble(Double::doubleValue).sum();
 
+        // Định dạng doanh thu
         NumberFormat formatter = new DecimalFormat("#,###" + " vn₫");
-        String revenueThisWeek = formatter.format(revenueMap.get("thisWeek"));
-        String revenueLastWeek = formatter.format(revenueMap.get("lastWeek"));
+        String revenueThisWeek = formatter.format(revenueThisWeekTotal);
+        String revenueLastWeek = formatter.format(revenueLastWeekTotal);
 
+        // Thêm doanh thu vào mô hình
         model.addAttribute("revenueThisWeek", revenueThisWeek);
         model.addAttribute("revenueLastWeek", revenueLastWeek);
 
-        System.out.println("xValuesTuan: " + daysOfWeek);
-        System.out.println("dataSet: " + values);
-        System.out.println("doanh thu tuan: " + revenueMap);
+        System.out.println("Doanh thu tuần này: " + revenueThisWeek);
+        System.out.println("Doanh thu tuần trước: " + revenueLastWeek);
+        System.out.println("xValuesTuan: " + vietnameseDaysOfWeek);
+        System.out.println("dataSet tuần này: " + currentWeekValues);
+        System.out.println("dataSet tuần trước: " + lastWeekValues);
 
         // top 5 sản phẩm có đơn giá cao nhất
         List<List<String>> top5SanPham = sanPhamService.getTop5SanPhamByDonGia();
