@@ -115,6 +115,10 @@ public class DonHangController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
         String maDonHang = dvl.generateOrderCode();
         System.out.println("Mã đơn hàng " + maDonHang);
         Float donGia = dl.getTongTien();

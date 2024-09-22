@@ -26,6 +26,18 @@ public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
 
+<<<<<<< HEAD
+    public List<DoanhThuThang> thongKeDoanhThuTheoThang(int year, int month) {
+        // Lấy danh sách doanh thu từ database
+        List<DoanhThuThang> doanhThuList = kdl.findDoanhThuTheoThang(year, month);
+        
+        // Tạo danh sách 31 phần tử, mặc định là 0 cho mỗi ngày trong tháng
+        List<DoanhThuThang> doanhThuTheoNgay = new ArrayList<>();
+        for (int i = 0; i < 31; i++) {
+            doanhThuTheoNgay.add(new DoanhThuThang(0.0, i + 1, month, year));  // Thay Float bằng Double
+        }
+    
+=======
     public Map<Integer, Integer> getThongKeDonHang(int year) {
         List<Object[]> results = kdl.countDonHangByMonth(year);
         Map<Integer, Integer> statistics = new HashMap<>();
@@ -74,13 +86,19 @@ public class DonHangService {
             doanhThuTheoNgay.add(new DoanhThuThang(0.0, i + 1, month, year)); // Thay Float bằng Double
         }
 
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
         // Duyệt qua danh sách doanh thu và cập nhật vào danh sách theo ngày
         for (DoanhThuThang dt : doanhThuList) {
             int day = dt.getDay();
             doanhThuTheoNgay.set(day - 1, new DoanhThuThang(dt.getTongTien(), day, month, year));
         }
+<<<<<<< HEAD
+    
+        return doanhThuTheoNgay;  // Trả về danh sách doanh thu theo ngày
+=======
 
         return doanhThuTheoNgay; // Trả về danh sách doanh thu theo ngày
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
     }
 
     public String getTotalRevenueByYear(int year) {

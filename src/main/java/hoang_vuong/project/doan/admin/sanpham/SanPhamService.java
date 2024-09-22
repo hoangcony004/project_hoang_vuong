@@ -8,12 +8,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.StreamWriteConstraints;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 public class SanPhamService {
@@ -78,9 +86,7 @@ public class SanPhamService {
         return kdl.findByTenSPContaining(tenSanPham);
     }
 
-    public List<SanPham> dsSanPham() {
-        return kdl.findAll();
-    }
+ 
     public Page<SanPham> duyetSanPhamTheoId(int id, Pageable pageable) {
         return kdl.findByMaNSX(id, pageable);
     }
@@ -115,6 +121,7 @@ public class SanPhamService {
         return dl;
 
     }
+
 
     public List<SanPham> timMaNSX(int maNSX) {
         return kdl.findByMaNSX(maNSX);
@@ -151,13 +158,29 @@ public class SanPhamService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
-
     public List<SanPham> dsSanPhamNoiBat() {
-        return kdl.findByNoiBat(true);
+        return getSanPhamByCondition(kdl::findByNoiBat);
     }
-
+    
     public List<SanPham> dsSanPhamBanChay() {
-        return kdl.findByBanChay(true);
+        return getSanPhamByCondition(kdl::findByBanChay);
     }
-
+    public List<SanPham> dsSanPham() {
+        return  getSanPhamByConditionall(this::duyet);
+    }
+    
+    private List<SanPham> getSanPhamByCondition(Function<Boolean, List<SanPham>> fetchFunction) {
+        List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
+        return sanPhams.stream()               // Lọc theo điều kiện nổi bật hoặc bán chạy
+                .filter(sp -> fetchFunction.apply(true).contains(sp))
+                .limit(16)       
+                .collect(Collectors.toList());
+    }
+    private List<SanPham> getSanPhamByConditionall(Supplier<List<SanPham>> fetchFunction) {
+        List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
+        return sanPhams.stream()               // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
+                .filter(sp -> fetchFunction.get().contains(sp)) // Sử dụng get() của Supplier
+                .limit(16)       
+                .collect(Collectors.toList());
+    }
 }

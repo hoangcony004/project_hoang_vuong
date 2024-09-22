@@ -204,42 +204,44 @@ public class Controller {
             String vnpayUrl = vnPayService.createOrder(intValue, orderInfor, baseUrl);
             // Xử lý nếu người dùng chọn chuyển khoản
             return "redirect:" + vnpayUrl;
+        } else if ("monkey".equals(method)) {      
+        dh.setDiaChi(fullAdress+" ("+ward+" "+district+" "+city+")");
+        dh.setGhiChu(note);
+        dh.setNgayTao(LocalDate.now());
+        dh.setTongTien(tongGiaTriGioHang());
+        dh.setThanhtoan(method);
+        String maDonHang = dvlDonHang.generateOrderCode();
+        dh.setMaDH(maDonHang);
+        Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
+        if(khachhang_Id==null){
+            khachhang_Id =1010101010;
+            dh.setMaKH(khachhang_Id);
+        }else{
+            dh.setMaKH(khachhang_Id);
+        }
+        var donhang= this.dvlDonHang.luuDonHang(dh);
+        int maDon = donhang.getId();
+        @SuppressWarnings("unchecked")
+        Map<Integer,Integer> cartMap = (Map<Integer,Integer>)session.getAttribute("cart");
 
-        } else if ("monkey".equals(method)) {
-            dh.setDiaChi(fullAdress + " (" + ward + " " + district + " " + city + ")");
-            dh.setGhiChu(note);
-            dh.setNgayTao(LocalDate.now());
-            dh.setTongTien(tongGiaTriGioHang());
-            dh.setThanhtoan(method);
-            Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
-            if (khachhang_Id == null) {
-                khachhang_Id = 0;
-                dh.setMaKH(khachhang_Id);
-            } else {
-                dh.setMaKH(khachhang_Id);
-            }
-            var donhang = this.dvlDonHang.luuDonHang(dh);
-            int maDon = donhang.getId();
-            @SuppressWarnings("unchecked")
-            Map<Integer, Integer> cartMap = (Map<Integer, Integer>) session.getAttribute("cart");
+        for (Integer maSanPham : cartMap.keySet()) 
+        { 
+            SanPham sp = dvlSanPham.xem(maSanPham);
+            // tongSoSanPham += cartMap.get(maSanPham);
+            // var donGiaStr = String.valueOf(sp.getDonGia());
+            // float thanhTien = cartMap.get(maSanPham) * sp.getDonGia();
+            int soLuong = cartMap.get(maSanPham);
+              var ctdh = new ChiTietDonHang();
+            ctdh.setDonHangId(maDon);
+            ctdh.setMaSP(maSanPham);
+            ctdh.setTen(sp.getTenSP());
+            ctdh.setModel(sp.getModel());
+            ctdh.setDonGia(sp.getDonGia());
+            ctdh.setSoLuong(soLuong);
+            ctdh.setTongTien(soLuong * sp.getDonGia());
+            ctdh.setNgayTao(LocalDate.now());
+            this.dvlChiTietDonHang.luu(ctdh);
 
-            for (Integer maSanPham : cartMap.keySet()) {
-                SanPham sp = dvlSanPham.xem(maSanPham);
-                // tongSoSanPham += cartMap.get(maSanPham);
-                // var donGiaStr = String.valueOf(sp.getDonGia());
-                // float thanhTien = cartMap.get(maSanPham) * sp.getDonGia();
-                int soLuong = cartMap.get(maSanPham);
-                var ctdh = new ChiTietDonHang();
-                ctdh.setDonHangId(maDon);
-                ctdh.setMaSP(maSanPham);
-                ctdh.setTen(sp.getTenSP());
-                ctdh.setModel(sp.getModel());
-                ctdh.setDonGia(sp.getDonGia());
-                ctdh.setSoLuong(soLuong);
-                ctdh.setTongTien(soLuong * sp.getDonGia());
-                ctdh.setNgayTao(LocalDate.now());
-
-                this.dvlChiTietDonHang.luu(ctdh);
 
             }
             System.out.println("Phương thức thanh toán: Tiền mặt");

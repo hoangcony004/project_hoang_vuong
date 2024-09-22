@@ -8,14 +8,31 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+<<<<<<< HEAD
+
+=======
 public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
       Page<SanPham> findByMaNSX(int maNSX, Pageable pageable);
 
       List<SanPham> findByTrangThai(Boolean trangThai);
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
 
       List<SanPham> findByMaNSX(int maNSX);
 
+<<<<<<< HEAD
+public interface SanPhamRepository extends JpaRepository<SanPham, Integer>
+{
+   Page<SanPham> findByMaNSX(int maNSX, Pageable pageable);
+
+   List<SanPham> findByTrangThai(Boolean trangThai);
+
+   List<SanPham> findByMaNSX(int maNSX);
+
+
+   SanPham findOneByMaNSX(int maNSX);
+=======
       SanPham findOneByMaNSX(int maNSX);
+>>>>>>> 8d87d435b83f27f926b838331e9ec5853058b106
 
       List<SanPham> findByNoiBat(Boolean noiBat);
 

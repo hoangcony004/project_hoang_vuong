@@ -47,7 +47,6 @@ public class DashboardController {
 
     @Autowired
     private ChiTietDonHangService chiTietDonHangService;
-
     @GetMapping("/dashboard")
     public String getDashboard(Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
@@ -75,7 +74,6 @@ public class DashboardController {
         long donthangtruoc = donHangService.getPreviousMonthOrderCount();
         double phantramthaydoi;
         double maxPercentageChange = 1000.0; // Giới hạn tỷ lệ phần trăm tối đa
-
         if (donthangtruoc > 0) {
             // Tính tỷ lệ phần trăm thay đổi
             phantramthaydoi = ((double) (donthangnay - donthangtruoc) / donthangtruoc) * 100;
@@ -87,13 +85,13 @@ public class DashboardController {
             // Khi donthangtruoc là 0, chỉ hiển thị 100% nếu donthangnay > 0
             phantramthaydoi = (donthangnay > 0) ? 100.0 : 0.0;
         }
-
         // Định dạng tỷ lệ phần trăm với tối đa hai chữ số thập phân
         DecimalFormat order = new DecimalFormat("#.##");
         String formattedPercentageChangeOrder = order.format(phantramthaydoi);
-
+        
         model.addAttribute("currentMonthCountOrder", donthangnay);
         model.addAttribute("percentageChangeOrder", formattedPercentageChangeOrder);
+        
 
         // Lấy tổng tiền từ service
         Float tongTienFloat = donHangService.getTongTien();

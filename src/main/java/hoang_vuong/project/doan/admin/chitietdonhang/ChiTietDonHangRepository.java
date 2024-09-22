@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import hoang_vuong.project.doan.admin.chitietdonhang.ThongKeSanPhamDTO;
-
 public interface ChiTietDonHangRepository extends JpaRepository<ChiTietDonHang, Integer> {
 
         @Query("SELECT c FROM ChiTietDonHang c WHERE c.donHang.id = :id")
@@ -27,5 +25,6 @@ public interface ChiTietDonHangRepository extends JpaRepository<ChiTietDonHang, 
                         "GROUP BY sp.tenSP, sp.donGia " +
                         "ORDER BY SUM(ctdh.soLuong) DESC")
         List<ThongKeSanPhamDTO> thongKeTop10SanPhamBanChay(Pageable pageable);
+
 
 }

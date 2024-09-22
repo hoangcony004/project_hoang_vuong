@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 
-
-<!-- molla/contact.html  22 Nov 2019 10:04:01 GMT -->
-<head th:replace="client/fragments/head :: head"></head>
-
-<body>
-    <div class="page-wrapper">
-        <header th:replace="client/fragments/header :: header"></header>
         <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container">
@@ -18,12 +9,6 @@
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-            <div class="container">
-	        	<div class="page-header page-header-big text-center" style="background-image: url('assets/images/contact-header-bg.jpg')">
-        			<h1 class="page-title text-white">Contact us<span class="text-white">keep in touch with us</span></h1>
-	        	</div><!-- End .page-header -->
-            </div><!-- End .container -->
-
             <div class="page-content pb-0">
                 <div class="container">
                 	<div class="row">
@@ -112,86 +97,7 @@
 
                 	<hr class="mt-4 mb-5">
 
-                	<div class="stores mb-4 mb-lg-5">
-	                	<h2 class="title text-center mb-3">Our Stores</h2><!-- End .title text-center mb-2 -->
-
-	                	<div class="row">
-	                		<div class="col-lg-6">
-	                			<div class="store">
-	                				<div class="row">
-	                					<div class="col-sm-5 col-xl-6">
-	                						<figure class="store-media mb-2 mb-lg-0">
-	                							<img src="assets/images/stores/img-1.jpg" alt="image">
-	                						</figure><!-- End .store-media -->
-	                					</div><!-- End .col-xl-6 -->
-	                					<div class="col-sm-7 col-xl-6">
-	                						<div class="store-content">
-	                							<h3 class="store-title">Wall Street Plaza</h3><!-- End .store-title -->
-	                							<address>88 Pine St, New York, NY 10005, USA</address>
-	                							<div><a href="tel:#">+1 987-876-6543</a></div>
-
-	                							<h4 class="store-subtitle">Store Hours:</h4><!-- End .store-subtitle -->
-                								<div>Monday - Saturday 11am to 7pm</div>
-                								<div>Sunday 11am to 6pm</div>
-
-                								<a href="#" class="btn btn-link" target="_blank"><span>View Map</span><i class="icon-long-arrow-right"></i></a>
-	                						</div><!-- End .store-content -->
-	                					</div><!-- End .col-xl-6 -->
-	                				</div><!-- End .row -->
-	                			</div><!-- End .store -->
-	                		</div><!-- End .col-lg-6 -->
-
-	                		<div class="col-lg-6">
-	                			<div class="store">
-	                				<div class="row">
-	                					<div class="col-sm-5 col-xl-6">
-	                						<figure class="store-media mb-2 mb-lg-0">
-	                							<img src="assets/images/stores/img-2.jpg" alt="image">
-	                						</figure><!-- End .store-media -->
-	                					</div><!-- End .col-xl-6 -->
-
-	                					<div class="col-sm-7 col-xl-6">
-	                						<div class="store-content">
-	                							<h3 class="store-title">One New York Plaza</h3><!-- End .store-title -->
-	                							<address>88 Pine St, New York, NY 10005, USA</address>
-	                							<div><a href="tel:#">+1 987-876-6543</a></div>
-
-	                							<h4 class="store-subtitle">Store Hours:</h4><!-- End .store-subtitle -->
-												<div>Monday - Friday 9am to 8pm</div>
-												<div>Saturday - 9am to 2pm</div>
-												<div>Sunday - Closed</div>
-
-                								<a href="#" class="btn btn-link" target="_blank"><span>View Map</span><i class="icon-long-arrow-right"></i></a>
-	                						</div><!-- End .store-content -->
-	                					</div><!-- End .col-xl-6 -->
-	                				</div><!-- End .row -->
-	                			</div><!-- End .store -->
-	                		</div><!-- End .col-lg-6 -->
-	                	</div><!-- End .row -->
-                	</div><!-- End .stores -->
+            
                 </div><!-- End .container -->
-            	<div id="map"></div><!-- End #map -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
-
-        <footer  th:replace="client/fragments/footer :: footer" ></footer>
-    </div><!-- End .page-wrapper -->
-    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
-
-    <div th:replace="client/fragments/menu_mobile :: menu_mobile"></div>
-    <!-- Sign in / Register Modal -->
-    <div th:replace="client/fragments/register_modal :: register_modal"></div><!-- End .modal -->
-
-    <!-- Google Map -->
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDc3LRykbLB-y8MuomRUIY0qH5S6xgBLX4"></script>
-
-    <!-- Plugins JS File -->
-    <div th:replace="client/fragments/script :: script"></div>
-</body>
-
-
-<!-- molla/contact.html  22 Nov 2019 10:04:03 GMT -->
-</html>

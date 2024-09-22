@@ -9,30 +9,26 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
-import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.admin.quangcao.QuangCao;
 import hoang_vuong.project.doan.admin.quangcao.QuangCaoService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
-import hoang_vuong.project.doan.qdl.Qdl;
+import hoang_vuong.project.doan.client.DTO.sanphamDTOlist;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class TrangchuController {
   @Autowired
@@ -53,36 +49,45 @@ public class TrangchuController {
   public String formatPrice(float price) {
     DecimalFormat formatter = new DecimalFormat("#,###.00"); // Định dạng: phân cách hàng nghìn và 2 chữ số thập phân
     return formatter.format(price);
-  }
-
-  @GetMapping({
+}
+@PostMapping("/post/mnsx")
+@ResponseBody
+public List<sanphamDTOlist> getProductsByNsx(@RequestParam("id") int nsxId) {
+  // Lấy danh sách sản phẩm theo mã nhà sản xuất
+  List<SanPham> sanPhamList = dvl.timMaNSX(nsxId);
+  return sanPhamList.stream()
+      .map(sp -> new sanphamDTOlist(sp.getId(), sp.getTenSP(),sp.getAnhDaiDien(),sp.getDonGia()))
+      .collect(Collectors.toList());
+}
+ 
+    @GetMapping({
       "/apps",
-      "/"
-  })
-  public String get(Model model, HttpSession session) {
-
-    // java.util.List<SanPham> list = dvl.dsSanPham();
-    List<SanPham> noibat = dvl.dsSanPhamNoiBat();
-    List<SanPham> banchay = dvl.dsSanPhamBanChay();
-    List<QuangCao> dsquangcao = quangcao.choPhep();
-    // Format giá cho từng sản phẩm trong danh sách banchay
-    model.addAttribute("dsquangcao", dsquangcao);
-    model.addAttribute("ds_noibat", noibat);
-    model.addAttribute("ds_banchay", banchay);
-    // model.addAttribute("ds", list);
-
-    model.addAttribute("content", "client/index.html");
-
-    // System.out.println("\n uri before login: " + (String)
-    // session.getAttribute("URI_BEFORE_LOGIN"));
-    return "layouts/layout-client";
-  }
-
-  @GetMapping("/apps/product")
-  public String getXem(Model model, @RequestParam(value = "id") int id) {
-    // if (Qdl.KhachHangChuaDangNhap(request))
-    // return "redirect:/apps/dang-ky";
-    var dl = anhdv.dsmasp(id);
+    "/"
+    })
+    public String get(Model model, HttpSession session) {
+      
+        // java.util.List<SanPham> list = dvl.dsSanPham();
+      List<SanPham> noibat = dvl.dsSanPhamNoiBat();
+        List<SanPham> banchay = dvl.dsSanPhamBanChay();  
+        List<QuangCao> dsquangcao = quangcao.choPhep();
+        List<SanPham> dsall= dvl.dsSanPham();
+        model.addAttribute("spAll", dsall);
+      // Format giá cho từng sản phẩm trong danh sách banchay
+      model.addAttribute("dsquangcao", dsquangcao);
+                  model.addAttribute("ds_noibat", noibat);
+                  model.addAttribute("ds_banchay", banchay);    
+      //  model.addAttribute("ds", list);
+     
+       model.addAttribute("content", "client/index.html");
+       
+        // System.out.println("\n uri before login: " + (String) session.getAttribute("URI_BEFORE_LOGIN"));
+     return "layouts/layout-client";
+    }
+    @GetMapping("/apps/product") 
+ public String getXem(Model model, @RequestParam(value = "id") int id) {
+        // if (Qdl.KhachHangChuaDangNhap(request))
+        //     return "redirect:/apps/dang-ky";
+      var dl = anhdv.dsmasp(id);
     model.addAttribute("ds", dl);
     var dls = dvl.timTheoId(id);
 

@@ -23,11 +23,11 @@ import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -128,7 +128,7 @@ public class ThongKeController {
         }
 
         return "layouts/layout-admin.html";
-    }
+            }
 
     @GetMapping("/thong-ke-chi-tiet-tung-thang")
     public String thongKeChiTietTungThang(@RequestParam("year") int year,
@@ -163,7 +163,6 @@ public class ThongKeController {
 
         return "layouts/layout-admin.html";
     }
-
     @GetMapping("/thong-ke-don-hang")
     public String getThongKeDonHang(RedirectAttributes redirectAttributes, Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
