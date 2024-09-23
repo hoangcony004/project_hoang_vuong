@@ -33,10 +33,11 @@ public class AccountController {
     @Autowired
     DonHangService dhSV;
     @GetMapping("/apps/account")
-    public String getAcount(Model model, HttpSession session){
+    public String getAcount(Model model, HttpSession session,RedirectAttributes redirectAttributes){
          String khachhang_Email = (String) session.getAttribute("khachhang_Email");
     // Nếu email không tồn tại hoặc rỗng, chuyển hướng về trang /apps
     if (khachhang_Email == null || khachhang_Email.isEmpty()) {
+        redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn cần đăng nhập để truy cập trang này.");
         return "redirect:/apps";
     }
     // Lấy thông tin khách hàng theo email

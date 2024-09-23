@@ -66,7 +66,12 @@
 											<td th:text="${donhang.getFomatTongTien}"></td>
 											<td th:text="${donhang.ghiChu}"></td>
 											<td th:text="${donhang.diaChi}"></td>
-											<td th:text="${donhang.trangThai}"></td>
+											<td ><span th:if="${dl.trangThai} == 0" class="badge bg-primary">Đã đặt hàng</span>
+												<span th:if="${dl.trangThai} == 1" class="badge bg-warning">Xác nhận đơn hàng </span>
+												<span th:if="${dl.trangThai} == 2" class="badge bg-info">Đang giao hàng</span>
+												<span th:if="${dl.trangThai} == 3" class="badge bg-success">Giao hàng thành công</span> 
+												<span th: if="${dl.trangThai} == 4" class="badge bg-secondary">Hàng trà ve</span>
+												<span th: if="${dl.trangThai} == 5" class="badge bg-danger">Đã hủy đơn</span></td>
 										</tr>
 											</tbody>
 										</table>

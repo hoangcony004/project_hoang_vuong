@@ -138,7 +138,8 @@ public class Controller {
             } else {
                 dh.setMaKH(khachhang_Id);
             }
-
+            String maDonHang = dvlDonHang.generateOrderCode();
+            dh.setMaDH(maDonHang);
             var donhang = this.dvlDonHang.luuDonHang(dh);
             int maDon = donhang.getId();
             @SuppressWarnings("unchecked")

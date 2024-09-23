@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
@@ -27,6 +29,7 @@ import hoang_vuong.project.doan.admin.quangcao.QuangCaoService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.client.DTO.sanphamDTOlist;
+import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 @Controller
@@ -152,5 +155,57 @@ public List<sanphamDTOlist> getProductsByNsx(@RequestParam("id") int nsxId) {
     model.addAttribute("content", "client/category.html");
     return "layouts/layout-client";
   }
+      @GetMapping("/san-pham/tim-kiem")
+    public String getSearch(Model model,
+            @RequestParam("query") String query,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "9") int pageSize,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
+
+        // Kiểm tra nếu không có từ khóa tìm kiếm
+        if (query == null || query.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Chưa nhập từ khóa tìm kiếm.");
+            return "redirect:/";
+        }
+
+        // lấy số lượng sản phẩm đan có
+        Long totalProducts = dvl.getTotalProducts();
+        model.addAttribute("totalProducts", totalProducts);
+
+        // Tìm kiếm sản phẩm dựa trên từ khóa
+        List<SanPham> list = dvl.timSanPhamTheoTen(query);
+        int total = list.size();
+
+        // Kiểm tra nếu không có kết quả nào
+        if (total == 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không có kết quả nào trùng với từ khóa tìm kiếm.");
+            return "redirect:/";
+        }
+
+        // Phân trang danh sách kết quả
+        int start = (page - 1) * pageSize;
+        int end = Math.min((start + pageSize), list.size());
+        Page<SanPham> sanPhamPage = new PageImpl<>(list.subList(start, end), PageRequest.of(page - 1, pageSize), total);
+
+        // Thêm số thứ tự
+        int startIndex = (page - 1) * pageSize;
+        model.addAttribute("startIndex", startIndex);
+
+        // Thêm các thuộc tính cho giao diện
+        model.addAttribute("dlns", sanPhamPage.getContent());
+        model.addAttribute("page", sanPhamPage);
+        model.addAttribute("dl", new SanPham());
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sanPhamPage.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+
+        redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Tìn kiếm thành công !");
+        model.addAttribute("content", "client/category.html");
+        return "layouts/layout-client";
+    }
 
 }
