@@ -1,12 +1,10 @@
-
 <div class="mobile-menu-container" th:fragment="menu_mobile">
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-        <form action="#" method="get" class="mobile-search">
+        <form action="/san-pham/tim-kiem" method="get" class="mobile-search">
             <label for="mobile-search" class="sr-only">Tìm kiếm sản phẩm</label>
-            <input type="search" class="form-control" name="mobile-search" id="mobile-search"
-                placeholder="Tìm kiếm sản phẩm..." required>
+            <input type="search" class="form-control" name="query" placeholder="Tìm kiếm sản phẩm..." required>
             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
         </form>
 
@@ -37,7 +35,7 @@
                             <a href="/apps/categories">Sản Phẩm</a>
                         </li>
 
-                       
+
                         <li>
                             <a href="/apps/account" class="">Tài khoản của bạn</a>
 
@@ -82,4 +80,3 @@
             </div>
         </div>
     </div>
-

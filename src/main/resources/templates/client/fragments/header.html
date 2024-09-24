@@ -5,7 +5,7 @@
                 <a href="tel:#" th:text="${'Call: ' + caidat.get('phone')}"><i class="icon-phone"></i>Call: +0123 456
                     789</a>
             </div>
-            <div class="header-center">
+            <!-- <div class="header-center">
                 <div class="custom-alert alert-success alert-dismissible fade show" id="alert-box-success" th:if="${THONG_BAO_SUCCESS}">
                     <div th:text="${THONG_BAO_SUCCESS}">Thông báo đẩy ra ở đây</div>
                 </div>
@@ -14,7 +14,7 @@
                     <div th:text="${THONG_BAO_ERROR}">Thông báo đẩy ra ở đây</div>
                 </div>
                                              
-            </div>
+            </div> -->
             <div th:insert="~{client/fragments/styleError :: stylethongbao}"></div>
             <div class="header-right">
                 <ul class="top-menu">
