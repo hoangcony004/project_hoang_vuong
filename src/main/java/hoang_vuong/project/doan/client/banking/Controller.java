@@ -214,7 +214,7 @@ public class Controller {
         dh.setMaDH(maDonHang);
         Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
         if(khachhang_Id==null){
-            khachhang_Id =1010101010;
+            khachhang_Id = 0;
             dh.setMaKH(khachhang_Id);
         }else{
             dh.setMaKH(khachhang_Id);

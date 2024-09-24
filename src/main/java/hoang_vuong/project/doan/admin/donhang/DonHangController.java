@@ -111,9 +111,14 @@ public class DonHangController {
 
         System.out.println("Số lượng là: " + soLuong);
         System.out.println("Mã sản phẩm là: " + MaSP);
-
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
+        // Kiểm tra nếu đơn giá là số âm
+        if (dl.getTongTien() < 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Tổng tiền không được là số âm.");
+            return "redirect:/admin/don-hang";
+        }
+
         String maDonHang = dvl.generateOrderCode();
         System.out.println("Mã đơn hàng " + maDonHang);
         Float donGia = dl.getTongTien();

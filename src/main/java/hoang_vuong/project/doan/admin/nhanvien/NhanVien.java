@@ -39,6 +39,7 @@ public class NhanVien {
     private String matKhauMoi;
     private String nhapLaiMatKhauMoi;
 
+
     @Column(columnDefinition = "LONGTEXT")
     private String moTa;
 

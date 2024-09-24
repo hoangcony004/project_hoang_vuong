@@ -70,7 +70,11 @@ public class QuangCaoController {
 
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
-
+        // Kiểm tra nếu đơn giá là số âm
+        if (dl.getGiaTien() < 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Giá tiền không được là số âm.");
+            return "redirect:/admin/quang-cao";
+        }
         dl.setNgayTao(LocalDate.now());
         try {
             dvl.them(dl);
@@ -106,7 +110,10 @@ public class QuangCaoController {
             RedirectAttributes redirectAttributes) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
-
+        if (dl.getGiaTien() < 0) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Giá tiền không được là số âm.");
+            return "redirect:/admin/quang-cao";
+        }
         dl.setNgaySua(LocalDate.now());
         try {
             dvl.sua(dl);

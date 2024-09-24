@@ -95,6 +95,7 @@ public class ThongKeController {
             model.addAttribute("title", "Thống Kê Doanh Thu");
             model.addAttribute("content", "admin/dashboard/thongkedoanhthu.html");
             model.addAttribute("title_duyet", "Thống Kê Doanh Thu");
+            model.addAttribute("THONG_BAO_SUCCESS", "Thống kê doanh thu thành công");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
                     "Không thể thống kê sản phẩm. Mã lỗi: " + e.getMessage());
@@ -128,7 +129,7 @@ public class ThongKeController {
         }
 
         return "layouts/layout-admin.html";
-            }
+    }
 
     @GetMapping("/thong-ke-chi-tiet-tung-thang")
     public String thongKeChiTietTungThang(@RequestParam("year") int year,
@@ -163,6 +164,7 @@ public class ThongKeController {
 
         return "layouts/layout-admin.html";
     }
+
     @GetMapping("/thong-ke-don-hang")
     public String getThongKeDonHang(RedirectAttributes redirectAttributes, Model model) {
         if (Qdl.NhanVienChuaDangNhap(request))
