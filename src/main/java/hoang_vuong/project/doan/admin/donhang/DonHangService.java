@@ -287,5 +287,11 @@ public class DonHangService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
-
+    public boolean xoaDonHang(int id) {
+        if (kdl.existsById(id)) {
+            kdl.deleteById(id);
+            return true;
+        }
+        return false; // If the record does not exist, return false
+    }
 }

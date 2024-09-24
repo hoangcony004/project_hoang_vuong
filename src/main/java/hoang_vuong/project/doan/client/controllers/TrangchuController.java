@@ -207,5 +207,9 @@ public List<sanphamDTOlist> getProductsByNsx(@RequestParam("id") int nsxId) {
         model.addAttribute("content", "client/category.html");
         return "layouts/layout-client";
     }
-
+        @GetMapping("/apps/error")
+        public String getError(Model model){
+          model.addAttribute("content", "client/404.html");
+        return "layouts/layout-client";
+        }
 }

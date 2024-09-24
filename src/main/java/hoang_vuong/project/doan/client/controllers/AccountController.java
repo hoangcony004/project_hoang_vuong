@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,4 +71,18 @@ public ResponseEntity<Map<String, String>> postEdit(@ModelAttribute("formKH") Kh
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
+
+@PostMapping("/donhang/xoa")
+public ResponseEntity<?> xoaDonHang(@RequestParam("id") int id) {
+    // Gọi phương thức trong service để xóa đơn hàng
+    boolean isDeleted = dhSV.xoaDonHang(id);
+    
+    if (isDeleted) {
+        return ResponseEntity.ok().body(Map.of("success", "Đơn hàng đã được xóa thành công!"));
+    } else {
+        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Có lỗi xảy ra trong quá trình xóa đơn hàng."));
+    }
+}
+
+
 }
