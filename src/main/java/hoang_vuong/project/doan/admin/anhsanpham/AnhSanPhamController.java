@@ -90,21 +90,20 @@ public class AnhSanPhamController {
     }
 
     @GetMapping("/anh-san-pham/sua")
-    public String getEdit(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    public String getEdit(Model model, @RequestParam("id") int id) {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        try {
-            var dl = dvl.xem(id);
-            List<SanPham> dsSanPham = sanPhamService.dsSanPham();
-            model.addAttribute("dsSanPham", dsSanPham);
-            model.addAttribute("title_btn_add", "Sửa Ảnh Sản Phẩm");
-            model.addAttribute("title_sm", "Cập nhật");
-            model.addAttribute("dl", dl);
-            model.addAttribute("action", "/admin/anh-san-pham/sua");
-        } catch (Exception e) {
-            model.addAttribute("THONG_BAO_ERROR", "Không thể xem. Mã lỗi: " + e.getMessage());
-        }
+        var dl = dvl.xem(id);
+
+        List<SanPham> dsSanPham = sanPhamService.dsSanPham();
+        model.addAttribute("dsSanPham", dsSanPham);
+
+        model.addAttribute("title_btn_add", "Sửa Ảnh Sản Phẩm");
+        model.addAttribute("title_sm", "Cập nhật");
+        model.addAttribute("dl", dl);
+        model.addAttribute("action", "/admin/anh-san-pham/sua");
+
         return "admin/anhsanpham/form-bs4-asp.html";
 
     }
@@ -117,6 +116,7 @@ public class AnhSanPhamController {
             return "redirect:/admin/dang-nhap";
 
         dl.setNgaySua(LocalDate.now());
+
         try {
             dvl.sua(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã sửa thành công!");

@@ -6,20 +6,16 @@
                     789</a>
             </div>
             <div class="header-center">
-                <div class="alert alert-success" id="alert-box" th:if="${THONG_BAO_SUCCESS}">
-                    <div th:text="${THONG_BAO_SUCCESS}">
-                        Thông báo đẩy ra ở đây
-                    </div>
-                    <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
+                <div class="custom-alert alert-success alert-dismissible fade show" id="alert-box-success" th:if="${THONG_BAO_SUCCESS}">
+                    <div th:text="${THONG_BAO_SUCCESS}">Thông báo đẩy ra ở đây</div>
                 </div>
-                <div class="alert alert-danger" id="alert-box" th:if="${THONG_BAO_ERROR}">
-                    <div th:text="${THONG_BAO_ERROR}">
-                        Thông báo đẩy ra ở đây
-                    </div>
-                    <button type="button" id="close-button" class="close" aria-label="Close">&times;</button>
+                
+                <div class="custom-alert alert-danger alert-dismissible fade show" id="alert-box-error" th:if="${THONG_BAO_ERROR}">
+                    <div th:text="${THONG_BAO_ERROR}">Thông báo đẩy ra ở đây</div>
                 </div>
+                                             
             </div>
-            <div th:insert="~{admin/fragments/stylethongbao :: stylethongbao}"></div>
+            <div th:insert="~{client/fragments/styleError :: stylethongbao}"></div>
             <div class="header-right">
                 <ul class="top-menu">
                     <li>
@@ -68,7 +64,7 @@
             <div class="header-center">
                 <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="/apps/search" method="get">
+                    <form action="/san-pham/tim-kiem" method="get">
                         <div class="header-search-wrapper search-wrapper-wide">
                             <label for="q" class="sr-only">Tìm kiếm</label>
                             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
@@ -170,8 +166,8 @@
                             <ul>
                                 <li><a href="/apps/auth">Login</a></li>
                                 <li><a href="/apps/contact">Liên hệ</a></li>
-                                <li><a href="404.html">Error 404</a></li>
-                                <li><a href="coming-soon.html">Coming Soon</a></li>
+                                <li><a href="/apps/error">Error 404</a></li>
+                             
                             </ul>
                         </li>
                     </ul><!-- End .menu -->

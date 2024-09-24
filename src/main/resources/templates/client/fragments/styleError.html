@@ -1,0 +1,93 @@
+<div th:fragment="stylethongbao">
+    <style>
+/* Base styling for both success and error alerts */
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    padding: 15px;
+    z-index: 1050;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    animation: slideDown 0.5s ease;
+}
+
+/* Success alert styling */
+.alert-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+/* Error alert styling */
+.alert-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+/* Animation for slide down */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Extra styling for spacing between multiple alerts */
+.custom-alert + .custom-alert {
+    margin-top: 10px;
+}
+
+
+
+    </style>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all alerts
+    const successAlert = document.getElementById('alert-box-success');
+    const errorAlert = document.getElementById('alert-box-error');
+
+    // Auto-close success alert after 2 seconds
+    if (successAlert) {
+        setTimeout(function() {
+            successAlert.style.animation = "fadeOut 1s ease";
+            setTimeout(function() {
+                successAlert.remove();
+            }, 1000); // Removes the alert from the DOM after fade out
+        }, 2000); // Wait 2 seconds before starting the fade out
+    }
+
+    // Auto-close error alert after 2 seconds
+    if (errorAlert) {
+        setTimeout(function() {
+            errorAlert.style.animation = "fadeOut 1s ease";
+            setTimeout(function() {
+                errorAlert.remove();
+            }, 1000); // Removes the alert from the DOM after fade out
+        }, 2000); // Wait 2 seconds before starting the fade out
+    }
+});
+
+
+    </script>
+</div>

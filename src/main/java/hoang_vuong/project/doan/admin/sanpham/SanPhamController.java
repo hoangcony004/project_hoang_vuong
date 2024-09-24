@@ -89,13 +89,7 @@ public class SanPhamController {
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
 
-        // Kiểm tra nếu đơn giá là số âm
-        if (dl.getDonGia() < 0) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đơn giá không được là số âm.");
-            return "redirect:/admin/san-pham";
-        }
         dl.setNgayTao(LocalDate.now());
-
         try {
             dvl.them(dl);
             redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
@@ -148,11 +142,7 @@ public class SanPhamController {
 
         if (Qdl.NhanVienChuaDangNhap(request))
             return "redirect:/admin/dang-nhap";
-        // Kiểm tra nếu đơn giá là số âm
-        if (dl.getDonGia() < 0) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đơn giá không được là số âm.");
-            return "redirect:/admin/san-pham";
-        }
+
         dl.setNgaySua(LocalDate.now());
 
         try {

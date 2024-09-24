@@ -1,7 +1,43 @@
 <div th:fragment="script">
       <!-- Plugins JS File -->
-   
-      <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    $('.status-delete').on('click', function(e) { 
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+
+        var orderId = $(this).data('id'); 
+        console.log(orderId)// Lấy ID đơn hàng từ thuộc tính data-id
+        // Hiển thị thông báo xác nhận trước khi xóa
+        if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?')) {
+            // Gửi yêu cầu AJAX để xóa đơn hàng
+            $.ajax({
+                url: '/donhang/xoa', // Đường dẫn tới endpoint xóa đơn hàng
+                type: 'POST',
+                data: {
+                    id: orderId // Gửi ID của đơn hàng cần xóa
+                },
+                success: function(response) {
+                    // Xử lý phản hồi từ server
+                    if (response.success) {
+                        alert('Đơn hàng đã được xóa thành công!');
+                        location.reload();
+                        // Cập nhật lại giao diện nếu cần
+                        // Có thể xóa phần tử đơn hàng khỏi giao diện
+                        // $('#order_' + orderId).remove();
+                    } else {
+                        alert('Có lỗi xảy ra: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Lỗi: Không thể xóa đơn hàng.');
+                }
+            });
+        }
+    });
+});
+
+  </script>
       <script>
      $(document).ready(function() {
     $('.mnsx_shop').on('click', function(e) {
