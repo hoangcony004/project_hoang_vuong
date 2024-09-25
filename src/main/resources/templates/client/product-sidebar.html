@@ -62,10 +62,11 @@
                                                 <div class="details-action-col">
                                                     <label for="qty">Qty:</label>
                                                     <div class="product-details-quantity">
-                                                        <input type="number"  class="form-control"  id="soluong" value="1"  min="1" max="10" step="1" data-decimals="0" required>
+                                                        <input type="number"  class="form-control"  id="soluong" value="1"  min="1" th:max="${dl.soLuong}" step="1" data-decimals="0" required>
                                                     </div><!-- End .product-details-quantity -->
-
-                                                    <button  th:onclick="cart.add([[${dl.id}]], $('#soluong').val(), [[${dl.tenSP}]])" class="btn-product btn-cart"> <span>add to cart</span></button>
+                                                    <input id="product" type="hidden" th:data-so-luong="${dl.soLuong}">
+                                                    <div id="neuhethang"></div>
+                                                    <button id="myneuhethang"  th:onclick="cart.add([[${dl.id}]], $('#soluong').val(), [[${dl.tenSP}]])" class="btn-product btn-cart"> <span>add to cart</span></button>
                                                 </div><!-- End .details-action-col -->
 
                                                 <div class="details-action-wrapper">
@@ -477,3 +478,12 @@
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
+<script>
+ let soLuong = document.getElementById('product').getAttribute('data-so-luong');
+    soLuong = parseInt(soLuong, 10);
+
+    if (soLuong === 0) {
+        document.getElementById('neuhethang').innerHTML = "Hết hàng";
+        document.getElementById('myneuhethang').style.display = 'none';
+    }
+</script>

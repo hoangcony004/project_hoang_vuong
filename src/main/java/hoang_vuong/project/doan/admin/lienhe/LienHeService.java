@@ -59,6 +59,12 @@ public class LienHeService {
     public void luu(LienHe dl) {
         this.kdl.save(dl);
     }
+    public boolean luulh(LienHe dl) {
+        if(kdl.save(dl) != null){
+            return true;
+        }
+        return false;
+    }
 
     public void them(LienHe dl) {
         this.kdl.save(dl);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHang;
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
@@ -260,9 +261,10 @@ public class Controller {
     }
 
     @GetMapping("/apps/checkout")
-    public String getGioHangThanhToan(Model model, HttpServletRequest request) {
-        if// nếu không có sản phẩm
-        (!gioHangCoSanPham()) {
+    public String getGioHangThanhToan(Model model, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+        if//nếu không có sản phẩm
+        (!gioHangCoSanPham()){
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Giỏ chưa có sản phẩm!");
             return "redirect:/";
         }
         int maKhachHang = 1;
