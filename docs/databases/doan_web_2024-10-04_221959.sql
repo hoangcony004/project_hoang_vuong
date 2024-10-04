@@ -88,7 +88,7 @@ CREATE TABLE `chi_tiet_don_hang` (
   KEY `FK98u87ds1aj1339w293i4er4fx` (`masp`),
   CONSTRAINT `FK98u87ds1aj1339w293i4er4fx` FOREIGN KEY (`masp`) REFERENCES `san_pham` (`id`),
   CONSTRAINT `FKt57maavf6s28hxyar724mdr1b` FOREIGN KEY (`don_hang_id`) REFERENCES `don_hang` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `chi_tiet_don_hang` (
 --
 
 /*!40000 ALTER TABLE `chi_tiet_don_hang` DISABLE KEYS */;
-INSERT INTO `chi_tiet_don_hang` VALUES (33,5794440,13,'512GB, Vàng Cứt',NULL,'2024-09-23',1,5794440,59,'Realme 3 Pro'),(34,25400000,10,NULL,NULL,'2024-09-23',1,25400000,60,NULL),(35,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-23',1,11005000,61,'Xiaomi 11'),(36,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-24',1,11005000,63,'Xiaomi 11'),(37,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,64,'SamSung S23 UTra'),(38,27600000,8,'512GB, Xám, Pin 97%',NULL,'2024-09-24',1,27600000,65,'IPhone 15 Pro Max'),(39,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',2,38888800,66,'SamSung S23 UTra'),(40,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,67,'SamSung S23 UTra');
+INSERT INTO `chi_tiet_don_hang` VALUES (33,5794440,13,'512GB, Vàng Cứt',NULL,'2024-09-23',1,5794440,59,'Realme 3 Pro'),(34,25400000,10,NULL,NULL,'2024-09-23',1,25400000,60,NULL),(35,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-23',1,11005000,61,'Xiaomi 11'),(36,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-24',1,11005000,63,'Xiaomi 11'),(37,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,64,'SamSung S23 UTra'),(38,27600000,8,'512GB, Xám, Pin 97%',NULL,'2024-09-24',1,27600000,65,'IPhone 15 Pro Max'),(39,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',2,38888800,66,'SamSung S23 UTra'),(40,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,67,'SamSung S23 UTra'),(41,5794440,13,'512GB, Vàng Cứt','2024-10-04','2024-10-04',1,5794440,68,'Realme 3 Pro'),(44,19444400,10,'128GB, Xanh Đen',NULL,'2024-10-04',1,19444400,71,'SamSung S23 UTra');
 /*!40000 ALTER TABLE `chi_tiet_don_hang` ENABLE KEYS */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `don_hang` (
   UNIQUE KEY `UKn067siyskj21r17c860rg1eik` (`madh`),
   KEY `FKiy9wbkgc3iv3ome6new025n9o` (`makh`),
   CONSTRAINT `FKiy9wbkgc3iv3ome6new025n9o` FOREIGN KEY (`makh`) REFERENCES `khach_hang` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `don_hang` (
 --
 
 /*!40000 ALTER TABLE `don_hang` DISABLE KEYS */;
-INSERT INTO `don_hang` VALUES (59,'0388937608','nguyenduchoang522@gmail.com','sadfas',0,'2023-09-23','Nguyễn Đức Hoàng',5794440,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH165440','monkey'),(60,'0987654377','nguyenduchoang522@gmail.com','ádfsad',0,'2024-09-23','Nguyễn Đức Hoàng',25400000,0,'100','Quận Nam Từ Liêm','Thành phố Hà Nội','Phường Đại Mỗ','DH358810',NULL),(61,'0388937608','test123@gmail.com','sgasg',0,'2024-09-23','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH572062','monkey'),(63,'0388937608','test123@gmail.com','fghdf',0,'2024-09-24','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Chương Dương Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH941153','monkey'),(64,'0388937608','test123@gmail.com','sadvasdv',0,'2024-09-24','Nguyễn Đức Hoàng',19444400,0,'Ngõ 1,  (Phường Thanh Xuân Nam Quận Thanh Xuân Thành phố Hà Nội)',NULL,NULL,NULL,'DH949911','monkey'),(65,'0388937608','test123@gmail.com','ggg',0,'2024-09-24','Nguyễn Đức Hoàng',27600000,0,'Ngõ 1,  (Phường Nhật Tân Quận Tây Hồ Thành phố Hà Nội)',NULL,NULL,NULL,'DH188551','monkey'),(66,'0388937608','test123@gmail.com','dfdf',0,'2024-09-24','Nguyễn Đức Hoàng',38888800,0,'Ngõ 1,  (Phường Thạch Bàn Quận Long Biên Thành phố Hà Nội)',NULL,NULL,NULL,'DH524564','monkey'),(67,'0388937608','hoang@gmail.com','dfgsd',0,'2024-09-24','Nguyễn Đức Hoàng',19444400,1,'Ngõ 1,  (Phường Cửa Nam Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH886004','monkey');
+INSERT INTO `don_hang` VALUES (59,'0388937608','nguyenduchoang522@gmail.com','sadfas',0,'2023-08-23','Nguyễn Đức Hoàng',5794440,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH165440','monkey'),(60,'0987654377','nguyenduchoang522@gmail.com','ádfsad',0,'2024-09-23','Nguyễn Đức Hoàng',25400000,0,'100','Quận Nam Từ Liêm','Thành phố Hà Nội','Phường Đại Mỗ','DH358810',NULL),(61,'0388937608','test123@gmail.com','sgasg',0,'2024-09-23','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH572062','monkey'),(63,'0388937608','test123@gmail.com','fghdf',0,'2024-09-24','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Chương Dương Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH941153','monkey'),(64,'0388937608','test123@gmail.com','sadvasdv',0,'2024-09-24','Nguyễn Đức Hoàng',19444400,0,'Ngõ 1,  (Phường Thanh Xuân Nam Quận Thanh Xuân Thành phố Hà Nội)',NULL,NULL,NULL,'DH949911','monkey'),(65,'0388937608','test123@gmail.com','ggg',0,'2024-09-24','Nguyễn Đức Hoàng',27600000,0,'Ngõ 1,  (Phường Nhật Tân Quận Tây Hồ Thành phố Hà Nội)',NULL,NULL,NULL,'DH188551','monkey'),(66,'0388937608','test123@gmail.com','dfdf',0,'2024-09-24','Nguyễn Đức Hoàng',38888800,0,'Ngõ 1,  (Phường Thạch Bàn Quận Long Biên Thành phố Hà Nội)',NULL,NULL,NULL,'DH524564','monkey'),(67,'0388937608','hoang@gmail.com','dfgsd',0,'2024-10-24','Nguyễn Đức Hoàng',19444400,1,'Ngõ 1,  (Phường Cửa Nam Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH886004','monkey'),(68,'0388937608','hoang@gmail.com','dfgddfgdf',0,'2024-10-04','Nguyễn Đức Hoàng',5794440,1,'Ngõ 1,  (Phường Kim Mã Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH224270','banking'),(71,'0974653212','hoang999@gmail.com','',12,'2024-10-04','Nguyễn Đức Hoàng',19444400,1,'Ngõ 1,  (Xã Thái Học Huyện Bảo Lâm Tỉnh Cao Bằng)',NULL,NULL,NULL,'DH221392','monkey');
 /*!40000 ALTER TABLE `don_hang` ENABLE KEYS */;
 
 --
@@ -160,7 +160,7 @@ CREATE TABLE `khach_hang` (
   UNIQUE KEY `UKnlomnykdsca5gj0oakbh2cpu` (`dien_thoai`),
   UNIQUE KEY `UKj3lhg8opnqln2wcb41cp14xn9` (`email`),
   UNIQUE KEY `UKjbvtsjsqvol6fe5y1jwdu8oui` (`ten_dang_nhap`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `khach_hang` (
 --
 
 /*!40000 ALTER TABLE `khach_hang` DISABLE KEYS */;
-INSERT INTO `khach_hang` VALUES (0,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','Thành Phố Hà Nội','0987654321','admin999@gmail.com','$2a$12$LAB2U5DtJF7mFzdoBlTSAe7TKZMdwd5DATege1BcjNpWQ.co4c49W','2024-09-13','2024-08-13','admin','Khách Vãn Lai',0x00),(3,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453455','levanc55@gmail.com','$2a$12$6NlaUOyra1z57BKL9uxVBuYGh/g5fTQzrkrjDM5PuZHM.NHpi8/0u',NULL,'2024-09-19','levanC1','nguyen duc hoang',0x01),(4,NULL,NULL,'hoang00','hoang00090@gmail.com','$2a$12$GwadLZR4xCWUNIq1IqoYpeaVUwjPZ/f62LndOC9j59BCTq9kzHxU2','2024-09-20','2024-09-20',NULL,NULL,NULL),(7,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453478','levanc4445@gmail.com','$2a$12$U90nWWapc3r49.Jq4M0wl.d7b2i/neW0ra3TxPczXTppbW7PWkKVG',NULL,'2024-09-22','hoang000','nguyen duc hoang',0x01),(8,NULL,NULL,'hoang2004','nam682800@gmail.com','$2a$12$fz79ECIBUKOT7t3Cb0nHhO71vzQMIVzN9kxSUhy/6NEPRbPdE7uWO','2024-09-23','2024-09-23',NULL,NULL,NULL),(10,NULL,NULL,'12345678967','hoang111@gmail.com','$2a$12$dF9sEnWNYqf4lrGKSTvFvusDM889c6XDCM1OleS/Ex8k4JK.2u3DG','2024-09-24','2024-09-24',NULL,NULL,NULL);
+INSERT INTO `khach_hang` VALUES (0,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','Thành Phố Hà Nội','0987654321','admin999@gmail.com','$2a$12$LAB2U5DtJF7mFzdoBlTSAe7TKZMdwd5DATege1BcjNpWQ.co4c49W','2024-09-13','2024-08-13','admin','Khách Vãn Lai',0x00),(3,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453455','levanc55@gmail.com','$2a$12$6NlaUOyra1z57BKL9uxVBuYGh/g5fTQzrkrjDM5PuZHM.NHpi8/0u',NULL,'2024-09-19','levanC1','nguyen duc hoang',0x01),(4,NULL,NULL,'hoang00','hoang00090@gmail.com','$2a$12$GwadLZR4xCWUNIq1IqoYpeaVUwjPZ/f62LndOC9j59BCTq9kzHxU2','2024-09-20','2024-09-20',NULL,NULL,NULL),(7,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453478','levanc4445@gmail.com','$2a$12$U90nWWapc3r49.Jq4M0wl.d7b2i/neW0ra3TxPczXTppbW7PWkKVG',NULL,'2024-09-22','hoang000','nguyen duc hoang',0x01),(10,NULL,NULL,'12345678967','hoang111@gmail.com','$2a$12$dF9sEnWNYqf4lrGKSTvFvusDM889c6XDCM1OleS/Ex8k4JK.2u3DG','2024-09-24','2024-09-24',NULL,NULL,NULL),(12,NULL,NULL,'0974653212','hoang999@gmail.com','$2a$12$0mFSzpsGt1.BGo0EE5hS0OKmfUEFVXaBaQPcyZrwu.guMRDpuj2xW','2024-10-04','2024-10-04',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `khach_hang` ENABLE KEYS */;
 
 --
@@ -347,4 +347,4 @@ INSERT INTO `san_pham` VALUES (8,'https://i.postimg.cc/dQzv4bn0/IPhone-15-Pro-Ma
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-24 14:38:57
+-- Dump completed on 2024-10-04 22:20:13

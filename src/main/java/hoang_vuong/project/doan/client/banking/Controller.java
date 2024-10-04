@@ -161,7 +161,6 @@ public class Controller {
                 ctdh.setSoLuong(soLuong);
                 ctdh.setTongTien(soLuong * sp.getDonGia());
                 ctdh.setNgayTao(LocalDate.now());
-                ctdh.setNgaySua(LocalDate.now());
 
                 this.dvlChiTietDonHang.luu(ctdh);
 
@@ -262,9 +261,10 @@ public class Controller {
     }
 
     @GetMapping("/apps/checkout")
-    public String getGioHangThanhToan(Model model, HttpServletRequest request) {
+    public String getGioHangThanhToan(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if// nếu không có sản phẩm
         (!gioHangCoSanPham()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Giỏ hàng trống!");
             return "redirect:/";
         }
         int maKhachHang = 1;

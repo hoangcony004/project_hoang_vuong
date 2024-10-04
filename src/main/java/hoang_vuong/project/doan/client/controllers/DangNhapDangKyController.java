@@ -20,7 +20,6 @@ import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 @RequestMapping("/apps")
 public class DangNhapDangKyController {
@@ -54,9 +53,9 @@ public class DangNhapDangKyController {
         dl.setNgaySua(LocalDate.now());
         try {
             dvl.luuKhachHang(dl);
-            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã đăng ký thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đăng ký ko thành công!");
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đăng ký không thành công!");
         }
 
         return "redirect:/apps/auth";
@@ -69,7 +68,6 @@ public class DangNhapDangKyController {
             @RequestParam("matKhau") String MatKhau,
             HttpServletRequest request,
             HttpSession session) {
-
 
         String old_pss = null;
 
@@ -89,6 +87,7 @@ public class DangNhapDangKyController {
                 request.getSession().setAttribute("khachhang_Email", old_dl.getEmail());
 
                 var uriBeforeLogin = (String) session.getAttribute("URI_BEFORE_LOGIN_USER");
+                redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đăng nhập thành công!");
                 return uriBeforeLogin != null ? "redirect:" + uriBeforeLogin : "redirect:/";
             } else {
                 // Sai mật khẩu

@@ -218,16 +218,20 @@
                         thongKe = {}; // Nếu có lỗi, khởi tạo thongKe là một đối tượng rỗng
                     }
 
-                    console.log(thongKe); // Kiểm tra dữ liệu
+                    console.log("du lieu", thongKe); // Kiểm tra dữ liệu
 
                     const xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
                         "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
-                    const yValues = [];
 
-                    // Đổ dữ liệu vào yValues từ thongKe
-                    for (let i = 1; i <= 12; i++) {
-                        yValues.push(thongKe[i] || 0); // Nếu không có thì để là 0
+                    // Tạo mảng yValues với 12 tháng, mặc định là 0
+                    const yValues = new Array(12).fill(0);
+
+                    // Đổ dữ liệu từ thongKe, đảm bảo gán đúng vị trí trong yValues
+                    for (const [month, value] of Object.entries(thongKe)) {
+                        yValues[month] = value; // Lấy thongKe[i] tương ứng với tháng i, trừ đi 1 để khớp với chỉ số mảng
                     }
+
+                    console.log("du lieu sau khi xử lý:", yValues); // Kiểm tra dữ liệu sau khi đã được gán đúng vị trí
 
                     const barColors = ["red", "green", "blue", "orange", "brown", "purple",
                         "cyan", "magenta", "lime", "yellow", "gray", "pink"];
@@ -255,6 +259,7 @@
                         }
                     });
                 </script>
+
 
             </div>
 

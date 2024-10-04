@@ -5,16 +5,18 @@
                 <a href="tel:#" th:text="${'Call: ' + caidat.get('phone')}"><i class="icon-phone"></i>Call: +0123 456
                     789</a>
             </div>
-            <!-- <div class="header-center">
-                <div class="custom-alert alert-success alert-dismissible fade show" id="alert-box-success" th:if="${THONG_BAO_SUCCESS}">
+            <div class="header-center">
+                <div class="custom-alert alert-success alert-dismissible fade show" id="alert-box-success"
+                    th:if="${THONG_BAO_SUCCESS}">
                     <div th:text="${THONG_BAO_SUCCESS}">Thông báo đẩy ra ở đây</div>
                 </div>
-                
-                <div class="custom-alert alert-danger alert-dismissible fade show" id="alert-box-error" th:if="${THONG_BAO_ERROR}">
+
+                <div class="custom-alert alert-danger alert-dismissible fade show" id="alert-box-error"
+                    th:if="${THONG_BAO_ERROR}">
                     <div th:text="${THONG_BAO_ERROR}">Thông báo đẩy ra ở đây</div>
                 </div>
-                                             
-            </div> -->
+
+            </div>
             <div th:insert="~{client/fragments/styleError :: stylethongbao}"></div>
             <div class="header-right">
                 <ul class="top-menu">
@@ -29,10 +31,12 @@
                                     <div class="header-menu">
                                         <ul>
                                             <li>
-                                                <a th:href="@{/apps/auth}" th:if="${khachhang_Email == null}">Đăng Nhập</a>
+                                                <a th:href="@{/apps/auth}" th:if="${khachhang_Email == null}">Đăng
+                                                    Nhập</a>
                                             </li>
                                             <li>
-                                                <a th:if="${khachhang_Email != null}" th:href="@{/apps/doi-mat-khau}">Đổi
+                                                <a th:if="${khachhang_Email != null}"
+                                                    th:href="@{/apps/doi-mat-khau}">Đổi
                                                     mật khẩu</a>
                                             </li>
                                             <li><a th:if="${khachhang_Email != null}" th:href="@{/apps/dang-xuat}">Đăng
@@ -135,7 +139,9 @@
                         <nav class="side-nav">
                             <ul class="menu-vertical sf-arrows" th:each="dl : ${dlnsx}">
 
-                                <li class="item-lead"><a th:href="@{/apps/categories?id=}+${dl.id}"  ><h8 th:text="${dl.ten}"></h8></a></li>
+                                <li class="item-lead"><a th:href="@{/apps/categories?id=}+${dl.id}">
+                                        <h8 th:text="${dl.ten}"></h8>
+                                    </a></li>
                                 <!-- <li class="item-lead"><a th:href="${dl.link}" th:text=${dl.ten}></a></li> -->
                             </ul><!-- End .menu-vertical -->
                         </nav><!-- End .side-nav -->
@@ -155,7 +161,7 @@
                             <a href="/apps/categories">Sản Phẩm</a>
                         </li>
 
-                       
+
                         <li>
                             <a href="/apps/account" class="">Tài khoản của bạn</a>
 
@@ -167,7 +173,7 @@
                                 <li><a href="/apps/auth">Login</a></li>
                                 <li><a href="/apps/contact">Liên hệ</a></li>
                                 <li><a href="/apps/error">Error 404</a></li>
-                             
+
                             </ul>
                         </li>
                     </ul><!-- End .menu -->
@@ -176,4 +182,3 @@
         </div><!-- End .container -->
     </div><!-- End .header-bottom -->
 </header><!-- End .header -->
-
