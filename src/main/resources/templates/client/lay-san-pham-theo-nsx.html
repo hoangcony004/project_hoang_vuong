@@ -1,0 +1,27 @@
+<div class="product-list">
+    <div th:each="sanPham : ${sanPhams}" class="product product-7 text-center">
+        <figure class="product-media">
+            <a th:href="@{/product/{id}(id=${sanPham.id})}">
+                <img th:src="@{${sanPham.anhDaiDien}}" alt="Product image" class="product-image">
+            </a>
+
+            <div class="product-action-vertical">
+                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm Yêu Thích</span></a>
+            </div>
+
+            <div class="product-action">
+                <a href="#" class="btn-product btn-cart"><span>Thêm vào giỏ hàng</span></a>
+            </div>
+        </figure>
+
+        <div class="product-body">
+            <div class="product-cat">
+                <a href="#">Women</a>
+            </div>
+            <h3 class="product-title"><a th:href="@{/product/{id}(id=${sanPham.id})}"><span
+                        th:text="${sanPham.tenSP}">Ten SP</a></h3>
+            <div class="product-price" th:text="${sanPham.getFomatGiaBan}">Giá</div>
+        </div>
+    </div>
+</div>
+</div>

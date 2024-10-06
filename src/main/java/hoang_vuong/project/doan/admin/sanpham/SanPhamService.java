@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +21,15 @@ import java.util.stream.Collectors;
 public class SanPhamService {
     @Autowired
     private SanPhamRepository kdl;
+
+    public List<SanPham> getSanPhamsByNSX(Integer maNSX) {
+        // Tại đây bạn có thể thêm các logic xử lý nếu cần
+        return kdl.findByMaNSX(maNSX);
+    }
+
+    public List<SanPham> getRandomSanPhams() {
+        return kdl.findRandomSanPhams();
+    }
 
     public Long getTotalProducts() {
         return kdl.countTotalProducts();
@@ -81,7 +89,6 @@ public class SanPhamService {
         return kdl.findByTenSPContaining(tenSanPham);
     }
 
- 
     public Page<SanPham> duyetSanPhamTheoId(int id, Pageable pageable) {
         return kdl.findByMaNSX(id, pageable);
     }
@@ -98,6 +105,7 @@ public class SanPhamService {
     public List<SanPham> trangthai() {
         return kdl.findByTrangThai(true);
     }
+
     public List<SanPham> timMaNhnuat(int maNSX) {
         return kdl.findByMaNSX(maNSX);
     }
@@ -116,7 +124,6 @@ public class SanPhamService {
         return dl;
 
     }
-
 
     public List<SanPham> timMaNSX(int maNSX) {
         return kdl.findByMaNSX(maNSX);
@@ -153,29 +160,32 @@ public class SanPhamService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
+
     public List<SanPham> dsSanPhamNoiBat() {
         return getSanPhamByCondition(kdl::findByNoiBat);
     }
-    
+
     public List<SanPham> dsSanPhamBanChay() {
         return getSanPhamByCondition(kdl::findByBanChay);
     }
+
     public List<SanPham> dsSanPham() {
-        return  getSanPhamByConditionall(this::duyet);
+        return getSanPhamByConditionall(this::duyet);
     }
-    
+
     private List<SanPham> getSanPhamByCondition(Function<Boolean, List<SanPham>> fetchFunction) {
-        List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
-        return sanPhams.stream()               // Lọc theo điều kiện nổi bật hoặc bán chạy
+        List<SanPham> sanPhams = trangthai(); // Lọc theo trạng thái
+        return sanPhams.stream() // Lọc theo điều kiện nổi bật hoặc bán chạy
                 .filter(sp -> fetchFunction.apply(true).contains(sp))
-                .limit(16)       
+                .limit(16)
                 .collect(Collectors.toList());
     }
+
     private List<SanPham> getSanPhamByConditionall(Supplier<List<SanPham>> fetchFunction) {
-        List<SanPham> sanPhams = trangthai();  // Lọc theo trạng thái
-        return sanPhams.stream()               // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
+        List<SanPham> sanPhams = trangthai(); // Lọc theo trạng thái
+        return sanPhams.stream() // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
                 .filter(sp -> fetchFunction.get().contains(sp)) // Sử dụng get() của Supplier
-                .limit(16)       
+                .limit(16)
                 .collect(Collectors.toList());
     }
 }
