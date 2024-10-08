@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import hoang_vuong.project.doan.admin.donhang.DoanhThuThang;
 
 public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
+
+        @Query("SELECT dh FROM DonHang dh WHERE dh.ngayTao BETWEEN :startDate AND :endDate")
+        List<DonHang> findDonHangByNgayTaoBetween(@Param("startDate") LocalDate startDate,
+                        @Param("endDate") LocalDate endDate);
+
         @Query("SELECT MONTH(d.ngayTao) AS month, COUNT(d.id) AS count " +
                         "FROM DonHang d " +
                         "WHERE YEAR(d.ngayTao) = :year " +

@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPham;
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHang;
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
+import java.io.IOException; // Để sử dụng IOException
+import java.text.SimpleDateFormat; // Để định dạng ngày
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import hoang_vuong.project.doan.admin.lienhe.LienHe;
@@ -27,6 +35,9 @@ import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -93,7 +104,9 @@ public class DonHangController {
         model.addAttribute("title_duyet", "Đơn Hàng");
         model.addAttribute("title_btn_add", "Thêm Đơn Hàng");
         model.addAttribute("title_sm", "Thêm mới");
+        model.addAttribute("title_loc", "Xuất Dữ Liệu");
         model.addAttribute("action", "/admin/don-hang/them");
+        model.addAttribute("action_loc", "/admin/don-hang/export");
         model.addAttribute("content", "admin/donhang/duyet.html");
 
         int startIndex = (page - 1) * pageSize;
@@ -260,6 +273,127 @@ public class DonHangController {
         }
 
         return "redirect:/admin/don-hang";
+    }
+
+    // @PostMapping("/don-hang/export")
+    // public String postDonHangToExcel(
+    // @RequestParam("startDate") @DateTimeFormat(iso =
+    // DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
+    // @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    // LocalDate endDate,
+    // RedirectAttributes redirectAttributes) {
+
+    // System.out.println("Ngày bắt đầu: " + startDate);
+    // System.out.println("Ngày kết thuật: " + endDate);
+    // List<DonHang> donHangList = dvl.getDonHangByDateRange(startDate, endDate);
+
+    // System.out.println("Danh sách đơn hàng: " + donHangList);
+
+    // try {
+
+    // redirectAttributes.addFlashAttribute("successMessage", "Xuất Excel thành
+    // công!");
+    // } catch (Exception e) {
+    // redirectAttributes.addFlashAttribute("errorMessage", "Lỗi xuất Excel: " +
+    // e.getMessage());
+    // }
+
+    // return "redirect:/admin/don-hang";
+    // }
+
+    @PostMapping("/don-hang/export")
+    public String postDonHangToExcel(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            RedirectAttributes redirectAttributes, HttpServletResponse response) {
+
+        System.out.println("Ngày bắt đầu: " + startDate);
+        System.out.println("Ngày kết thúc: " + endDate);
+
+        // Lấy danh sách đơn hàng trong khoảng thời gian được chọn
+        List<DonHang> donHangList = dvl.getDonHangByDateRange(startDate, endDate);
+
+        // donHangList.forEach(donHang -> {
+        // System.out.println("ID: " + donHang.getId());
+        // System.out.println("Tên khách hàng: " + donHang.getMaKH());
+        // System.out.println("Tổng tiền: " + donHang.getFomatTongTien());
+        // System.out.println("Ngày tạo: " + donHang.getNgayTao());
+        // System.out.println("----------");
+        // });
+
+        // Kiểm tra xem danh sách đơn hàng có rỗng hay không
+        if (donHangList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR",
+                    "Không có đơn hàng nào trong khoảng thời gian đã chọn.");
+            return "redirect:/admin/don-hang";
+        }
+
+        try {
+            // Tạo file Excel từ danh sách đơn hàng
+            // (Giả sử bạn đã có phương thức để xuất ra file Excel, gọi nó ở đây)
+            exportDonHangToExcel(donHangList, response);
+            System.out.println("Đã xuat Excel");
+            redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Xuất Excel thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Lỗi xuất Excel: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    // Phương thức xuất Excel (giả định)
+    private void exportDonHangToExcel(List<DonHang> donHangList, HttpServletResponse response) throws IOException {
+        // Thiết lập tiêu đề và loại file trả về
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=donhang_" + System.currentTimeMillis() + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        // Tạo workbook và sheet mới
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Đơn hàng");
+
+        // Tạo dòng tiêu đề
+        Row headerRow = sheet.createRow(0);
+        String[] columnHeaders = { "ID", "Mã Khách Hàng", "Tên khách hàng", "Số Điện Thoại", "Email", "Tổng tiền",
+                "Tỉnh Thành", "Quận huyện", "Xã Phường", "Địa Chỉ", "Ngày Đặt Hàng" };
+        for (int i = 0; i < columnHeaders.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columnHeaders[i]);
+        }
+
+        // Điền dữ liệu đơn hàng vào các dòng tiếp theo
+        int rowIndex = 1;
+        for (DonHang donHang : donHangList) {
+            Row row = sheet.createRow(rowIndex++);
+
+            // Lấy thông tin từ donHang
+            row.createCell(0).setCellValue(donHang.getId());
+            row.createCell(1).setCellValue(donHang.getMaKH());
+            row.createCell(2).setCellValue(donHang.getTenDayDu());
+            row.createCell(3).setCellValue(donHang.getDienThoai());
+            row.createCell(4).setCellValue(donHang.getEmail());
+            row.createCell(5).setCellValue(donHang.getFomatTongTien());
+            row.createCell(6).setCellValue(donHang.getTinhThanh());
+            row.createCell(7).setCellValue(donHang.getQuanHuyen());
+            row.createCell(8).setCellValue(donHang.getXaPhuong());
+            row.createCell(9).setCellValue(donHang.getDiaChi());
+            row.createCell(10).setCellValue(donHang.getNgayTaoText());
+
+            // Định dạng ngày tháng
+            // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            // row.createCell(3).setCellValue(dateFormat.format(donHang.getNgayTao()));
+        }
+
+        // Tự động điều chỉnh kích thước các cột
+        for (int i = 0; i < columnHeaders.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Ghi workbook ra output stream
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
     }
 
 }

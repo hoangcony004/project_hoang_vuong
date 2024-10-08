@@ -147,6 +147,101 @@
                             <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
                                 aria-labelledby="product-review-link">
                                 <div class="reviews">
+                                    <h5>Viết Đánh Giá</h5>
+                                    <style>
+                                        .rating-wrapper {
+                                            direction: rtl;
+                                            /* Để ngôi sao có thể được chọn từ phải sang trái */
+                                            display: flex;
+                                            /* Sử dụng flex để căn chỉnh ngôi sao */
+                                            justify-content: start;
+                                            /* Căn giữa các ngôi sao */
+                                        }
+
+                                        .rating-wrapper input {
+                                            display: none;
+                                            /* Ẩn các input radio */
+                                        }
+
+                                        .rating-wrapper label {
+                                            cursor: pointer;
+                                            /* Hiển thị con trỏ khi di chuột lên ngôi sao */
+                                            font-size: 30px;
+                                            /* Kích thước ngôi sao */
+                                            color: lightgray;
+                                            /* Màu mặc định của ngôi sao */
+                                            transition: color 0.2s;
+                                            /* Hiệu ứng chuyển màu khi hover */
+                                        }
+
+                                        .rating-wrapper input:checked~label {
+                                            color: gold;
+                                            /* Màu vàng cho ngôi sao được chọn */
+                                        }
+
+                                        .rating-wrapper label:hover,
+                                        .rating-wrapper label:hover~label {
+                                            color: gold;
+                                            /* Màu vàng cho ngôi sao khi hover */
+                                        }
+                                    </style>
+                                    <form id="ratingForm" action="/apps/danh-gia-san-pham" method="post">
+                                        <input type="hidden" name="id" id="idInput" th:value="${dl.id}" />
+                                        <div class="container-wrapper">
+                                            <div class="container d-flex align-items-center justify-content-start">
+                                                <div class="row justify-content-center">
+                                                    <div class="rating-wrapper">
+                                                        <input type="radio" id="5-star-rating" name="star-rating"
+                                                            value="5">
+                                                        <label for="5-star-rating" class="star-rating">
+                                                            <i class="fas fa-star d-inline-block"></i>
+                                                        </label>
+                                                        <input type="radio" id="4-star-rating" name="star-rating"
+                                                            value="4">
+                                                        <label for="4-star-rating" class="star-rating">
+                                                            <i class="fas fa-star d-inline-block"></i>
+                                                        </label>
+                                                        <input type="radio" id="3-star-rating" name="star-rating"
+                                                            value="3">
+                                                        <label for="3-star-rating" class="star-rating">
+                                                            <i class="fas fa-star d-inline-block"></i>
+                                                        </label>
+                                                        <input type="radio" id="2-star-rating" name="star-rating"
+                                                            value="2">
+                                                        <label for="2-star-rating" class="star-rating">
+                                                            <i class="fas fa-star d-inline-block"></i>
+                                                        </label>
+                                                        <input type="radio" id="1-star-rating" name="star-rating"
+                                                            value="1">
+                                                        <label for="1-star-rating" class="star-rating">
+                                                            <i class="fas fa-star d-inline-block"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="nhanXet">Nhận xét:</label>
+                                            <textarea id="nhanXet" name="nhanXet" rows="4" class="form-control"
+                                                placeholder="Nhập nhận xét của bạn tại đây..." required></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success">Gửi Đánh giá</button>
+                                    </form>
+
+                                    <script>
+                                        document.getElementById('ratingForm').addEventListener('submit', function (e) {
+                                            // Kiểm tra xem có radio nào được chọn không
+                                            const ratingSelected = document.querySelector('input[name="star-rating"]:checked');
+                                            if (!ratingSelected) {
+                                                e.preventDefault(); // Ngăn không cho form được gửi
+                                                alert("Vui lòng chọn số sao mà bạn muốn đánh giá."); // Thông báo lỗi
+                                            }
+                                        });
+                                    </script>
+
+                                    <br>
                                     <h3>Reviews (2)</h3>
                                     <div class="review">
                                         <div class="row no-gutters">
@@ -212,7 +307,7 @@
                         </div><!-- End .tab-content -->
                     </div><!-- End .product-details-tab -->
 
-                    <h2 class="title text-center mb-4">Các Sản Phẩm Liên Quan</h2>
+                    <!-- <h2 class="title text-center mb-4">Các Sản Phẩm Liên Quan</h2> -->
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
 
@@ -288,42 +383,39 @@
                         <input type="hidden" id="NSX_id" th:value="${dl.maNSX}">
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                        <div class="product-list">
-                            <!-- Sản phẩm sẽ được thêm vào đây -->
-                        </div>
+                        <!-- <p class="product-nsx">
+                            
+                        </p> -->
                         <script>
                             function getProductsByManufacturer() {
                                 var maNSX = $("#NSX_id").val(); // Lấy giá trị maNSX từ input ẩn
-                                console.log("maNSX:", maNSX); // Kiểm tra giá trị maNSX
+
                                 $.ajax({
                                     url: '/apps/lay-san-pham-theo-nsx',  // URL của API phía server để lấy sản phẩm
                                     type: 'GET',
                                     data: { maNSX: maNSX },
                                     success: function (response) {
                                         // Gọi hàm để đổ dữ liệu sản phẩm vào HTML
-                                        renderProducts("du lieu nhan dc tu server", response); // Gọi renderProducts để thêm HTML nhận được
+                                        renderProducts(response);
                                     },
                                     error: function (error) {
                                         console.log("Có lỗi xảy ra", error);
                                     }
                                 });
                             }
+
+                            // Gọi hàm ngay khi trang load
+                            $(document).ready(function () {
+                                getProductsByManufacturer();
+                            });
                             function renderProducts(html) {
-                                var productList = $('.product-list');
+                                var productList = $('.product-nsx');
                                 productList.empty(); // Xóa nội dung cũ trước khi thêm sản phẩm mới
 
                                 // Chèn HTML nhận được từ server vào phần product-list
                                 productList.append(html);
                             }
-
-
                         </script>
-
-
-
-
-
-
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .col-lg-9 -->
 

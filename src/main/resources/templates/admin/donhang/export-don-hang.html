@@ -1,0 +1,38 @@
+<div th:fragment="them">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                        <li class="breadcrumb-item active" th:text="${title_loc}">Sửa Nhân Viên</li>
+                    </ol>
+                </div>
+                <h4 class="page-title" th:text="${title_loc}">Sửa Nhân Viên</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="container">
+        <form th:action="${action_loc}" th:object="${dl}" method="post">
+            <div class="row mb-3">
+                <!-- Ô input chọn ngày bắt đầu -->
+                <div class="col">
+                    <label for="ngayBatDau">Ngày bắt đầu</label>
+                    <input type="date" id="ngayBatDau" name="startDate" class="form-control">
+                </div>
+
+                <!-- Ô input chọn ngày kết thúc -->
+                <div class="col">
+                    <label for="ngayKetThuc">Ngày kết thúc</label>
+                    <input type="date" id="ngayKetThuc" name="endDate" class="form-control">
+                </div>
+            </div>
+
+            <button th:text="${title_loc}" type="submit" class="btn btn-outline-success">Lọc Sản Phẩm</button>
+        </form>
+
+
+    </div>
+</div>

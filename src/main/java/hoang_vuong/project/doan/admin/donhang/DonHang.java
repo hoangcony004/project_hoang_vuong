@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHang;
 
@@ -36,10 +37,8 @@ public class DonHang {
     @JoinColumn(name = "maKH", insertable = false, updatable = false)
     private KhachHang khachHang;
 
-
     @Column(unique = true)
     private String maDH;
-
 
     private String email;
     private String dienThoai;
@@ -55,7 +54,8 @@ public class DonHang {
     private String quanHuyen;
     private String xaPhuong;
     private String diaChi;
-private String thanhtoan;
+    private String thanhtoan;
+
     public String getNgayTaoText() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(this.ngayTao);
     }
@@ -80,5 +80,15 @@ private String thanhtoan;
         this.chiTietDonHangList = chiTietDonHangList;
     }
 
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return "DonHang{" +
+                "id=" + id +
+                ", MaKH='" + maKH + '\'' +
+                ", tongTien=" + tongTien +
+                ", ngayTao=" + dateFormat.format(ngayTao) +
+                '}';
+    }
 
 }

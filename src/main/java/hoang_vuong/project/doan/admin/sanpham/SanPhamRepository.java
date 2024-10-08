@@ -12,7 +12,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 
    List<SanPham> findByMaNSX(Long maNSX);
 
-   @Query(value = "SELECT * FROM san_pham ORDER BY RAND() LIMIT 10", nativeQuery = true)
+   @Query(value = "SELECT * FROM san_pham ORDER BY RAND() LIMIT 5", nativeQuery = true)
    List<SanPham> findRandomSanPhams();
 
    Page<SanPham> findByMaNSX(int maNSX, Pageable pageable);

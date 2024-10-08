@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface ChiTietDonHangRepository extends JpaRepository<ChiTietDonHang, Integer> {
 
+
+
         @Query("SELECT c FROM ChiTietDonHang c WHERE c.donHang.id = :id")
         List<ChiTietDonHang> findByDonHangId(@Param("id") int id);
 

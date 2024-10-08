@@ -69,16 +69,18 @@
 											<td>
 												<span th:if="${donhang.trangThai} == 0">
 													<!-- <a  href="javascript:void(0);" th:data-id="${donhang.id}" class="badge bg-warning status-delete">Huỷ</a><br> -->
-													<span class="badge bg-success">Chờ xác nhận</span>
+													<span class="badge bg-primary">Chờ xác nhận</span>
 												</span>
 												<span th:if="${donhang.trangThai} == 1" class="badge bg-warning">Đã xác
 													nhận đơn hàng</span>
 												<span th:if="${donhang.trangThai} == 2" class="badge bg-info">Đang giao
 													hàng</span>
+
 												<span th:if="${donhang.trangThai} == 3" class="badge bg-success">Giao
 													hàng thành công</span>
-												<span th:if="${donhang.trangThai} == 4" class="badge bg-secondary">Giao
-													thất bại</span>
+
+												<span th:if="${donhang.trangThai} == 4" class="badge bg-secondary">Hàng
+													trả về</span>
 												<span th:if="${donhang.trangThai} == 5" class="badge bg-danger">Đã hủy
 													đơn</span>
 											</td>

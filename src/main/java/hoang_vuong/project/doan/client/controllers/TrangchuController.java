@@ -1,12 +1,14 @@
 
 package hoang_vuong.project.doan.client.controllers;
 
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,12 +25,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
+import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
+import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.admin.quangcao.QuangCao;
 import hoang_vuong.project.doan.admin.quangcao.QuangCaoService;
 import hoang_vuong.project.doan.admin.sanpham.SanPham;
 import hoang_vuong.project.doan.admin.sanpham.SanPhamService;
 import hoang_vuong.project.doan.client.DTO.sanphamDTOlist;
+import hoang_vuong.project.doan.client.danhgiasanpham.DanhGiaSanPham;
+import hoang_vuong.project.doan.client.danhgiasanpham.DanhGiaSanPhamService;
 import hoang_vuong.project.doan.qdl.Qdl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -49,6 +55,15 @@ public class TrangchuController {
 
   @Autowired
   private QuangCaoService quangcao;
+
+  @Autowired
+  private ChiTietDonHangService chiTietDonHangService;
+
+  @Autowired
+  private DanhGiaSanPhamService danhGiaService;
+
+  // @Autowired
+  // private KhachHang khachHangService;
 
   public String formatPrice(float price) {
     DecimalFormat formatter = new DecimalFormat("#,###.00"); // Định dạng: phân cách hàng nghìn và 2 chữ số thập phân
@@ -122,12 +137,55 @@ public class TrangchuController {
     System.out.println("du lieu" + sanPhams);
     return "client/lay-san-pham-theo-nsx"; // Trả về tên template
   }
-  // @GetMapping("/apps/lay-san-pham-theo-nsx")
-  // @ResponseBody
-  // public List<SanPham> getSanPhamByNSX(@RequestParam("maNSX") Long maNSX) {
-  // System.out.println(maNSX); // In ra giá trị maNSX để kiểm tra
-  // return dvl.getSanPhamsByNSX(maNSX); // Lấy danh sách sản phẩm từ dịch vụ
+
+  // @PostMapping("/apps/danh-gia-san-pham")
+  // public String danhGiaSanPham(@RequestParam("id") Long id, Model model) {
+  // System.out.println("id don hang" + id);
+
+  // return "redirect:/";
   // }
+  @PostMapping("/apps/danh-gia-san-pham")
+  public String danhGiaSanPham(@RequestParam("id") Integer id,
+      @RequestParam("star-rating") int starRating,
+      @RequestParam("nhanXet") String nhanXet,
+      Model model, RedirectAttributes redirectAttributes) {
+    if (Qdl.KhachHangChuaDangNhap(request)) {
+      redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn phải đăng nhập để đánh giá sản phẩm");
+      return "redirect:/apps/product?id=" + id;
+    }
+
+    int khachhangId = (int) request.getSession().getAttribute("khachhang_Id");
+
+    System.out.println("ID khach hang: " + khachhangId);
+    System.out.println("ID sản phẩm: " + id);
+    System.out.println("Số sao: " + starRating);
+    System.out.println("Nhận xét: " + nhanXet);
+
+
+    try {
+
+      // int khachHang = khachHangId;
+      // SanPham sanPham = dvl.timTheoId(id);
+
+      // // Tạo đối tượng DanhGia mới
+      // DanhGiaSanPham danhGiaMoi = new DanhGiaSanPham();
+
+      // // Gán các giá trị vào đối tượng
+      // danhGiaMoi.setKhachHang(khachHang);
+      // danhGiaMoi.setSanPham(sanPham);
+      // danhGiaMoi.setDiemDanhGia(starRating);
+      // danhGiaMoi.setNhanXet(nhanXet);
+
+      // Gọi phương thức để lưu vào cơ sở dữ liệu
+      // danhGiaService.them(danhGiaMoi);
+
+      redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+    }
+
+    return "redirect:/";
+  }
 
   @GetMapping("/apps/categories")
   public String getDuyetSanPham(Model model,

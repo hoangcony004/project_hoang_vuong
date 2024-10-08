@@ -81,7 +81,7 @@ public class KhachHangService {
         return dl;
     }
 
-    public KhachHang timKhachHangTheoId(int id)//
+    public KhachHang timKhachHangTheoId(int id)
     {
         KhachHang dl = null;
 

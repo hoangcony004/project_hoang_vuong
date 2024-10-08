@@ -26,6 +26,10 @@ public class DonHangService {
     @Autowired
     private DonHangRepository kdl;
 
+    public List<DonHang> getDonHangByDateRange(LocalDate startDate, LocalDate endDate) {
+        return kdl.findDonHangByNgayTaoBetween(startDate, endDate);
+    }
+
     public Map<Integer, Integer> getThongKeDonHang(int year) {
         List<Object[]> results = kdl.countDonHangByMonth(year);
         Map<Integer, Integer> statistics = new HashMap<>();
@@ -79,7 +83,7 @@ public class DonHangService {
             int day = dt.getDay();
             doanhThuTheoNgay.set(day - 1, new DoanhThuThang(dt.getTongTien(), day, month, year));
         }
-        return doanhThuTheoNgay;  // Trả về danh sách doanh thu theo ngày
+        return doanhThuTheoNgay; // Trả về danh sách doanh thu theo ngày
     }
 
     public String getTotalRevenueByYear(int year) {
@@ -287,6 +291,7 @@ public class DonHangService {
     public void xoa(int id) {
         this.kdl.deleteById(id);
     }
+
     public boolean xoaDonHang(int id) {
         if (kdl.existsById(id)) {
             kdl.deleteById(id);
