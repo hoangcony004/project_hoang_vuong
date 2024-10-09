@@ -42,11 +42,17 @@ public class DangNhapDangKyController {
 
     @PostMapping("/auth_register")
     public String postAdd(@ModelAttribute("KhachHang") KhachHang dl,
+            @RequestParam("emailcom") String emailcom,
             RedirectAttributes redirectAttributes) {
         // Mã hóa mật khẩu
         var inputPassword = dl.getMatKhau();
         var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
-
+            if(dvl.dacoemail(emailcom)){
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đăng ký không thành công! Email đã tồn tại!");
+                return "redirect:/apps/auth";
+                }else{
+                    dl.setEmail(emailcom);
+                }
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
 

@@ -82,13 +82,13 @@
 							<form th:action="@{/apps/auth_register}" th:object="${dl}" method="post">
 								<div class="form-group">
 									<label for="register-email-2">Email: </label>
-									<input type="email" th:field="*{email}" placeholder="Nhập Email"
-										class="form-control" id="register-email-2" name="register-email" required>
+									<input type="email"  name="emailcom" placeholder="Nhập Email"
+										class="form-control" id="register-email-2" required>
 								</div>
 
 								<div class="form-group">
 									<label>Số điện thoại: </label>
-									<input type="text" placeholder="Nhập Số điện thoại" th:field="*{dienThoai}"
+									<input type="text" placeholder="Nhập Số điện thoại" pattern="(0\d{9}|\+84\d{9})" th:field="*{dienThoai}"
 										class="form-control" required>
 								</div>
 

@@ -53,6 +53,9 @@ public class SanPhamService {
         }
         return sanPhamList;
     }
+    public Page<SanPham> locSanPhamKhongFilterBanChayNoiBat(Float minPrice, Float maxPrice, Integer maNSX, Pageable pageable) {
+        return kdl.locSanPhamKhongFilterBanChayNoiBat(minPrice, maxPrice, maNSX, pageable);
+    }
 
     public Map<String, Long> thongKeSanPhamTheoTrangThai() {
         Map<String, Long> thongKe = new HashMap<>();
@@ -182,9 +185,9 @@ public class SanPhamService {
     }
 
     private List<SanPham> getSanPhamByConditionall(Supplier<List<SanPham>> fetchFunction) {
-        List<SanPham> sanPhams = trangthai(); // Lọc theo trạng thái
-        return sanPhams.stream() // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
-                .filter(sp -> fetchFunction.get().contains(sp)) // Sử dụng get() của Supplier
+        List<SanPham> sanPhams = trangthai();
+        return sanPhams.stream() 
+                .filter(sp -> fetchFunction.get().contains(sp)) 
                 .limit(16)
                 .collect(Collectors.toList());
     }

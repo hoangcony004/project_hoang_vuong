@@ -37,7 +37,7 @@ var cart = {
 				}
 			},
 			error: function(){
-				alert('Lỗi!-Không thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
+				alert('Lỗi!-Không thêm sản phẩm vào giỏ hàng được!');
 			}
 		});
 	},
@@ -128,4 +128,24 @@ var cart = {
 		}
 	}
 	
+	
 }
+
+$(document).ready(function() {
+	$('#top-all-tab').click(function(event) {
+		event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+
+		// Gửi yêu cầu AJAX để tải nội dung mới
+		$.ajax({
+			url: '/path-to-your-api-or-endpoint', // Địa chỉ API để lấy nội dung mới
+			method: 'GET',
+			success: function(data) {
+				// Cập nhật nội dung trong div #content
+				$('#allmy').html(data);
+			},
+			error: function(xhr, status, error) {
+				console.error("Đã xảy ra lỗi: " + error);
+			}
+		});
+	});
+});
