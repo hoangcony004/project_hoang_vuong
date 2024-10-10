@@ -69,13 +69,13 @@
                     <div class="tab-content">
                         <div class="tab-pane show active" id="thongkeSP_X_NSX">
                             <div class="chart-container">
-                                <canvas id="myChart"></canvas>
+                                <canvas id="myChart" style="max-width: 500px; max-height: 500px;"></canvas>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="thongkeSP_X_TrangThai">
                             <div class="chart-container">
-                                <canvas id="myChartTrangThai"></canvas>
+                                <canvas id="myChartTrangThai" style="max-width: 500px; max-height: 500px;"></canvas>
                             </div>
                         </div>
                         <tr th:each="sanPhamBanChay : ${top10SanPham}">

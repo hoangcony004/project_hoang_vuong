@@ -80,15 +80,15 @@ public class DonHang {
         this.chiTietDonHangList = chiTietDonHangList;
     }
 
-    @Override
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return "DonHang{" +
-                "id=" + id +
-                ", MaKH='" + maKH + '\'' +
-                ", tongTien=" + tongTien +
-                ", ngayTao=" + dateFormat.format(ngayTao) +
-                '}';
-    }
+    // @Override
+    // public String toString() {
+    //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    //     return "DonHang{" +
+    //             "id=" + id +
+    //             ", MaKH='" + maKH + '\'' +
+    //             ", tongTien=" + tongTien +
+    //             ", ngayTao=" + dateFormat.format(ngayTao) +
+    //             '}';
+    // }
 
 }

@@ -341,7 +341,7 @@ public class DonHangController {
         return null;
     }
 
-    // Phương thức xuất Excel (giả định)
+    // Phương thức xuất Excel 
     private void exportDonHangToExcel(List<DonHang> donHangList, HttpServletResponse response) throws IOException {
         // Thiết lập tiêu đề và loại file trả về
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -355,7 +355,7 @@ public class DonHangController {
 
         // Tạo dòng tiêu đề
         Row headerRow = sheet.createRow(0);
-        String[] columnHeaders = { "ID", "Mã Khách Hàng", "Tên khách hàng", "Số Điện Thoại", "Email", "Tổng tiền",
+        String[] columnHeaders = { "Mã Đơn Hàng", "Mã Khách Hàng", "Tên khách hàng", "Số Điện Thoại", "Email", "Tổng tiền",
                 "Tỉnh Thành", "Quận huyện", "Xã Phường", "Địa Chỉ", "Ngày Đặt Hàng" };
         for (int i = 0; i < columnHeaders.length; i++) {
             Cell cell = headerRow.createCell(i);
@@ -368,7 +368,7 @@ public class DonHangController {
             Row row = sheet.createRow(rowIndex++);
 
             // Lấy thông tin từ donHang
-            row.createCell(0).setCellValue(donHang.getId());
+            row.createCell(0).setCellValue(donHang.getMaDH());
             row.createCell(1).setCellValue(donHang.getMaKH());
             row.createCell(2).setCellValue(donHang.getTenDayDu());
             row.createCell(3).setCellValue(donHang.getDienThoai());

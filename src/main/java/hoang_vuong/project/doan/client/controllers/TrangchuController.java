@@ -4,6 +4,7 @@ package hoang_vuong.project.doan.client.controllers;
 import java.security.Principal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hoang_vuong.project.doan.admin.anhsanpham.AnhSanPhamService;
 import hoang_vuong.project.doan.admin.chitietdonhang.ChiTietDonHangService;
 import hoang_vuong.project.doan.admin.khachhang.KhachHang;
+import hoang_vuong.project.doan.admin.khachhang.KhachHangService;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.admin.quangcao.QuangCao;
 import hoang_vuong.project.doan.admin.quangcao.QuangCaoService;
@@ -62,8 +64,8 @@ public class TrangchuController {
   @Autowired
   private DanhGiaSanPhamService danhGiaService;
 
-  // @Autowired
-  // private KhachHang khachHangService;
+  @Autowired
+  private KhachHangService khachHangService;
 
   public String formatPrice(float price) {
     DecimalFormat formatter = new DecimalFormat("#,###.00"); // Định dạng: phân cách hàng nghìn và 2 chữ số thập phân
@@ -115,6 +117,11 @@ public class TrangchuController {
 
     List<SanPham> randomSanPhams = dvl.getRandomSanPhams();
     model.addAttribute("randomSanPhams", randomSanPhams);
+    
+    int khachhangId = (int) request.getSession().getAttribute("khachhang_Id");
+    List<DanhGiaSanPham> danhGia = danhGiaService.getDanhGiaBySanPham(id);
+    System.out.println("tim id" + danhGia);
+    System.out.println("id khach hang la" + khachhangId);
 
     // float price = dls.getDonGia();
     // NumberFormat formatTienViet = NumberFormat.getCurrencyInstance(new
@@ -161,30 +168,33 @@ public class TrangchuController {
     System.out.println("Số sao: " + starRating);
     System.out.println("Nhận xét: " + nhanXet);
 
-
     try {
 
-      // int khachHang = khachHangId;
-      // SanPham sanPham = dvl.timTheoId(id);
+      // Tạo đối tượng DanhGia của KhachHang
+      var khachHang = khachHangService.timKhachHangTheoId(khachhangId);
+      System.out.println("id khach hang la" + khachHang);
 
-      // // Tạo đối tượng DanhGia mới
-      // DanhGiaSanPham danhGiaMoi = new DanhGiaSanPham();
+      SanPham sanPham = dvl.timTheoId(id);
 
-      // // Gán các giá trị vào đối tượng
-      // danhGiaMoi.setKhachHang(khachHang);
-      // danhGiaMoi.setSanPham(sanPham);
-      // danhGiaMoi.setDiemDanhGia(starRating);
-      // danhGiaMoi.setNhanXet(nhanXet);
+      // Tạo đối tượng DanhGia mới
+      DanhGiaSanPham danhGiaMoi = new DanhGiaSanPham();
+
+      // Gán các giá trị vào đối tượng
+      danhGiaMoi.setKhachHang(khachHang);
+      danhGiaMoi.setSanPham(sanPham);
+      danhGiaMoi.setDiemDanhGia(starRating);
+      danhGiaMoi.setNhanXet(nhanXet);
+      danhGiaMoi.setNgayDanhGia(LocalDate.now());
 
       // Gọi phương thức để lưu vào cơ sở dữ liệu
-      // danhGiaService.them(danhGiaMoi);
+      danhGiaService.them(danhGiaMoi);
 
-      redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm mới thành công!");
+      redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm phần đánh giá của bạn!");
     } catch (Exception e) {
-      redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm mới. Mã lỗi: " + e.getMessage());
+      redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm đánh giá!. Mã lỗi: " + e.getMessage());
     }
 
-    return "redirect:/";
+    return "redirect:/apps/product?id=" + id;
   }
 
   @GetMapping("/apps/categories")

@@ -28,61 +28,62 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AccountController {
-     @Autowired
+    @Autowired
     private HttpServletRequest request;
     @Autowired
     KhachHangService khSV;
     @Autowired
     DonHangService dhSV;
-    @GetMapping("/apps/account")
-    public String getAcount(Model model, HttpSession session,RedirectAttributes redirectAttributes){
-         String khachhang_Email = (String) session.getAttribute("khachhang_Email");
-    // Nếu email không tồn tại hoặc rỗng, chuyển hướng về trang /apps
-    if (khachhang_Email == null || khachhang_Email.isEmpty()) {
-        redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn cần đăng nhập để truy cập trang này.");
-        return "redirect:/apps";
-    }
-    // Lấy thông tin khách hàng theo email
-    KhachHang formkhachhang = khSV.timEmmail(khachhang_Email);
 
-    List<DonHang> donhang = dhSV.dsDonhangEmail(khachhang_Email);
-    System.out.println(donhang+"alosoalo");
-    // Thêm thông tin khách hàng vào model
-    model.addAttribute("donhang", donhang);
-    model.addAttribute("formKH", formkhachhang);
-    
+    @GetMapping("/apps/account")
+    public String getAcount(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        String khachhang_Email = (String) session.getAttribute("khachhang_Email");
+        // Nếu email không tồn tại hoặc rỗng, chuyển hướng về trang /apps
+        if (khachhang_Email == null || khachhang_Email.isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn cần đăng nhập để truy cập trang này.");
+            return "redirect:/apps";
+        }
+        // Lấy thông tin khách hàng theo email
+        KhachHang formkhachhang = khSV.timEmmail(khachhang_Email);
+
+        List<DonHang> donhang = dhSV.dsDonhangEmail(khachhang_Email);
+        System.out.println(donhang + "alosoalo");
+        // Thêm thông tin khách hàng vào model
+        model.addAttribute("donhang", donhang);
+        model.addAttribute("formKH", formkhachhang);
+
         model.addAttribute("content", "client/dashboard.html");
         return "layouts/layout-client";
     }
 
     @PostMapping("/apps/account")
-@ResponseBody
-public ResponseEntity<Map<String, String>> postEdit(@ModelAttribute("formKH") KhachHang dl) {
-    Map<String, String> response = new HashMap<>();
-   
-    dl.setNgaySua(LocalDate.now());
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> postEdit(@ModelAttribute("formKH") KhachHang dl) {
+        Map<String, String> response = new HashMap<>();
 
-    try {
-        khSV.luuKhachHang(dl);
-        response.put("message", "Đã sửa thành công!");
-        return ResponseEntity.ok(response);
-    } catch (Exception e) {
-        response.put("message", "Không thể sửa. Mã lỗi: " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        dl.setNgaySua(LocalDate.now());
+
+        try {
+            khSV.luuKhachHang(dl);
+            response.put("message", "Đã sửa thành công!");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("message", "Không thể sửa. Mã lỗi: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
-}
 
-@PostMapping("/donhang/xoa")
-public ResponseEntity<?> xoaDonHang(@RequestParam("id") int id) {
-    // Gọi phương thức trong service để xóa đơn hàng
-    boolean isDeleted = dhSV.xoaDonHang(id);
-    
-    if (isDeleted) {
-        return ResponseEntity.ok().body(Map.of("success", "Đơn hàng đã được xóa thành công!"));
-    } else {
-        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Có lỗi xảy ra trong quá trình xóa đơn hàng."));
+    @PostMapping("/donhang/xoa")
+    public ResponseEntity<?> xoaDonHang(@RequestParam("id") int id) {
+        // Gọi phương thức trong service để xóa đơn hàng
+        boolean isDeleted = dhSV.xoaDonHang(id);
+
+        if (isDeleted) {
+            return ResponseEntity.ok().body(Map.of("success", "Đơn hàng đã được xóa thành công!"));
+        } else {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("success", false, "message", "Có lỗi xảy ra trong quá trình xóa đơn hàng."));
+        }
     }
-}
-
 
 }
