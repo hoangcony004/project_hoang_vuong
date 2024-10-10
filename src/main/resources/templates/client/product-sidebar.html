@@ -72,7 +72,7 @@
 
                                         <div class="details-action-wrapper">
                                             <div class="btn-product" >Số lượng: <span th:text="${ dl.soLuong}"></span></div>
-                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                            <a href="#" th:data-product-id="${dl.id}" class="btn-product btn-wishlist" title="Wishlist"><span>Thêm vào yêu thích</span></a>
                                             <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
                                         </div><!-- End .details-action-wrapper -->
                                     </div><!-- End .product-details-action -->

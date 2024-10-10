@@ -131,21 +131,52 @@ var cart = {
 	
 }
 
-$(document).ready(function() {
-	$('#top-all-tab').click(function(event) {
-		event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
 
-		// Gửi yêu cầu AJAX để tải nội dung mới
-		$.ajax({
-			url: '/path-to-your-api-or-endpoint', // Địa chỉ API để lấy nội dung mới
-			method: 'GET',
-			success: function(data) {
-				// Cập nhật nội dung trong div #content
-				$('#allmy').html(data);
-			},
-			error: function(xhr, status, error) {
-				console.error("Đã xảy ra lỗi: " + error);
-			}
-		});
-	});
+
+$(document).ready(function() {
+    // Bind click event to all elements with class 'btn-wishlist'
+    $('.btn-wishlist').on('click', function(event) {
+        event.preventDefault();  // Prevent the default link action
+
+        // Get the product ID from the data attribute
+        var productId = $(this).data('product-id');
+
+        // Send an Ajax POST request to add the product to the wishlist
+        $.ajax({
+            url: '/add/favourite',
+            type: 'POST',
+            data: { 'product-id': productId },  // Send the product ID as part of the POST data
+            success: function(response) {
+                alert("Sản phẩm đã thêm vào yêu thích!");
+            },
+            error: function(xhr, status, error) {
+				alert( xhr.responseText);
+            }
+        });
+    });
 });
+$(document).ready(function() {
+    // Bind click event to all elements with class 'btn-remove-favourite'
+    $('.btn-remove-favourite').on('click', function(event) {
+        event.preventDefault();  // Prevent the default link action
+
+        // Get the product ID from data attribute
+        var productId = $(this).data('product-id');
+        var userId = $(this).data('user-id'); // Lấy userId nếu cần
+
+        // Send an Ajax DELETE request to remove the product from favourites
+        $.ajax({
+            url: '/apps/' + userId + '/product/' + productId,
+            type: 'DELETE',
+            success: function(response) {
+				location.reload();
+                // Optional: Refresh the favourites list or update the UI
+            },
+            error: function(xhr, status, error) {
+                alert("Thất bại!");
+            }
+        });
+    });
+});
+
+

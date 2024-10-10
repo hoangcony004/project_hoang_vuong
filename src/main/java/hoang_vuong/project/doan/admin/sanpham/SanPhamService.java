@@ -3,6 +3,8 @@ package hoang_vuong.project.doan.admin.sanpham;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -190,5 +192,8 @@ public class SanPhamService {
                 .filter(sp -> fetchFunction.get().contains(sp)) 
                 .limit(16)
                 .collect(Collectors.toList());
+    }
+      public List<SanPham> getProductsByIds(List<Integer> productIds) {
+        return kdl.findByIdIn(productIds);
     }
 }

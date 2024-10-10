@@ -216,9 +216,5 @@ public class TrangchuController {
     model.addAttribute("content", "client/404.html");
     return "layouts/layout-client";
   }
-  @GetMapping("/path-to-your-api-or-endpoint")
-    public ResponseEntity<Object> getNewContent() {
-      List<SanPham> data = dvl.dsSanPham();
-        return new ResponseEntity<>(data, HttpStatus.OK); // Trả về nội dung mới
-    }
+
 }

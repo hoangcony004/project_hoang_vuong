@@ -64,4 +64,5 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 
       @Query("SELECT COUNT(o) FROM SanPham o")
       Long countTotalProducts();
+      List<SanPham> findByIdIn(List<Integer> productIds);
 }
