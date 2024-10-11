@@ -3,6 +3,8 @@ package hoang_vuong.project.doan.admin.sanpham;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -52,6 +54,9 @@ public class SanPhamService {
             sanPhamList.add(sanPhamData);
         }
         return sanPhamList;
+    }
+    public Page<SanPham> locSanPhamKhongFilterBanChayNoiBat(Float minPrice, Float maxPrice, Integer maNSX, Pageable pageable) {
+        return kdl.locSanPhamKhongFilterBanChayNoiBat(minPrice, maxPrice, maNSX, pageable);
     }
 
     public Map<String, Long> thongKeSanPhamTheoTrangThai() {
@@ -182,10 +187,13 @@ public class SanPhamService {
     }
 
     private List<SanPham> getSanPhamByConditionall(Supplier<List<SanPham>> fetchFunction) {
-        List<SanPham> sanPhams = trangthai(); // Lọc theo trạng thái
-        return sanPhams.stream() // Lọc theo điều kiện (nổi bật, bán chạy, v.v.)
-                .filter(sp -> fetchFunction.get().contains(sp)) // Sử dụng get() của Supplier
+        List<SanPham> sanPhams = trangthai();
+        return sanPhams.stream() 
+                .filter(sp -> fetchFunction.get().contains(sp)) 
                 .limit(16)
                 .collect(Collectors.toList());
+    }
+      public List<SanPham> getProductsByIds(List<Integer> productIds) {
+        return kdl.findByIdIn(productIds);
     }
 }

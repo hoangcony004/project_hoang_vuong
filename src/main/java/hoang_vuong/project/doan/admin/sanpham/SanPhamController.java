@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
-import hoang_vuong.project.doan.admin.khachhang.KhachHang;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuat;
 import hoang_vuong.project.doan.admin.nhasanxuat.NhaSanXuatService;
 import hoang_vuong.project.doan.qdl.Qdl;

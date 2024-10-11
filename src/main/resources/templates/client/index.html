@@ -138,10 +138,8 @@
 
                             <div class="product-action-vertical">
 
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
-
-                                    <span>add to wishlist</span>
-
+                                <a href="# "th:data-product-id="${dl.id}"  class="btn-product-icon btn-wishlist btn-expandable">
+                                    <span>Thêm yêu thích</span>
                                 </a>
 
                             </div><!-- End .product-action -->
@@ -214,9 +212,9 @@
 
                             <div class="product-action-vertical">
 
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                <a  th:data-product-id="${dl.id}" class="btn-product-icon btn-wishlist btn-expandable">
 
-                                    <span>add to wishlist</span>
+                                    <span>Thêm vào yêu thích</span>
 
                                 </a>
 
@@ -225,7 +223,7 @@
                             <div class="product-action product-action-dark">
 
                                 <button style="background-color: #000000; color: white;"
-                                    th:onclick="cart.add([[${dl.id}]], 1)" class="btn-product btn-cart"
+                                    th:onclick="cart.add([[${dl.id}]], 1, [[${dl.tenSP}]])" class="btn-product btn-cart"
                                     title="Add to cart">
 
                                     <span>Thêm giỏ hàng</span></button>
@@ -478,7 +476,7 @@
         </div><!-- End .heading -->
 
         <div id="load_category" class="tab-content tab-content-carousel just-action-icons-sm">
-            <div class="tab-pane p-0 fade show active" id="top-all-tab "  role="tabpanel" aria-labelledby="top-all-link">
+            <div class="tab-pane p-0 fade show active" id="top-all-tab"  role="tabpanel" aria-labelledby="top-all-link">
                 <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl"
                     data-owl-options='{
                                 "nav": true, 
@@ -503,7 +501,7 @@
                                     }
                                 }
                             }'>
-                            <div th:each="dl : ${spAll}" class="product product-2">
+                            <div th:each="dl : ${spAll}" class="product product-2 " >
 
                                 <figure class="product-media">
         
@@ -514,9 +512,9 @@
         
                                     <div class="product-action-vertical">
         
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                        <a  th:data-product-id="${dl.id}" class="btn-product-icon btn-wishlist btn-expandable">
         
-                                            <span>add to wishlist</span>
+                                            <span>Thêm vào yêu thích</span>
         
                                         </a>
         
@@ -525,7 +523,7 @@
                                     <div class="product-action product-action-dark">
         
                                         <button style="background-color: #000000; color: white;"
-                                            th:onclick="cart.add([[${dl.id}]], 1)" class="btn-product btn-cart"
+                                            th:onclick="cart.add([[${dl.id}]], 1, [[${dl.tenSP}]])" class="btn-product btn-cart"
                                             title="Add to cart">
         
                                             <span>Thêm giỏ hàng</span></button>

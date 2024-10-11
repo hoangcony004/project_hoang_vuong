@@ -37,7 +37,7 @@ var cart = {
 				}
 			},
 			error: function(){
-				alert('Lỗi!-Không thêm sản phẩm vào giỏ hàng được! Kiểm tra đường dẫn ajax và thử lại.');
+				alert('Lỗi!-Không thêm sản phẩm vào giỏ hàng được!');
 			}
 		});
 	},
@@ -128,4 +128,55 @@ var cart = {
 		}
 	}
 	
+	
 }
+
+
+
+$(document).ready(function() {
+    // Bind click event to all elements with class 'btn-wishlist'
+    $('.btn-wishlist').on('click', function(event) {
+        event.preventDefault();  // Prevent the default link action
+
+        // Get the product ID from the data attribute
+        var productId = $(this).data('product-id');
+
+        // Send an Ajax POST request to add the product to the wishlist
+        $.ajax({
+            url: '/add/favourite',
+            type: 'POST',
+            data: { 'product-id': productId },  // Send the product ID as part of the POST data
+            success: function(response) {
+                alert("Sản phẩm đã thêm vào yêu thích!");
+            },
+            error: function(xhr, status, error) {
+				alert( xhr.responseText);
+            }
+        });
+    });
+});
+$(document).ready(function() {
+    // Bind click event to all elements with class 'btn-remove-favourite'
+    $('.btn-remove-favourite').on('click', function(event) {
+        event.preventDefault();  // Prevent the default link action
+
+        // Get the product ID from data attribute
+        var productId = $(this).data('product-id');
+        var userId = $(this).data('user-id'); // Lấy userId nếu cần
+
+        // Send an Ajax DELETE request to remove the product from favourites
+        $.ajax({
+            url: '/apps/' + userId + '/product/' + productId,
+            type: 'DELETE',
+            success: function(response) {
+				location.reload();
+                // Optional: Refresh the favourites list or update the UI
+            },
+            error: function(xhr, status, error) {
+                alert("Thất bại!");
+            }
+        });
+    });
+});
+
+

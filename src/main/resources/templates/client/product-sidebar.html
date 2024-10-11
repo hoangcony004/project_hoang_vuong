@@ -2,9 +2,9 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/apps/categories">Sản Phẩm</a></li>
-                <li class="breadcrumb-item active" aria-current="page" th:text="${dl.tenSP}">With Sidebar</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">With Sidebar</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -19,96 +19,78 @@
                                 <div class="product-gallery">
                                     <figure class="product-main-image">
                                         <span class="product-label label-top">Top</span>
-                                        <img id="product-zoom" th:src="${dl.anhDaiDien}" alt="product image">
+                                        <img id="product-zoom"   th:src="${dl.anhDaiDien}" alt="product image">
                                     </figure><!-- End .product-main-image -->
 
                                     <div id="product-zoom-gallery" class="product-image-gallery">
-                                        <a th:each="dls : ${ds}" class="product-gallery-item" href="#">
-                                            <img th:src="${dls.hinhAnh}" th:data-image="${dls.hinhAnh}"
-                                                alt="product side">
+                                        <a th:each="dls : ${ds}"  class="product-gallery-item" href="#" >
+                                            <img  th:src="${dls.hinhAnh}" th:data-image="${dls.hinhAnh}"  alt="product side">
                                         </a>
                                     </div><!-- End .product-image-gallery -->
                                 </div>
-
+                           
                                 <!-- End .product-gallery -->
                             </div><!-- End .col-md-6 -->
                             <div class="col-md-6">
                                 <div class="product-details product-details-sidebar">
-                                    <h1 class="product-title" th:text="${dl.tenSP}"></h1><!-- End .product-title -->
+                                    <h1 class="product-title"  th:text="${dl.tenSP}"></h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
                                         <div class="ratings">
                                             <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
                                         </div><!-- End .ratings -->
-                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
-                                            )</a>
+                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                                     </div><!-- End .rating-container -->
 
-                                    <div class="product-price" th:object="${dl}">
+                                    <div class="product-price"  th:object="${dl}">
                                         <h2 th:text="${dl.getFomatGiaBan}"></h2>
                                     </div>
-
+                        
                                     <!-- End .product-price -->
-
+                                 
                                     <div class="product-content">
-                                        <!-- <p th:text="${dl.moTa}"></p> -->
-                                        <p th:text="${'Cấu Hình Máy: ' + dl.model}"></p>
+                                        <p th:text="${dl.moTa}"></p>
+                                        <p th:text="${dl.model}"></p>
                                     </div><!-- End .product-content -->
 
                                     <div class="details-filter-row details-row-size">
                                         <div class="product-countdown" th:data-until="${dl.getNgayHetHan}"></div>
+                                      
                                     </div><!-- End .details-filter-row -->
 
-
+                                   
                                     <div class="product-details-action">
                                         <div class="details-action-col">
-                                            <label for="qty">Số Lượng:</label>
+                                            <label for="qty">Qty:</label>
                                             <div class="product-details-quantity">
-                                                <input type="number" class="form-control" id="soluong" value="1" min="1"
-                                                    max="10" step="1" data-decimals="0" required>
+                                                <input type="number"  class="form-control"  id="soluong" value="1"  min="1" th:max="${dl.soLuong}" step="1" data-decimals="0" required>
                                             </div><!-- End .product-details-quantity -->
-
-                                            <button
-                                                th:onclick="cart.add([[${dl.id}]], $('#soluong').val(), [[${dl.tenSP}]])"
-                                                class="btn-product btn-cart"> <span>add to cart</span></button>
+                                            <input id="product" type="hidden" th:data-so-luong="${dl.soLuong}">
+                                            <div id="neuhethang"></div>
+                                            <button id="myneuhethang"  th:onclick="cart.add([[${dl.id}]], $('#soluong').val(), [[${dl.tenSP}]])" class="btn-product btn-cart"> <span>add to cart</span></button>
                                         </div><!-- End .details-action-col -->
 
                                         <div class="details-action-wrapper">
-                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Thêm Yêu
-                                                    Thích</span></a>
-                                            <!-- <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                                                    Compare</span></a> -->
+                                            <div class="btn-product" >Số lượng: <span th:text="${ dl.soLuong}"></span></div>
+                                            <a href="#" th:data-product-id="${dl.id}" class="btn-product btn-wishlist" title="Wishlist"><span>Thêm vào yêu thích</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
                                         </div><!-- End .details-action-wrapper -->
                                     </div><!-- End .product-details-action -->
 
                                     <div class="product-details-footer details-footer-col">
+                                        <div class="product-cat">
+                                            <span>Category:</span>
+                                            <a href="#">Women</a>,
+                                            <a href="#">Dresses</a>,
+                                            <a href="#">Yellow</a>
+                                        </div><!-- End .product-cat -->
 
                                         <div class="social-icons social-icons-sm">
                                             <span class="social-label">Share:</span>
-                                            <a href="#" class="social-icon copy-link" title="Copy Link"
-                                                onclick="copyProductLink()">
-                                                <i class="fas fa-copy"></i>
-                                            </a>
-                                            <script>
-                                                function copyProductLink() {
-                                                    // Lấy liên kết hiện tại của trang sản phẩm (hoặc tạo một liên kết cụ thể)
-                                                    var productLink = window.location.href;
-
-                                                    // Tạo một phần tử tạm để sao chép liên kết vào clipboard
-                                                    var tempInput = document.createElement("input");
-                                                    tempInput.style.position = "absolute";
-                                                    tempInput.style.left = "-1000px";
-                                                    tempInput.value = productLink;
-                                                    document.body.appendChild(tempInput);
-                                                    tempInput.select();
-                                                    document.execCommand("copy");
-                                                    document.body.removeChild(tempInput);
-
-                                                    // Hiển thị thông báo cho người dùng biết liên kết đã được sao chép
-                                                    alert("Đã sao chép liên kết sản phẩm: " + productLink);
-                                                }
-                                            </script>
-
+                                            <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                            <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                            <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                            <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
                                         </div>
                                     </div><!-- End .product-details-footer -->
                                 </div><!-- End .product-details -->
@@ -119,129 +101,60 @@
                     <div class="product-details-tab">
                         <ul class="nav nav-pills justify-content-center" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="product-desc-link" data-toggle="tab"
-                                    href="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
-                                    aria-selected="true">Mô Tả</a>
+                                <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="product-review-link" data-toggle="tab"
-                                    href="#product-review-tab" role="tab" aria-controls="product-review-tab"
-                                    aria-selected="false">Đánh Giá (2)</a>
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
-                                aria-labelledby="product-desc-link">
+                            <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                                 <div class="product-desc-content">
-                                    <h3 th:text="${dl.tenSP}">Product Information</h3>
-                                    <p th:text="${dl.moTa}">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                        Donec odio. Quisque
-                                        volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra
-                                        non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis
-                                        fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque
-                                        felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer
-                                        ligula vulputate sem tristique cursus. </p>
+                                    <h3>Product Information</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
+                                    <ul>
+                                        <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit. </li>
+                                        <li>Vivamus finibus vel mauris ut vehicula.</li>
+                                        <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
+                                    </ul>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+                                <div class="product-desc-content">
+                                    <h3>Information</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
 
-                            <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
-                                aria-labelledby="product-review-link">
+                                    <h3>Fabric & care</h3>
+                                    <ul>
+                                        <li>Faux suede fabric</li>
+                                        <li>Gold tone metal hoop handles.</li>
+                                        <li>RI branding</li>
+                                        <li>Snake print trim interior </li>
+                                        <li>Adjustable cross body strap</li>
+                                        <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
+                                    </ul>
+
+                                    <h3>Size</h3>
+                                    <p>one size</p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+                                <div class="product-desc-content">
+                                    <h3>Delivery & returns</h3>
+                                    <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
+                                    We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                                 <div class="reviews">
-                                    <h5>Viết Đánh Giá</h5>
-                                    <style>
-                                        .rating-wrapper {
-                                            direction: rtl;
-                                            /* Để ngôi sao có thể được chọn từ phải sang trái */
-                                            display: flex;
-                                            /* Sử dụng flex để căn chỉnh ngôi sao */
-                                            justify-content: start;
-                                            /* Căn giữa các ngôi sao */
-                                        }
-
-                                        .rating-wrapper input {
-                                            display: none;
-                                            /* Ẩn các input radio */
-                                        }
-
-                                        .rating-wrapper label {
-                                            cursor: pointer;
-                                            /* Hiển thị con trỏ khi di chuột lên ngôi sao */
-                                            font-size: 30px;
-                                            /* Kích thước ngôi sao */
-                                            color: lightgray;
-                                            /* Màu mặc định của ngôi sao */
-                                            transition: color 0.2s;
-                                            /* Hiệu ứng chuyển màu khi hover */
-                                        }
-
-                                        .rating-wrapper input:checked~label {
-                                            color: gold;
-                                            /* Màu vàng cho ngôi sao được chọn */
-                                        }
-
-                                        .rating-wrapper label:hover,
-                                        .rating-wrapper label:hover~label {
-                                            color: gold;
-                                            /* Màu vàng cho ngôi sao khi hover */
-                                        }
-                                    </style>
-                                    <form id="ratingForm" action="/apps/danh-gia-san-pham" method="post">
-                                        <input type="hidden" name="id" id="idInput" th:value="${dl.id}" />
-                                        <div class="container-wrapper">
-                                            <div class="container d-flex align-items-center justify-content-start">
-                                                <div class="row justify-content-center">
-                                                    <div class="rating-wrapper">
-                                                        <input type="radio" id="5-star-rating" name="star-rating"
-                                                            value="5">
-                                                        <label for="5-star-rating" class="star-rating">
-                                                            <i class="fas fa-star d-inline-block"></i>
-                                                        </label>
-                                                        <input type="radio" id="4-star-rating" name="star-rating"
-                                                            value="4">
-                                                        <label for="4-star-rating" class="star-rating">
-                                                            <i class="fas fa-star d-inline-block"></i>
-                                                        </label>
-                                                        <input type="radio" id="3-star-rating" name="star-rating"
-                                                            value="3">
-                                                        <label for="3-star-rating" class="star-rating">
-                                                            <i class="fas fa-star d-inline-block"></i>
-                                                        </label>
-                                                        <input type="radio" id="2-star-rating" name="star-rating"
-                                                            value="2">
-                                                        <label for="2-star-rating" class="star-rating">
-                                                            <i class="fas fa-star d-inline-block"></i>
-                                                        </label>
-                                                        <input type="radio" id="1-star-rating" name="star-rating"
-                                                            value="1">
-                                                        <label for="1-star-rating" class="star-rating">
-                                                            <i class="fas fa-star d-inline-block"></i>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="nhanXet">Nhận xét:</label>
-                                            <textarea id="nhanXet" name="nhanXet" rows="4" class="form-control"
-                                                placeholder="Nhập nhận xét của bạn tại đây..." required></textarea>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-success">Gửi Đánh giá</button>
-                                    </form>
-
-                                    <script>
-                                        document.getElementById('ratingForm').addEventListener('submit', function (e) {
-                                            // Kiểm tra xem có radio nào được chọn không
-                                            const ratingSelected = document.querySelector('input[name="star-rating"]:checked');
-                                            if (!ratingSelected) {
-                                                e.preventDefault(); // Ngăn không cho form được gửi
-                                                alert("Vui lòng chọn số sao mà bạn muốn đánh giá."); // Thông báo lỗi
-                                            }
-                                        });
-                                    </script>
-
-                                    <br>
                                     <h3>Reviews (2)</h3>
                                     <div class="review">
                                         <div class="row no-gutters">
@@ -249,8 +162,7 @@
                                                 <h4><a href="#">Samanta J.</a></h4>
                                                 <div class="ratings-container">
                                                     <div class="ratings">
-                                                        <div class="ratings-val" style="width: 80%;"></div>
-                                                        <!-- End .ratings-val -->
+                                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
                                                     </div><!-- End .ratings -->
                                                 </div><!-- End .rating-container -->
                                                 <span class="review-date">6 days ago</span>
@@ -259,10 +171,7 @@
                                                 <h4>Good, perfect size</h4>
 
                                                 <div class="review-content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus
-                                                        cum dolores assumenda asperiores facilis porro reprehenderit
-                                                        animi culpa atque blanditiis commodi perspiciatis doloremque,
-                                                        possimus, explicabo, autem fugit beatae quae voluptas!</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
@@ -279,8 +188,7 @@
                                                 <h4><a href="#">John Doe</a></h4>
                                                 <div class="ratings-container">
                                                     <div class="ratings">
-                                                        <div class="ratings-val" style="width: 100%;"></div>
-                                                        <!-- End .ratings-val -->
+                                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
                                                     </div><!-- End .ratings -->
                                                 </div><!-- End .rating-container -->
                                                 <span class="review-date">5 days ago</span>
@@ -289,10 +197,7 @@
                                                 <h4>Very good</h4>
 
                                                 <div class="review-content">
-                                                    <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum
-                                                        blanditiis laudantium iste amet. Cum non voluptate eos enim, ab
-                                                        cumque nam, modi, quas iure illum repellendus, blanditiis
-                                                        perspiciatis beatae!</p>
+                                                    <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
@@ -307,145 +212,267 @@
                         </div><!-- End .tab-content -->
                     </div><!-- End .product-details-tab -->
 
-                    <!-- <h2 class="title text-center mb-4">Các Sản Phẩm Liên Quan</h2> -->
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                    <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                         data-owl-options='{
 
-                                    "nav": false, 
-                                    "dots": true,
-                                    "margin": 20,
-                                    "loop": false,
-                                    "responsive": {
-                                        "0": {
-                                            "items":1
-                                        },
-                                        "480": {
-                                            "items":2
-                                        },
-                                        "768": {
-                                            "items":3
-                                        },
-                                        "992": {
-                                            "items":4
-                                        },
-                                        "1200": {
-                                            "items":4,
-                                            "nav": true,
-                                            "dots": false
-                                        }
-                                    }
-                                }'>
-
-                        <!-- <input type="hidden" id="product_id" th:value="${dl.maNSX}">
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "480": {
+                                    "items":2
+                                },
+                                "768": {
+                                    "items":3
+                                },
+                                "992": {
+                                    "items":4
+                                },
+                                "1200": {
+                                    "items":4,
+                                    "nav": true,
+                                    "dots": false
+                                }
+                            }
+                        }'>
                         <div class="product product-7 text-center">
                             <figure class="product-media">
+                                <span class="product-label label-new">New</span>
                                 <a href="product.html">
-                                    <img src="/client/assets/images/products/product-4.jpg" alt="Product image"
-                                        class="product-image">
+                                    <img src="/client/assets/images/products/product-4.jpg" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm Yêu
-                                            Thích</span></a>
-                                </div>
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
 
                                 <div class="product-action">
                                     <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div>
-                            </figure>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
 
                             <div class="product-body">
                                 <div class="product-cat">
                                     <a href="#">Women</a>
-                                </div>
-                                <h3 class="product-title"><a href="product.html">Brown paperbag waist pencil skirt</a>
-                                </h3>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Brown paperbag waist pencil skirt</a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     $60.00
-                                </div>
+                                </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div>
-                                    </div>
+                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
                                     <span class="ratings-text">( 2 Reviews )</span>
-                                </div>
+                                </div><!-- End .rating-container -->
 
                                 <div class="product-nav product-nav-dots">
-                                    <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color
-                                            name</span></a>
+                                    <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
                                     <a href="#" style="background: #7fc5ed;"><span class="sr-only">Color name</span></a>
                                     <a href="#" style="background: #e8c97a;"><span class="sr-only">Color name</span></a>
-                                </div>
-                            </div>
-                        </div> -->
+                                </div><!-- End .product-nav -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
 
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <span class="product-label label-out">Out of Stock</span>
+                                <a href="product.html">
+                                    <img src="/client/assets/images/products/product-6.jpg" alt="Product image" class="product-image">
+                                </a>
 
-                        <input type="hidden" id="NSX_id" th:value="${dl.maNSX}">
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
 
-                        <!-- <p class="product-nsx">
-                            
-                        </p> -->
-                        <script>
-                            function getProductsByManufacturer() {
-                                var maNSX = $("#NSX_id").val(); // Lấy giá trị maNSX từ input ẩn
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
 
-                                $.ajax({
-                                    url: '/apps/lay-san-pham-theo-nsx',  // URL của API phía server để lấy sản phẩm
-                                    type: 'GET',
-                                    data: { maNSX: maNSX },
-                                    success: function (response) {
-                                        // Gọi hàm để đổ dữ liệu sản phẩm vào HTML
-                                        renderProducts(response);
-                                    },
-                                    error: function (error) {
-                                        console.log("Có lỗi xảy ra", error);
-                                    }
-                                });
-                            }
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Jackets</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Khaki utility boiler jumpsuit</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    <span class="out-price">$120.00</span>
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 6 Reviews )</span>
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
 
-                            // Gọi hàm ngay khi trang load
-                            $(document).ready(function () {
-                                getProductsByManufacturer();
-                            });
-                            function renderProducts(html) {
-                                var productList = $('.product-nsx');
-                                productList.empty(); // Xóa nội dung cũ trước khi thêm sản phẩm mới
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <span class="product-label label-top">Top</span>
+                                <a href="product.html">
+                                    <img src="/client/assets/images/products/product-11.jpg" alt="Product image" class="product-image">
+                                </a>
 
-                                // Chèn HTML nhận được từ server vào phần product-list
-                                productList.append(html);
-                            }
-                        </script>
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Shoes</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    $110.00
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 1 Reviews )</span>
+                                </div><!-- End .rating-container -->
+
+                                <div class="product-nav product-nav-dots">
+                                    <a href="#" class="active" style="background: #8b513d;"><span class="sr-only">Color name</span></a>
+                                    <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                                    <a href="#" style="background: #d2b99a;"><span class="sr-only">Color name</span></a>
+                                </div><!-- End .product-nav -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <a href="product.html">
+                                    <img src="/client/assets/images/products/product-10.jpg" alt="Product image" class="product-image">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Jumpers</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    $56.00
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 0 Reviews )</span>
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .col-lg-9 -->
 
                 <aside class="col-lg-3">
                     <div class="sidebar sidebar-product">
                         <div class="widget widget-products">
-                            <h4 class="widget-title">Các Sản Phẩm Khác</h4><!-- End .widget-title -->
+                            <h4 class="widget-title">Related Product</h4><!-- End .widget-title -->
 
                             <div class="products">
-                                <div th:each="sanPham : ${randomSanPhams}" class="product product-sm">
+                                <div class="product product-sm">
                                     <figure class="product-media">
-                                        <img th:src="${sanPham.anhDaiDien}" alt="Product image" class="product-image">
-
+                                        <a href="product.html">
+                                            <img src="/client/assets/images/products/single/sidebar/1.jpg" alt="Product image" class="product-image">
+                                        </a>
                                     </figure>
 
                                     <div class="product-body">
-                                        <h5 class="product-title">
-                                            <p th:text="${sanPham.tenSP}">Tên sản phẩm</p>
-                                        </h5><!-- End .product-title -->
+                                        <h5 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h5><!-- End .product-title -->
                                         <div class="product-price">
-                                            <span class="new-price" th:text="${sanPham.getFomatGiaBan}">Giá</span>
+                                            <span class="new-price">$50.00</span>
+                                            <span class="old-price">$110.00</span>
+                                        </div><!-- End .product-price -->
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product product-sm -->
+
+                                <div class="product product-sm">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <img src="/client/assets/images/products/single/sidebar/2.jpg" alt="Product image" class="product-image">
+                                        </a>
+                                    </figure>
+
+                                    <div class="product-body">
+                                        <h5 class="product-title"><a href="product.html">Yellow button front tea top</a></h5><!-- End .product-title -->
+                                        <div class="product-price">
+                                            $56.00
+                                        </div><!-- End .product-price -->
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product product-sm -->
+
+                                <div class="product product-sm">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <img src="/client/assets/images/products/single/sidebar/3.jpg" alt="Product image" class="product-image">
+                                        </a>
+                                    </figure>
+
+                                    <div class="product-body">
+                                        <h5 class="product-title"><a href="product.html">Beige metal hoop tote bag</a></h5><!-- End .product-title -->
+                                        <div class="product-price">
+                                            $50.00
+                                        </div><!-- End .product-price -->
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product product-sm -->
+
+                                <div class="product product-sm">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <img src="/client/assets/images/products/single/sidebar/4.jpg" alt="Product image" class="product-image">
+                                        </a>
+                                    </figure>
+
+                                    <div class="product-body">
+                                        <h5 class="product-title"><a href="product.html">Black soft RI weekend travel bag</a></h5><!-- End .product-title -->
+                                        <div class="product-price">
+                                            $75.00
                                         </div><!-- End .product-price -->
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product product-sm -->
                             </div><!-- End .products -->
 
-                            <a href="/apps/categories" class="btn btn-outline-dark-3"><span>Xem Sản Phẩm Khác</span><i
-                                    class="icon-long-arrow-right"></i></a>
+                            <a href="category.html" class="btn btn-outline-dark-3"><span>View More Products</span><i class="icon-long-arrow-right"></i></a>
                         </div><!-- End .widget widget-products -->
 
+                        <div class="widget widget-banner-sidebar">
+                            <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
+                            
+                            <div class="banner-sidebar banner-overlay">
+                                <a href="#">
+                                    <img src="/client/assets/images/blog/sidebar/banner.jpg" alt="banner">
+                                </a>
+                            </div><!-- End .banner-ad -->
+                        </div><!-- End .widget -->
                     </div><!-- End .sidebar sidebar-product -->
                 </aside><!-- End .col-lg-3 -->
             </div><!-- End .row -->
@@ -453,3 +480,12 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+<script>
+let soLuong = document.getElementById('product').getAttribute('data-so-luong');
+soLuong = parseInt(soLuong, 10);
+
+if (soLuong === 0) {
+document.getElementById('neuhethang').innerHTML = "Hết hàng";
+document.getElementById('myneuhethang').style.display = 'none';
+}
+</script>

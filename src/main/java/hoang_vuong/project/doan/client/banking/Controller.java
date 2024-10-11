@@ -163,6 +163,9 @@ public class Controller {
                 ctdh.setNgayTao(LocalDate.now());
 
                 this.dvlChiTietDonHang.luu(ctdh);
+                int soLuongTonKho = sp.getSoLuong() - soLuong;
+                sp.setSoLuong(soLuongTonKho);
+                    dvlSanPham.luu(sp);
 
             }
             // Reset session và giỏ hàng sau khi thêm đơn thành công
@@ -243,6 +246,9 @@ public class Controller {
                 ctdh.setTongTien(soLuong * sp.getDonGia());
                 ctdh.setNgayTao(LocalDate.now());
                 this.dvlChiTietDonHang.luu(ctdh);
+                int soLuongTonKho = sp.getSoLuong() - soLuong;
+                sp.setSoLuong(soLuongTonKho);
+                    dvlSanPham.luu(sp);
 
             }
             System.out.println("Phương thức thanh toán: Tiền mặt");

@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Đổi Mật Khẩu</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/apps/doi-mat-khau}"  method="post">
+                        <div class="form-group mb-3">
+                            <label for="matKhau">Mật khẩu Cũ</label>
+                            <input type="password" class="form-control" name="matKhau" id="matKhau" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="matKhauMoi">Mật khẩu Mới</label>
+                            <input type="password" class="form-control" name="matKhauMoi" id="matKhauMoi" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="nhapLaiMatKhauMoi">Nhập Lại Mật khẩu</label>
+                            <input type="password" class="form-control"  name="nhapLaiMatKhauMoi" id="nhapLaiMatKhauMoi" required>
+                        </div>
+
+                        <div class="alert alert-danger text-center" th:if="${THONG_BAO_ERROR}" th:text="${THONG_BAO_ERROR}"></div>
+                        <div class="alert alert-success text-center" th:if="${THONG_BAO_SUCCESS}" th:text="${THONG_BAO_SUCCESS}"></div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="javascript:history.back()" class="btn btn-link">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
+
 @Service
 public class KhachHangService {
     @Autowired
@@ -138,5 +140,7 @@ public class KhachHangService {
     public boolean dacosdt(String email){
         return kdl.existsByDienThoai(email);
     }
-
+ public List<KhachHang> timDanhSachkhachhangTheoEmail(String email) {
+        return kdl.findByEmail(email); // Giả sử bạn có một phương thức trong repository để tìm danh sách theo email
+    }
 }

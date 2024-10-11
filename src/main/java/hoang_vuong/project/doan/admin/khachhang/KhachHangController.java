@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
 import hoang_vuong.project.doan.qdl.Qdl;
 
 @Controller

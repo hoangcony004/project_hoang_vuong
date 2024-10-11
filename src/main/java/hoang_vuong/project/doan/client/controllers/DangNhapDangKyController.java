@@ -28,10 +28,11 @@ public class DangNhapDangKyController {
     private KhachHangService dvl;
 
     @GetMapping("/auth")
-    public String getAuth(Model model, HttpSession session) {
+    public String getAuth(Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
         if (khachhang_Id != null) {
-            return "redirect:/apps/auth";
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn đã đăng nhập!");
+            return "redirect:/";
         }
         var dl = new KhachHang();
         model.addAttribute("dl", dl);
@@ -42,11 +43,17 @@ public class DangNhapDangKyController {
 
     @PostMapping("/auth_register")
     public String postAdd(@ModelAttribute("KhachHang") KhachHang dl,
+            @RequestParam("emailcom") String emailcom,
             RedirectAttributes redirectAttributes) {
         // Mã hóa mật khẩu
         var inputPassword = dl.getMatKhau();
         var hash = BCrypt.hashpw(inputPassword, BCrypt.gensalt(12));
-
+            if(dvl.dacoemail(emailcom)){
+                redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Đăng ký không thành công! Email đã tồn tại!");
+                return "redirect:/apps/auth";
+                }else{
+                    dl.setEmail(emailcom);
+                }
         dl.setMatKhau(hash);
         dl.setNgayTao(LocalDate.now());
 

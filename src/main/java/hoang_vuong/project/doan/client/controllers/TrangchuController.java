@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,15 +104,13 @@ public class TrangchuController {
 
     model.addAttribute("content", "client/index.html");
 
-    // System.out.println("\n uri before login: " + (String)
-    // session.getAttribute("URI_BEFORE_LOGIN"));
+
     return "layouts/layout-client";
   }
 
   @GetMapping("/apps/product")
   public String getXem(Model model, @RequestParam(value = "id") int id) {
-    // if (Qdl.KhachHangChuaDangNhap(request))
-    // return "redirect:/apps/dang-ky";
+
     var dl = anhdv.dsmasp(id);
     model.addAttribute("ds", dl);
     var dls = dvl.timTheoId(id);
@@ -123,11 +123,6 @@ public class TrangchuController {
     System.out.println("tim id" + danhGia);
     // System.out.println("id khach hang la" + khachhangId);
 
-    // float price = dls.getDonGia();
-    // NumberFormat formatTienViet = NumberFormat.getCurrencyInstance(new
-    // Locale("vi", "VN"));
-    // String giaDinhDang = formatTienViet.format(price);
-    // model.addAttribute("price", giaDinhDang);
 
     model.addAttribute("dl", dls);
 
@@ -145,12 +140,7 @@ public class TrangchuController {
     return "client/lay-san-pham-theo-nsx"; // Trả về tên template
   }
 
-  // @PostMapping("/apps/danh-gia-san-pham")
-  // public String danhGiaSanPham(@RequestParam("id") Long id, Model model) {
-  // System.out.println("id don hang" + id);
 
-  // return "redirect:/";
-  // }
   @PostMapping("/apps/danh-gia-san-pham")
   public String danhGiaSanPham(@RequestParam("id") Integer id,
       @RequestParam("star-rating") int starRating,
@@ -190,6 +180,7 @@ public class TrangchuController {
       danhGiaService.them(danhGiaMoi);
 
       redirectAttributes.addFlashAttribute("THONG_BAO_SUCCESS", "Đã thêm phần đánh giá của bạn!");
+
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Không thể thêm đánh giá!. Mã lỗi: " + e.getMessage());
     }
@@ -197,54 +188,6 @@ public class TrangchuController {
     return "redirect:/apps/product?id=" + id;
   }
 
-  @GetMapping("/apps/categories")
-  public String getDuyetSanPham(Model model,
-      @RequestParam(defaultValue = "1") int page,
-      @RequestParam(defaultValue = "9") int pageSize,
-      @RequestParam(defaultValue = "tenSP") String sort, // Sắp xếp theo tên sản phẩm
-      @RequestParam(defaultValue = "asc") String direction, // Hướng sắp xếp
-      @RequestParam(value = "id", required = false) Integer id, // ID tùy chọn
-      HttpServletRequest request) {
-    // Chuyển đổi page từ 1-based thành 0-based
-    int pageIndex = page - 1;
-
-    // Thiết lập sắp xếp
-    Sort.Direction sortDirection = direction.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-    Pageable pageable = PageRequest.of(pageIndex, pageSize, Sort.by(sortDirection, sort));
-
-    Page<SanPham> sanPhamPage;
-    List<SanPham> list;
-
-    // Nếu `id` không null, tìm sản phẩm theo `id`
-    if (id != null && id != 0) {
-      // Tìm sản phẩm theo `id` và trả về kết quả phân trang
-      sanPhamPage = dvl.duyetSanPhamTheoId(id, pageable);
-    } else {
-      // Nếu không có `id`, trả về tất cả sản phẩm với phân trang và sắp xếp
-      sanPhamPage = dvl.duyetSanPham(pageable);
-    }
-    list = sanPhamPage.getContent();
-
-    // Thêm các thuộc tính cần thiết vào model để hiển thị trong view
-    model.addAttribute("dlns", list); // Danh sách sản phẩm
-    model.addAttribute("page", sanPhamPage); // Thông tin phân trang
-    model.addAttribute("dl", new SanPham()); // Đối tượng sản phẩm để thêm mới
-
-    // Thêm các thuộc tính cho phân trang và sắp xếp
-    model.addAttribute("currentPage", page);
-    model.addAttribute("totalPages", sanPhamPage.getTotalPages());
-    model.addAttribute("pageSize", pageSize);
-    model.addAttribute("id", id != null ? id : 0);
-
-    model.addAttribute("sort", sort); // Cột sắp xếp
-    model.addAttribute("direction", direction); // Hướng sắp xếp (asc/desc)
-    model.addAttribute("sortDirection", direction.equals("asc") ? "asc" : "desc");
-    int startIndex = (page - 1) * pageSize;
-    model.addAttribute("startIndex", startIndex);
-
-    model.addAttribute("content", "client/category.html");
-    return "layouts/layout-client";
-  }
 
   @GetMapping("/san-pham/tim-kiem")
   public String getSearch(Model model,
@@ -304,4 +247,5 @@ public class TrangchuController {
     model.addAttribute("content", "client/404.html");
     return "layouts/layout-client";
   }
+
 }
