@@ -104,6 +104,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div th:insert="admin/donhang/export-don-hang.html"></div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i> Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -119,9 +137,11 @@
                         <div class="text-sm-end">
                             <!-- Các nút chức năng -->
                             <form action="#" method="post" class="mb-3">
-                                <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
+                                <!-- <button type="button" class="btn btn-primary btn-sm me-2">Lọc</button>
                                 <button type="button" class="btn btn-light btn-sm me-2">Import</button>
-                                <button type="button" class="btn btn-light btn-sm">Export</button>
+                                <button type="button" class="btn btn-light btn-sm">Export</button> -->
+                                <button type="button" class="btn btn-primary btn-sm me-2" data-toggle="modal"
+                                    data-target="#modalExport">Xuất Excel</button>
                             </form>
 
                             <!-- Form tìm kiếm -->

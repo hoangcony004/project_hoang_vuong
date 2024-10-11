@@ -118,10 +118,10 @@ public class TrangchuController {
     List<SanPham> randomSanPhams = dvl.getRandomSanPhams();
     model.addAttribute("randomSanPhams", randomSanPhams);
     
-    int khachhangId = (int) request.getSession().getAttribute("khachhang_Id");
+    // int khachhangId = (int) request.getSession().getAttribute("khachhang_Id");
     List<DanhGiaSanPham> danhGia = danhGiaService.getDanhGiaBySanPham(id);
     System.out.println("tim id" + danhGia);
-    System.out.println("id khach hang la" + khachhangId);
+    // System.out.println("id khach hang la" + khachhangId);
 
     // float price = dls.getDonGia();
     // NumberFormat formatTienViet = NumberFormat.getCurrencyInstance(new
