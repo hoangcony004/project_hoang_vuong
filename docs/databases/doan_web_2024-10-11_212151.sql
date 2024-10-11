@@ -31,7 +31,7 @@ CREATE TABLE `anh_san_pham` (
   PRIMARY KEY (`id`),
   KEY `FKlk1my5j5shviqurasjc5n5k1o` (`masp`),
   CONSTRAINT `FKlk1my5j5shviqurasjc5n5k1o` FOREIGN KEY (`masp`) REFERENCES `san_pham` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `anh_san_pham` (
 --
 
 /*!40000 ALTER TABLE `anh_san_pham` DISABLE KEYS */;
-INSERT INTO `anh_san_pham` VALUES (2,'https://i.postimg.cc/jSPpgC2g/IPhone-14-Pro-Max.jpg',9,NULL,'2024-09-20');
+INSERT INTO `anh_san_pham` VALUES (2,'https://i.postimg.cc/jSPpgC2g/IPhone-14-Pro-Max.jpg',9,NULL,'2024-09-20'),(7,'https://i.postimg.cc/dQzv4bn0/IPhone-15-Pro-Max.jpg',8,NULL,'2024-10-11'),(10,'https://i.postimg.cc/R0KTfrBk/iphone-15-pro-max.jpg',8,NULL,'2024-10-11'),(11,'https://i.postimg.cc/R0KTfrBk/iphone-15-pro-max.jpg',8,NULL,'2024-10-11'),(12,'https://i.postimg.cc/mDVCNB65/iphone-14-pro-max.jpg',9,NULL,'2024-10-11'),(13,'https://i.postimg.cc/Lsx8x52L/iphone-15-trang.jpg',19,NULL,'2024-10-11');
 /*!40000 ALTER TABLE `anh_san_pham` ENABLE KEYS */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `chi_tiet_don_hang` (
   KEY `FK98u87ds1aj1339w293i4er4fx` (`masp`),
   CONSTRAINT `FK98u87ds1aj1339w293i4er4fx` FOREIGN KEY (`masp`) REFERENCES `san_pham` (`id`),
   CONSTRAINT `FKt57maavf6s28hxyar724mdr1b` FOREIGN KEY (`don_hang_id`) REFERENCES `don_hang` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,8 +96,38 @@ CREATE TABLE `chi_tiet_don_hang` (
 --
 
 /*!40000 ALTER TABLE `chi_tiet_don_hang` DISABLE KEYS */;
-INSERT INTO `chi_tiet_don_hang` VALUES (33,5794440,13,'512GB, Vàng Cứt',NULL,'2024-09-23',1,5794440,59,'Realme 3 Pro'),(34,25400000,10,NULL,NULL,'2024-09-23',1,25400000,60,NULL),(35,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-23',1,11005000,61,'Xiaomi 11'),(36,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-24',1,11005000,63,'Xiaomi 11'),(37,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,64,'SamSung S23 UTra'),(38,27600000,8,'512GB, Xám, Pin 97%',NULL,'2024-09-24',1,27600000,65,'IPhone 15 Pro Max'),(39,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',2,38888800,66,'SamSung S23 UTra'),(40,19444400,10,'128GB, Xanh Đen',NULL,'2024-09-24',1,19444400,67,'SamSung S23 UTra'),(41,5794440,13,'512GB, Vàng Cứt','2024-10-04','2024-10-04',1,5794440,68,'Realme 3 Pro'),(44,19444400,10,'128GB, Xanh Đen',NULL,'2024-10-04',1,19444400,71,'SamSung S23 UTra');
+INSERT INTO `chi_tiet_don_hang` VALUES (33,5794440,13,'512GB, Vàng Cứt',NULL,'2024-09-23',1,5794440,59,'Realme 3 Pro'),(34,25400000,10,NULL,NULL,'2024-09-23',1,25400000,60,NULL),(35,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-23',1,11005000,61,'Xiaomi 11'),(36,11005000,15,'128GB, Xám, Pin 97%',NULL,'2024-09-24',1,11005000,63,'Xiaomi 11'),(54,27600000,8,'512GB, Xám, Pin 97%',NULL,'2024-10-11',1,27600000,79,'IPhone 15 Pro Max'),(55,28600000,19,'128GB, Xanh Đen',NULL,'2024-10-11',1,28600000,80,'IPhone 15');
 /*!40000 ALTER TABLE `chi_tiet_don_hang` ENABLE KEYS */;
+
+--
+-- Table structure for table `danh_gia_san_pham`
+--
+
+DROP TABLE IF EXISTS `danh_gia_san_pham`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `danh_gia_san_pham` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `diem_danh_gia` int(11) NOT NULL,
+  `ngay_danh_gia` date DEFAULT NULL,
+  `nhan_xet` varchar(255) DEFAULT NULL,
+  `khach_hang_id` int(11) NOT NULL,
+  `san_pham_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKontig9eenpc2861rdjxg8yn8l` (`khach_hang_id`),
+  KEY `FKiqj0127ers93u2lqt8l6x2x7a` (`san_pham_id`),
+  CONSTRAINT `FKiqj0127ers93u2lqt8l6x2x7a` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`id`),
+  CONSTRAINT `FKontig9eenpc2861rdjxg8yn8l` FOREIGN KEY (`khach_hang_id`) REFERENCES `khach_hang` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `danh_gia_san_pham`
+--
+
+/*!40000 ALTER TABLE `danh_gia_san_pham` DISABLE KEYS */;
+INSERT INTO `danh_gia_san_pham` VALUES (2,5,'2024-10-09','hàng chất lượng',13,9);
+/*!40000 ALTER TABLE `danh_gia_san_pham` ENABLE KEYS */;
 
 --
 -- Table structure for table `don_hang`
@@ -126,7 +156,7 @@ CREATE TABLE `don_hang` (
   UNIQUE KEY `UKn067siyskj21r17c860rg1eik` (`madh`),
   KEY `FKiy9wbkgc3iv3ome6new025n9o` (`makh`),
   CONSTRAINT `FKiy9wbkgc3iv3ome6new025n9o` FOREIGN KEY (`makh`) REFERENCES `khach_hang` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,8 +164,32 @@ CREATE TABLE `don_hang` (
 --
 
 /*!40000 ALTER TABLE `don_hang` DISABLE KEYS */;
-INSERT INTO `don_hang` VALUES (59,'0388937608','nguyenduchoang522@gmail.com','sadfas',0,'2023-08-23','Nguyễn Đức Hoàng',5794440,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH165440','monkey'),(60,'0987654377','nguyenduchoang522@gmail.com','ádfsad',0,'2024-09-23','Nguyễn Đức Hoàng',25400000,0,'100','Quận Nam Từ Liêm','Thành phố Hà Nội','Phường Đại Mỗ','DH358810',NULL),(61,'0388937608','test123@gmail.com','sgasg',0,'2024-09-23','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH572062','monkey'),(63,'0388937608','test123@gmail.com','fghdf',0,'2024-09-24','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Chương Dương Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH941153','monkey'),(64,'0388937608','test123@gmail.com','sadvasdv',0,'2024-09-24','Nguyễn Đức Hoàng',19444400,0,'Ngõ 1,  (Phường Thanh Xuân Nam Quận Thanh Xuân Thành phố Hà Nội)',NULL,NULL,NULL,'DH949911','monkey'),(65,'0388937608','test123@gmail.com','ggg',0,'2024-09-24','Nguyễn Đức Hoàng',27600000,0,'Ngõ 1,  (Phường Nhật Tân Quận Tây Hồ Thành phố Hà Nội)',NULL,NULL,NULL,'DH188551','monkey'),(66,'0388937608','test123@gmail.com','dfdf',0,'2024-09-24','Nguyễn Đức Hoàng',38888800,0,'Ngõ 1,  (Phường Thạch Bàn Quận Long Biên Thành phố Hà Nội)',NULL,NULL,NULL,'DH524564','monkey'),(67,'0388937608','hoang@gmail.com','dfgsd',0,'2024-10-24','Nguyễn Đức Hoàng',19444400,1,'Ngõ 1,  (Phường Cửa Nam Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH886004','monkey'),(68,'0388937608','hoang@gmail.com','dfgddfgdf',0,'2024-10-04','Nguyễn Đức Hoàng',5794440,1,'Ngõ 1,  (Phường Kim Mã Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH224270','banking'),(71,'0974653212','hoang999@gmail.com','',12,'2024-10-04','Nguyễn Đức Hoàng',19444400,1,'Ngõ 1,  (Xã Thái Học Huyện Bảo Lâm Tỉnh Cao Bằng)',NULL,NULL,NULL,'DH221392','monkey');
+INSERT INTO `don_hang` VALUES (59,'0388937608','nguyenduchoang522@gmail.com','sadfas',0,'2023-08-23','Nguyễn Đức Hoàng',5794440,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH165440','monkey'),(60,'0987654377','nguyenduchoang522@gmail.com','ádfsad',0,'2024-09-23','Nguyễn Đức Hoàng',25400000,0,'100','Quận Nam Từ Liêm','Thành phố Hà Nội','Phường Đại Mỗ','DH358810',NULL),(61,'0388937608','test123@gmail.com','sgasg',0,'2024-09-23','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Ngọc Khánh Quận Ba Đình Thành phố Hà Nội)',NULL,NULL,NULL,'DH572062','monkey'),(63,'0388937608','test123@gmail.com','fghdf',0,'2024-09-24','Nguyễn Đức Hoàng',11005000,0,'Ngõ 1,  (Phường Chương Dương Quận Hoàn Kiếm Thành phố Hà Nội)',NULL,NULL,NULL,'DH941153','monkey'),(79,'0388937608','user@gmail.com','sadfsadf',13,'2024-10-11','Nguyễn Đức Hoàng',27600000,0,'Ngõ 1,  (Xã Chiềng Châu Huyện Mai Châu Tỉnh Hoà Bình)',NULL,NULL,NULL,'DH675418','monkey'),(80,'0388937608','user@gmail.com','ádfasdf',13,'2024-10-11','Nguyễn Đức Hoàng',28600000,0,'khu 2 (Xã Yên Phú Huyện Lạc Sơn Tỉnh Hoà Bình)',NULL,NULL,NULL,'DH855535','monkey');
 /*!40000 ALTER TABLE `don_hang` ENABLE KEYS */;
+
+--
+-- Table structure for table `favourites`
+--
+
+DROP TABLE IF EXISTS `favourites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `favourites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` date NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `favourites`
+--
+
+/*!40000 ALTER TABLE `favourites` DISABLE KEYS */;
+INSERT INTO `favourites` VALUES (5,'2024-10-11',14,13),(6,'2024-10-11',19,13),(7,'2024-10-11',19,13);
+/*!40000 ALTER TABLE `favourites` ENABLE KEYS */;
 
 --
 -- Table structure for table `khach_hang`
@@ -160,7 +214,7 @@ CREATE TABLE `khach_hang` (
   UNIQUE KEY `UKnlomnykdsca5gj0oakbh2cpu` (`dien_thoai`),
   UNIQUE KEY `UKj3lhg8opnqln2wcb41cp14xn9` (`email`),
   UNIQUE KEY `UKjbvtsjsqvol6fe5y1jwdu8oui` (`ten_dang_nhap`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +222,7 @@ CREATE TABLE `khach_hang` (
 --
 
 /*!40000 ALTER TABLE `khach_hang` DISABLE KEYS */;
-INSERT INTO `khach_hang` VALUES (0,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','Thành Phố Hà Nội','0987654321','admin999@gmail.com','$2a$12$LAB2U5DtJF7mFzdoBlTSAe7TKZMdwd5DATege1BcjNpWQ.co4c49W','2024-09-13','2024-08-13','admin','Khách Vãn Lai',0x00),(3,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453455','levanc55@gmail.com','$2a$12$6NlaUOyra1z57BKL9uxVBuYGh/g5fTQzrkrjDM5PuZHM.NHpi8/0u',NULL,'2024-09-19','levanC1','nguyen duc hoang',0x01),(4,NULL,NULL,'hoang00','hoang00090@gmail.com','$2a$12$GwadLZR4xCWUNIq1IqoYpeaVUwjPZ/f62LndOC9j59BCTq9kzHxU2','2024-09-20','2024-09-20',NULL,NULL,NULL),(7,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453478','levanc4445@gmail.com','$2a$12$U90nWWapc3r49.Jq4M0wl.d7b2i/neW0ra3TxPczXTppbW7PWkKVG',NULL,'2024-09-22','hoang000','nguyen duc hoang',0x01),(10,NULL,NULL,'12345678967','hoang111@gmail.com','$2a$12$dF9sEnWNYqf4lrGKSTvFvusDM889c6XDCM1OleS/Ex8k4JK.2u3DG','2024-09-24','2024-09-24',NULL,NULL,NULL),(12,NULL,NULL,'0974653212','hoang999@gmail.com','$2a$12$0mFSzpsGt1.BGo0EE5hS0OKmfUEFVXaBaQPcyZrwu.guMRDpuj2xW','2024-10-04','2024-10-04',NULL,NULL,NULL);
+INSERT INTO `khach_hang` VALUES (0,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','Thành Phố Hà Nội','0987654321','admin999@gmail.com','$2a$12$LAB2U5DtJF7mFzdoBlTSAe7TKZMdwd5DATege1BcjNpWQ.co4c49W','2024-09-13','2024-08-13','admin','Khách Vãn Lai',0x00),(3,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453455','levanc55@gmail.com','$2a$12$6NlaUOyra1z57BKL9uxVBuYGh/g5fTQzrkrjDM5PuZHM.NHpi8/0u',NULL,'2024-09-19','levanC1','nguyen duc hoang',0x01),(4,NULL,NULL,'hoang00','hoang00090@gmail.com','$2a$12$GwadLZR4xCWUNIq1IqoYpeaVUwjPZ/f62LndOC9j59BCTq9kzHxU2','2024-09-20','2024-09-20',NULL,NULL,NULL),(7,'https://th.bing.com/th/id/OIP.v0Cw6Gydr5bjYPAQrKRljwHaHa?rs=1&pid=ImgDetMain','hà nội','8975453478','levanc4445@gmail.com','$2a$12$U90nWWapc3r49.Jq4M0wl.d7b2i/neW0ra3TxPczXTppbW7PWkKVG',NULL,'2024-09-22','hoang000','nguyen duc hoang',0x01),(10,NULL,NULL,'12345678967','hoang111@gmail.com','$2a$12$dF9sEnWNYqf4lrGKSTvFvusDM889c6XDCM1OleS/Ex8k4JK.2u3DG','2024-09-24','2024-09-24',NULL,NULL,NULL),(12,NULL,NULL,'0974653212','hoang999@gmail.com','$2a$12$0mFSzpsGt1.BGo0EE5hS0OKmfUEFVXaBaQPcyZrwu.guMRDpuj2xW','2024-10-04','2024-10-04',NULL,NULL,NULL),(13,NULL,'Thanh Xuân, Hà Nội','0388937608','user@gmail.com','$2a$12$d7vlh1FXag2vlU7SG/BCZO0QUNW35Pu8auq.zC3IHM0qg5om50xl6','2024-10-09','2024-10-05','user1','Nguyễn Đức Hoàng',NULL);
 /*!40000 ALTER TABLE `khach_hang` ENABLE KEYS */;
 
 --
@@ -294,7 +348,7 @@ CREATE TABLE `quang_cao` (
 --
 
 /*!40000 ALTER TABLE `quang_cao` DISABLE KEYS */;
-INSERT INTO `quang_cao` VALUES (1,'https://i.postimg.cc/v8WBVqH6/banner-iphone.jpg',35000000,'https://www.apple.com/','IPhone 16 Siêu Chất','2024-10-30','2024-09-17',NULL,0x01,'IPhone 16 Đã Ra Mắt','Cùng Đón Chờ Nhé'),(4,'https://i.postimg.cc/3rC8RknX/banner-Xiaomi.jpg',500000,'https://www.samsung.com/vn','Hàng Giảm Mạnh Tay','2024-09-30','2024-09-24',NULL,0x00,'Xiaomi Lướt','Theo Dõi Ngay Nào');
+INSERT INTO `quang_cao` VALUES (1,'https://i.postimg.cc/v8WBVqH6/banner-iphone.jpg',35000000,'https://www.apple.com/','IPhone 16 Siêu Chất','2024-10-30','2024-09-17',NULL,0x01,'IPhone 16 Đã Ra Mắt','Cùng Đón Chờ Nhé'),(4,'https://i.postimg.cc/3rC8RknX/banner-Xiaomi.jpg',500000,'https://www.samsung.com/vn','Hàng Giảm Mạnh Tay','2024-10-30','2024-10-07',NULL,0x01,'Xiaomi Lướt','Theo Dõi Ngay Nào');
 /*!40000 ALTER TABLE `quang_cao` ENABLE KEYS */;
 
 --
@@ -323,7 +377,7 @@ CREATE TABLE `san_pham` (
   PRIMARY KEY (`id`),
   KEY `FK54dkh41652f0skwnl5tbp1ceq` (`mansx`),
   CONSTRAINT `FK54dkh41652f0skwnl5tbp1ceq` FOREIGN KEY (`mansx`) REFERENCES `nha_san_xuat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +385,7 @@ CREATE TABLE `san_pham` (
 --
 
 /*!40000 ALTER TABLE `san_pham` DISABLE KEYS */;
-INSERT INTO `san_pham` VALUES (8,'https://i.postimg.cc/dQzv4bn0/IPhone-15-Pro-Max.jpg',0x01,27600000,6,'Hàng đẹp như mới','512GB, Xám, Pin 97%',NULL,'2024-09-17',0x01,'IPhone, 15, Pro Max, Điện thoại','IPhone 15 Pro Max',0x01,NULL,50),(9,'https://i.postimg.cc/jSPpgC2g/IPhone-14-Pro-Max.jpg',0x00,20600000,6,'Hàng Có Hạn','256GB, Đỏ, Pin 100%, Xước Nhẹ',NULL,'2024-09-17',0x01,'IPhone, 14, Pro Max, Điện thoại','IPhone 14 Pro Max',0x01,NULL,10),(10,'https://i.postimg.cc/4djC2c60/Sam-Sung-S23-Utra.jpg',0x01,19444400,7,'Hàng Chất Lượng ','128GB, Xanh Đen','2024-09-17','2024-09-17',0x01,'SamSung, S23, Điện Thoại','SamSung S23 UTra',0x01,NULL,8),(11,'https://i.postimg.cc/02GPJFzj/LG-dien-thoai.jpg',0x00,6444440,12,'LG cũ siêu chất','128GB, Xanh Đen',NULL,'2024-09-18',0x00,'Điện Thoại, LG','LG Utra',0x01,NULL,5),(12,'https://i.postimg.cc/Njsn4bhM/Xiaomi-10.jpg',0x01,7444440,11,'chất chơi quá','128GB, Xanh Đen','2024-09-19','2024-09-18',0x00,'Điện Thoại, Xiaomi','Xiaomi 10',0x00,NULL,8),(13,'https://i.postimg.cc/TYdHC4kp/realme-3-pro.jpg',0x01,5794440,9,'mua đê','512GB, Vàng Cứt',NULL,'2024-09-18',0x01,'Điện Thoại, Realme','Realme 3 Pro',0x01,NULL,10),(14,'https://i.postimg.cc/zftYW6V8/Sam-Sung-S22.jpg',0x01,9005000,7,'hàng chất lượng','128GB, Xám, Pin 97%',NULL,'2024-09-22',0x01,'Điện Thoại, SamSung','SamSung S22',0x01,NULL,10),(15,'https://i.postimg.cc/43nSCdxR/Xiaomi-11.png',0x01,11005000,11,'mua đê','128GB, Xám, Pin 97%',NULL,'2024-09-22',0x01,'Điện Thoại, Xiaomi','Xiaomi 11',0x01,NULL,10),(16,'https://i.postimg.cc/xd7F92XJ/Xiaomi-12.jpg',0x00,15005000,11,'dfsdf','128GB, Xám, Pin 97%',NULL,'2024-09-22',0x00,'Điện Thoại, Xiaomi','Xiaomi 12',0x01,NULL,10),(17,'https://i.postimg.cc/QVL61kQX/IPhone-14-Plus.jpg',0x00,18005000,6,'sadvasdv','256GB, Xám, Pin 97%',NULL,'2024-09-22',0x00,'Điện Thoại, Iphone','IPhone 14 Plus',0x01,NULL,10),(18,'https://i.postimg.cc/kMtP6j9P/Sam-Sung-A54.jpg',0x00,6005000,7,'sdvasdf','256GB, Xám, Pin 97%',NULL,'2024-09-22',0x00,'Điện Thoại, samsung','SamSung ',0x01,NULL,10);
+INSERT INTO `san_pham` VALUES (8,'https://i.postimg.cc/dQzv4bn0/IPhone-15-Pro-Max.jpg',0x01,27600000,6,'Hàng đẹp như mới','512GB, Xám, Pin 97%','2024-10-11','2024-09-17',0x00,'IPhone, 15, Pro Max, Điện thoại','IPhone 15 Pro Max',0x01,NULL,49),(9,'https://i.postimg.cc/jSPpgC2g/IPhone-14-Pro-Max.jpg',0x00,20600000,6,'Hàng Có Hạn','256GB, Đỏ, Pin 100%, Xước Nhẹ',NULL,'2024-09-17',0x01,'IPhone, 14, Pro Max, Điện thoại','IPhone 14 Pro Max',0x01,NULL,10),(10,'https://i.postimg.cc/4djC2c60/Sam-Sung-S23-Utra.jpg',0x01,19444400,7,'Hàng Chất Lượng ','128GB, Xanh Đen','2024-10-11','2024-09-17',0x00,'SamSung, S23, Điện Thoại','SamSung S23 UTra',0x01,NULL,8),(11,'https://i.postimg.cc/02GPJFzj/LG-dien-thoai.jpg',0x00,6444440,12,'LG cũ siêu chất','128GB, Xanh Đen',NULL,'2024-09-18',0x00,'Điện Thoại, LG','LG Utra',0x01,NULL,5),(13,'https://i.postimg.cc/TYdHC4kp/realme-3-pro.jpg',0x00,5794440,9,'mua đê','512GB, Vàng Cứt','2024-10-11','2024-09-18',0x01,'Điện Thoại, Realme','Realme 3 Pro',0x01,NULL,10),(14,'https://i.postimg.cc/zftYW6V8/Sam-Sung-S22.jpg',0x01,9005000,7,'hàng chất lượng','128GB, Xám, Pin 97%','2024-10-11','2024-09-22',0x00,'Điện Thoại, SamSung','SamSung S22',0x01,NULL,10),(15,'https://i.postimg.cc/43nSCdxR/Xiaomi-11.png',0x01,11005000,11,'mua đê','128GB, Xám, Pin 97%','2024-10-11','2024-09-22',0x00,'Điện Thoại, Xiaomi','Xiaomi 11',0x01,NULL,10),(17,'https://i.postimg.cc/QVL61kQX/IPhone-14-Plus.jpg',0x00,18005000,6,'sadvasdv','256GB, Xám, Pin 97%','2024-10-11','2024-09-22',0x01,'Điện Thoại, Iphone','IPhone 14 Plus',0x01,NULL,10),(19,'https://i.postimg.cc/L8M5XGxY/iphone-15.jpg',0x00,28600000,6,'hàng mới đét','128GB, Xanh Đen',NULL,'2024-10-11',0x00,'test, Táo, Apple','IPhone 15',0x01,NULL,9),(20,'https://i.postimg.cc/dQyTVRJf/oppo-a17.jpg',0x00,8600000,8,'chưa bóc hộp','128GB, Xám',NULL,'2024-10-11',0x00,'oppo','Oppo A17',0x01,NULL,10),(21,'https://i.postimg.cc/g0jwH61F/vivo-Y17s.webp',0x00,5700000,10,'xịn lắm','64GB, Xanh Đen','2024-10-11','2024-10-11',0x00,'vivo','Vivo Y17s',0x01,NULL,10);
 /*!40000 ALTER TABLE `san_pham` ENABLE KEYS */;
 
 --
@@ -347,4 +401,4 @@ INSERT INTO `san_pham` VALUES (8,'https://i.postimg.cc/dQzv4bn0/IPhone-15-Pro-Ma
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-04 22:20:13
+-- Dump completed on 2024-10-11 21:21:56
