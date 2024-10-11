@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import hoang_vuong.project.doan.admin.nhanvien.NhanVien;
+
 public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
     long countByNgayTaoBetween(LocalDate startDate, LocalDate endDate);
-
+ List<KhachHang> findByEmail(String email);
     List<KhachHang> findByTenDangNhap(String tenDangNhap);
 
     Boolean existsByTenDangNhap(String tenDangNhap);

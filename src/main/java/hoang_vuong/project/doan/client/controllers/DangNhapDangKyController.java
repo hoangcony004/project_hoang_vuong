@@ -28,10 +28,11 @@ public class DangNhapDangKyController {
     private KhachHangService dvl;
 
     @GetMapping("/auth")
-    public String getAuth(Model model, HttpSession session) {
+    public String getAuth(Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         Integer khachhang_Id = (Integer) session.getAttribute("khachhang_Id");
         if (khachhang_Id != null) {
-            return "redirect:/apps/auth";
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Bạn đã đăng nhập!");
+            return "redirect:/";
         }
         var dl = new KhachHang();
         model.addAttribute("dl", dl);
