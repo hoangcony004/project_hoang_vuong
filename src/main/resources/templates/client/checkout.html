@@ -38,30 +38,29 @@
 								<div class="col-sm-6">
 									<label>Số điện thoại</label>
 
-									<input type="text" pattern="(0\d{9}|\+84\d{9})" th:field="${alldatakh.dienThoai}" class="form-control" required>
+									<input type="text" pattern="(0\d{9}|\+84\d{9})" th:field="${alldatakh.dienThoai}"
+										class="form-control" required>
 
 								</div><!-- End .col-sm-6 -->
 							</div><!-- End .row -->
 
 							<label>Tỉnh/Thành phố *</label>
-
 							<select class="form-control" required name="city" id='city'>
 								<option value=''>Tỉnh/Thành phố</option>
 							</select>
+
 							<label>Quận huyện *</label>
 							<select class="form-control" required name="district" id='district'>
 								<option value=''>Quận/huyện</option>
 							</select>
+
 							<label>Phường xã *</label>
 							<select class="form-control" required name="ward" id='ward'>
-
 								<option value=''>Phường/xã</option>
 							</select>
 
 							<label>Số nhà số ngõ địa chỉ chi tiết *</label>
-
 							<input type="" name="fullAdress" class="form-control" required>
-
 
 							<label>Email address *</label>
 							<input type="email" th:field="${alldatakh.email}" class="form-control" required>
@@ -109,9 +108,9 @@
 											<td><input type="radio" name="method" value="banking">Chuyển khoản</td>
 											<td></td>
 										</tr>
-										<tr></tr>
-										<td><input type="radio" name="method" value="monkey">Tiền mặt</td>
-										<td></td>
+										<tr>
+											<td><input type="radio" name="method" value="monkey">Tiền mặt</td>
+											<td></td>
 										</tr>
 									</tbody>
 								</table><!-- End .table table-summary -->

@@ -165,7 +165,7 @@ public class Controller {
                 this.dvlChiTietDonHang.luu(ctdh);
                 int soLuongTonKho = sp.getSoLuong() - soLuong;
                 sp.setSoLuong(soLuongTonKho);
-                    dvlSanPham.luu(sp);
+                dvlSanPham.luu(sp);
 
             }
             // Reset session và giỏ hàng sau khi thêm đơn thành công
@@ -193,8 +193,14 @@ public class Controller {
             @RequestParam("ward") String ward,
             @RequestParam("fullAdress") String fullAdress,
             @RequestParam("note") String note,
-            @RequestParam("method") String method,
+            // @RequestParam("method") String method,
+            @RequestParam(value = "method", required = false) String method,
             RedirectAttributes redirectAttributes) {
+
+        if (method == null || method.isEmpty()) {
+            redirectAttributes.addFlashAttribute("THONG_BAO_ERROR", "Vui lý chọn phuong thức thanh toán");
+            return "redirect:/apps/checkout";
+        }
 
         if ("banking".equals(method)) {
             session.setAttribute("donHang", dh);
@@ -248,7 +254,7 @@ public class Controller {
                 this.dvlChiTietDonHang.luu(ctdh);
                 int soLuongTonKho = sp.getSoLuong() - soLuong;
                 sp.setSoLuong(soLuongTonKho);
-                    dvlSanPham.luu(sp);
+                dvlSanPham.luu(sp);
 
             }
             System.out.println("Phương thức thanh toán: Tiền mặt");
